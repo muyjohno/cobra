@@ -1,1 +1,8 @@
 p= @tournament.name
+
+- @tournament.players.each do |p|
+  p= p.name
+
+= simple_form_for :player, url: tournament_players_path(@tournament) do |f|
+  = f.input :name
+  = f.submit 'Register Player'

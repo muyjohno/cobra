@@ -1,3 +1,4 @@
 Rails.application.routes.draw do
-  resources :tournaments, only: [:show]
+  root 'tournaments#index'
+  resources :tournaments, except: [:edit, :update, :destroy]
 end

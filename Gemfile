@@ -11,6 +11,7 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'swissper'
 gem 'slim-rails'
+gem 'simple_form'
 
 group :development, :test do
   gem 'pry'
@@ -18,6 +19,7 @@ end
 
 group :test do
   gem 'rspec-rails'
+  gem 'capybara'
 end
 
 group :development do

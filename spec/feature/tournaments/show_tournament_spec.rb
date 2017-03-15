@@ -9,4 +9,8 @@ RSpec.describe 'viewing a tournament' do
   it 'displays player names' do
     expect(page).to have_content('Jack Player')
   end
+
+  it 'displays tournament status' do
+    expect(page).to have_content('This tournament is: REGISTERING')
+  end
 end

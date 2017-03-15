@@ -1,0 +1,5 @@
+p This tournament is: REGISTERING
+p Add players to your tournament!
+= simple_form_for :player, url: tournament_players_path(@tournament) do |f|
+  = f.input :name
+  = f.submit 'Register Player'

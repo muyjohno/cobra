@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :player do
-    name 'Player Name'
+    name { Faker::Name.name }
     tournament
   end
 end

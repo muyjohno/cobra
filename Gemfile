@@ -9,7 +9,7 @@ gem 'coffee-rails', '~> 4.2'
 gem 'jquery-rails'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
-gem 'swissper'
+gem 'swissper', '~> 0.2'
 gem 'slim-rails'
 gem 'simple_form'
 
@@ -22,6 +22,7 @@ group :test do
   gem 'capybara'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
+  gem 'faker'
 end
 
 group :development do

@@ -1,4 +1,4 @@
-RSpec.describe 'create a tournament' do
+RSpec.describe 'creating a tournament' do
   before do
     visit new_tournament_path
 

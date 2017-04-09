@@ -3,3 +3,5 @@ p Add players to your tournament!
 = simple_form_for :player, url: tournament_players_path(@tournament) do |f|
   = f.input :name
   = f.submit 'Register Player'
+
+p= button_to 'Start Tournament!', start_tournament_path, method: :patch

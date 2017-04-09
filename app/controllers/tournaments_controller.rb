@@ -1,5 +1,5 @@
 class TournamentsController < ApplicationController
-  before_action :set_tournament, only: :show
+  before_action :set_tournament, only: [:show, :start]
 
   def index
     @tournaments = Tournament.all
@@ -20,6 +20,12 @@ class TournamentsController < ApplicationController
     else
       render :new
     end
+  end
+
+  def start
+    @tournament.start!
+
+    redirect_to tournament_path(@tournament)
   end
 
   private

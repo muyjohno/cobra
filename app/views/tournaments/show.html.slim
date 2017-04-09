@@ -3,4 +3,4 @@ p= @tournament.name
 - @tournament.players.each do |p|
   p= p.name
 
-= render "tournaments/statuses/#{@tournament.status}"
+= render "tournaments/statuses/#{@tournament.status}", tournament: @tournament

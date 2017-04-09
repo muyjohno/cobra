@@ -3,5 +3,6 @@ Rails.application.routes.draw do
   resources :tournaments, except: [:edit, :update, :destroy] do
     resources :players, only: :create
     patch :start, on: :member
+    resources :rounds, only: :create
   end
 end

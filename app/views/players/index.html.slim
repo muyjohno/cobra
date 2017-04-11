@@ -1,0 +1,6 @@
+= render @tournament.players
+
+- if @tournament.registering?
+  = simple_form_for :player, url: tournament_players_path(@tournament) do |f|
+    = f.input :name
+    = f.submit 'Register Player'

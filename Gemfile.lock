@@ -105,6 +105,8 @@ GEM
       method_source (~> 0.8.1)
       slop (~> 3.4)
     puma (3.7.1)
+    purecss-sass (0.6.2)
+      sass (~> 3.3)
     rack (2.0.1)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -217,6 +219,7 @@ DEPENDENCIES
   pg
   pry
   puma (~> 3.0)
+  purecss-sass
   rails (~> 5.0.1)
   rspec-rails
   sass-rails (~> 5.0)

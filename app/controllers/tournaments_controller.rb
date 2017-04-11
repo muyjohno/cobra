@@ -9,14 +9,14 @@ class TournamentsController < ApplicationController
   end
 
   def new
-    @tournament = Tournament.new
+    @new_tournament = Tournament.new
   end
 
   def create
-    @tournament = Tournament.new(tournament_params)
+    @new_tournament = Tournament.new(tournament_params)
 
-    if @tournament.save
-      redirect_to tournament_path(@tournament)
+    if @new_tournament.save
+      redirect_to tournament_path(@new_tournament)
     else
       render :new
     end

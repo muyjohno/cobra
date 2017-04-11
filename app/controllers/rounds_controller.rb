@@ -1,8 +1,18 @@
 class RoundsController < ApplicationController
-  def create
-    tournament = Tournament.find(params[:tournament_id])
-    tournament.pair_new_round!
+  before_action :set_tournament
 
-    redirect_to tournament_path(tournament)
+  def index
+  end
+
+  def create
+    @tournament.pair_new_round!
+
+    redirect_to tournament_rounds_path(@tournament)
+  end
+
+  private
+
+  def set_tournament
+    @tournament = Tournament.find(params[:tournament_id])
   end
 end

@@ -1,0 +1,27 @@
+doctype html
+html
+  head
+    title Cobra
+    = csrf_meta_tags
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+
+  body
+    #layout.pure-g
+      #nav.pure-u
+        = link_to 'Menu', '#', class: 'nav-menu-button'
+        .nav-inner
+          h1= link_to 'Cobra', root_path
+          - if @tournament
+            ul.pure-menu-list
+              li.pure-menu-item= link_to 'Tournament', tournament_path(@tournament), class: 'pure-menu-link'
+              li.pure-menu-item= link_to tournament_players_path(@tournament), class: 'pure-menu-link' do
+                ' Players
+                span.count= @tournament.players.count
+              li.pure-menu-item= link_to tournament_rounds_path(@tournament), class: 'pure-menu-link' do
+                ' Rounds
+                span.count= @tournament.rounds.count
+      #main.content.pure-u.pure-g
+        - if @tournament
+          h1= @tournament.name
+        = yield

@@ -2,7 +2,7 @@ RSpec.describe 'creating a player' do
   let(:tournament) { create(:tournament) }
 
   before do
-    visit tournament_path(tournament)
+    visit tournament_players_path(tournament)
     fill_in :player_name, with: 'Jack'
   end
 
@@ -23,9 +23,9 @@ RSpec.describe 'creating a player' do
     end
   end
 
-  it 'redirects to tournament page' do
+  it 'redirects to players page' do
     click_button 'Register Player'
 
-    expect(page.current_path).to eq(tournament_path(tournament))
+    expect(page.current_path).to eq(tournament_players_path(tournament))
   end
 end

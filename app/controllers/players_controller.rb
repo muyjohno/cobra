@@ -1,11 +1,14 @@
 class PlayersController < ApplicationController
-  before_action :set_tournament, only: :create
+  before_action :set_tournament
+
+  def index
+  end
 
   def create
     player = @tournament.players.new(player_params)
 
     player.save
-    redirect_to tournament_path(@tournament)
+    redirect_to tournament_players_path(@tournament)
   end
 
   private

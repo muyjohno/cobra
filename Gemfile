@@ -12,6 +12,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'swissper', '~> 0.2'
 gem 'slim-rails'
 gem 'simple_form'
+gem 'purecss-sass'
 
 group :development, :test do
   gem 'pry'

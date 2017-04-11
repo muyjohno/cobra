@@ -1,4 +1,4 @@
-RSpec.describe 'pairing a tournament' do
+RSpec.describe 'creating a round' do
   let(:tournament) { create(:tournament, status: :waiting, player_count: 4) }
 
   before do
@@ -11,9 +11,9 @@ RSpec.describe 'pairing a tournament' do
     expect(tournament.reload.playing?).to be true
   end
 
-  it 'redirects to tournament page' do
+  it 'redirects to rounds page' do
     click_button 'Pair new round'
 
-    expect(current_path).to eq tournament_path(tournament)
+    expect(current_path).to eq tournament_rounds_path(tournament)
   end
 end

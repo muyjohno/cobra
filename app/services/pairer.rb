@@ -3,6 +3,7 @@ class Pairer
 
   def initialize(round)
     @round = round
+    @table_number = 0
   end
 
   def pair!
@@ -19,6 +20,7 @@ class Pairer
 
   def pairing_params(pairing)
     {
+      table_number: next_table_number,
       player1: player_from_pairing(pairing[0]),
       player2: player_from_pairing(pairing[1])
     }
@@ -26,5 +28,9 @@ class Pairer
 
   def player_from_pairing(player)
     player == Swissper::Bye ? nil : player
+  end
+
+  def next_table_number
+    @table_number += 1
   end
 end

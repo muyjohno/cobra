@@ -1,4 +1,11 @@
-= render @tournament.players
+table.pure-table.pure-table-striped
+  thead
+    tr
+      th Name
+  tbody
+    - @tournament.players.each do |player|
+      tr
+        td= player.name
 
 - if @tournament.registering?
   = simple_form_for :player, url: tournament_players_path(@tournament) do |f|

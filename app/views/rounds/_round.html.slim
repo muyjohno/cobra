@@ -1,1 +1,21 @@
-p= round.number
+.tournament.pure-g
+  .pure-u-1-1
+    h4 Round #{round.number}
+    table.pure-table.pure-table-striped
+      thead
+        tr
+          th Table
+          th Player
+          th
+          th Player
+      tbody
+        - round.pairings.each do |pairing|
+          tr
+            td
+              = pairing.table_number
+            td
+              = render pairing.player1
+            td
+              ' vs
+            td
+              = render pairing.player2

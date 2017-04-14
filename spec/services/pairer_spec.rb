@@ -17,6 +17,14 @@ RSpec.describe Pairer do
 
       expect(round.pairings.count).to eq(2)
     end
+
+    it 'sets table numbers' do
+      pairer.pair!
+
+      round.reload
+
+      expect(round.pairings.map(&:table_number).flatten).to eq([1, 2])
+    end
   end
 
   context 'with three players' do

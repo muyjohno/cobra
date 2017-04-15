@@ -1,6 +1,6 @@
 class Round < ApplicationRecord
   belongs_to :tournament
-  has_many :pairings
+  has_many :pairings, dependent: :destroy
 
   def pair!
     Pairer.new(self).pair!

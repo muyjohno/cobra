@@ -1,5 +1,7 @@
 h2= "Round #{@round.number}"
 p= link_to 'Delete round', tournament_round_path(@round.tournament, @round), method: :delete
+p= link_to 'Re-pair round', repair_tournament_round_path(@round.tournament, @round), method: :patch
+
 = render "rounds/pairings", round: @round
 
 h4 Unpaired players

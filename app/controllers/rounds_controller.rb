@@ -1,6 +1,6 @@
 class RoundsController < ApplicationController
   before_action :set_tournament
-  before_action :set_round, only: [:show, :destroy]
+  before_action :set_round, only: [:show, :destroy, :repair]
 
   def index
   end
@@ -18,6 +18,12 @@ class RoundsController < ApplicationController
     @round.destroy!
 
     redirect_to tournament_rounds_path(@tournament)
+  end
+
+  def repair
+    @round.repair!
+
+    redirect_to tournament_round_path(@tournament, @round)
   end
 
   private

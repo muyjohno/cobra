@@ -1,0 +1,21 @@
+table.pure-table.pure-table-striped
+  thead
+    tr
+      th Table
+      th Player
+      th
+      th Player
+      th
+  tbody
+    - round.pairings.each do |pairing|
+      tr
+        td
+          = pairing.table_number
+        td
+          = render pairing.player1
+        td
+          ' vs
+        td
+          = render pairing.player2
+        td
+          = link_to 'Delete', tournament_round_pairing_path(pairing.tournament, pairing.round, pairing), method: :delete

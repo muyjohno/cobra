@@ -2,6 +2,11 @@ RSpec.describe Pairer do
   let(:pairer) { Pairer.new(round) }
   let(:round) { create(:round, number: 1, tournament: tournament) }
   let(:tournament) { create(:tournament) }
+  let(:nil_player) { double('NilPlayer') }
+
+  before do
+    allow(NilPlayer).to receive(:new).and_return(nil_player)
+  end
 
   context 'with four players' do
     %i(jack jill hansel gretel).each do |name|
@@ -41,7 +46,7 @@ RSpec.describe Pairer do
 
       expect(
         round.pairings.map(&:players).flatten
-      ).to contain_exactly(snap, crackle, pop, nil)
+      ).to contain_exactly(snap, crackle, pop, nil_player)
     end
   end
 end

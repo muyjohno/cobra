@@ -4,6 +4,10 @@ class RoundsController < ApplicationController
   def index
   end
 
+  def show
+    @round = Round.find(params[:id])
+  end
+
   def create
     @tournament.pair_new_round!
 

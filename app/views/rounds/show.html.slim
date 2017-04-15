@@ -1,0 +1,25 @@
+h2= "Round #{@round.number}"
+= render "rounds/pairings", round: @round
+
+h4 Unpaired players
+- if @round.unpaired_players.any?
+  - @round.unpaired_players.each do |player|
+    = render player
+  table.pure-table
+    thead
+      tr
+        th Table
+        th Player
+        th
+        th Player
+        th
+    tbody
+      = simple_form_for @round.pairings.build, url: tournament_round_pairings_path(@round.tournament, @round) do |f|
+        tr
+          td= f.input :table_number, label: false
+          td= pairing_player_select(f, :player1_id, @round)
+          td vs
+          td= pairing_player_select(f, :player2_id, @round)
+          td= f.submit 'Create'
+- else
+  ' None

@@ -9,4 +9,9 @@ class Round < ApplicationRecord
   def unpaired_players
     @unpaired_players ||= tournament.players - pairings.map(&:players).flatten
   end
+
+  def repair!
+    pairings.destroy_all
+    pair!
+  end
 end

@@ -5,8 +5,8 @@ table.pure-table.pure-table-striped
       th
   tbody
     - @tournament.players.each do |player|
-      tr
-        = simple_form_for player, url: tournament_player_path(@tournament, player) do |f|
+      = simple_form_for player, url: tournament_player_path(@tournament, player) do |f|
+        tr
           td= f.text_field :name
           td= f.submit 'Update'
 

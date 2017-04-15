@@ -8,6 +8,6 @@ RSpec.describe 'listing players' do
   end
 
   it 'lists players' do
-    expect(page).to have_content('Jack Player')
+    expect(first('input[name="player[name]"]').value).to eq('Jack Player')
   end
 end

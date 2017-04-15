@@ -2,10 +2,13 @@ table.pure-table.pure-table-striped
   thead
     tr
       th Name
+      th
   tbody
     - @tournament.players.each do |player|
       tr
-        td= player.name
+        = simple_form_for player, url: tournament_player_path(@tournament, player) do |f|
+          td= f.text_field :name
+          td= f.submit 'Update'
 
 - if @tournament.registering?
   = simple_form_for :player, url: tournament_players_path(@tournament) do |f|

@@ -11,6 +11,12 @@ class PlayersController < ApplicationController
     redirect_to tournament_players_path(@tournament)
   end
 
+  def update
+    Player.find(params[:id]).update(player_params)
+
+    redirect_to tournament_players_path(@tournament)
+  end
+
   private
 
   def set_tournament

@@ -1,14 +1,8 @@
 RSpec.describe 'creating a round' do
-  let(:tournament) { create(:tournament, status: :waiting, player_count: 4) }
+  let(:tournament) { create(:tournament, player_count: 4) }
 
   before do
-    visit tournament_path(tournament)
-  end
-
-  it 'changes the tournament state to playing' do
-    click_button 'Pair new round'
-
-    expect(tournament.reload.playing?).to be true
+    visit tournament_rounds_path(tournament)
   end
 
   it 'redirects to rounds page' do

@@ -1,21 +1,7 @@
 RSpec.describe Tournament do
   let(:tournament) { create(:tournament, player_count: 4) }
 
-  describe '#start!' do
-    it 'changes tournament status to waiting' do
-      tournament.start!
-
-      expect(tournament.waiting?).to be true
-    end
-  end
-
   describe '#pair_new_round!' do
-    it 'changes tournament status to playing' do
-      tournament.pair_new_round!
-
-      expect(tournament.playing?).to be true
-    end
-
     it 'creates new round with pairings' do
       expect do
         round = tournament.pair_new_round!

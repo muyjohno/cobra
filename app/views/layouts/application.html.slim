@@ -14,7 +14,6 @@ html
           h1= link_to 'Cobra', root_path
           - if @tournament
             ul.pure-menu-list
-              li.pure-menu-item= link_to 'Tournament', tournament_path(@tournament), class: 'pure-menu-link'
               li.pure-menu-item= link_to tournament_players_path(@tournament), class: 'pure-menu-link' do
                 ' Players
                 span.count= @tournament.players.count

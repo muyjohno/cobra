@@ -5,9 +5,9 @@ RSpec.describe 'updating players' do
     tournament.players << create(:player, name: 'Jack Player')
 
     visit tournament_players_path(tournament)
-    within(find('table tbody').first('tr')) do
+    within(first('form')) do
       fill_in 'player[name]', with: 'Jill Player'
-      click_button 'Update'
+      click_button 'Save'
     end
   end
 

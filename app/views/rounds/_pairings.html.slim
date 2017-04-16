@@ -18,4 +18,6 @@ table.pure-table.pure-table-striped
         td
           = render pairing.player2
         td
-          = link_to 'Delete', tournament_round_pairing_path(pairing.tournament, pairing.round, pairing), method: :delete
+          = link_to tournament_round_pairing_path(pairing.tournament, pairing.round, pairing), method: :delete, class: 'pure-button button-error' do
+            => fa_icon 'trash'
+            | Delete

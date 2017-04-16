@@ -1,17 +1,18 @@
-table.pure-table.pure-table-striped
-  thead
-    tr
-      th Name
-      th
-  tbody
-    - @tournament.players.each do |player|
-      = simple_form_for player, url: tournament_player_path(@tournament, player) do |f|
-        tr
-          td= f.text_field :name
-          td
-            = f.submit 'Update'
-            = link_to 'Delete', tournament_player_path(@tournament, player), method: :delete
+- @tournament.players.each do |player|
+  = simple_form_for player, url: tournament_player_path(@tournament, player), html: { class: 'pure-form' } do |f|
+    fieldset
+      = f.text_field :name
+      =< button_tag type: :submit, class: 'pure-button pure-button-primary' do
+        => fa_icon 'floppy-o'
+        | Save
+      =< link_to tournament_player_path(@tournament, player), method: :delete, class: 'pure-button button-error' do
+        => fa_icon 'trash'
+        | Delete
 
-= simple_form_for :player, url: tournament_players_path(@tournament) do |f|
-  = f.input :name
-  = f.submit 'Register Player'
+= simple_form_for :player, url: tournament_players_path(@tournament), html: { class: 'pure-form' } do |f|
+  fieldset
+    legend Create player
+    = f.text_field :name, placeholder: 'Name'
+    =< button_tag type: :submit, class: 'pure-button button-success' do
+      => fa_icon 'plus'
+      | Create

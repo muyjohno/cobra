@@ -1,28 +1,27 @@
 h2= "Round #{@round.number}"
-p= link_to 'Delete round', tournament_round_path(@round.tournament, @round), method: :delete
-p= link_to 'Re-pair round', repair_tournament_round_path(@round.tournament, @round), method: :patch
+p
+  => link_to repair_tournament_round_path(@round.tournament, @round), method: :patch, class: 'pure-button button-warning' do
+    => fa_icon 'refresh'
+    | Re-pair
+  = link_to tournament_round_path(@round.tournament, @round), method: :delete, class: 'pure-button button-error' do
+    => fa_icon 'trash'
+    | Delete round
 
 = render "rounds/pairings", round: @round
 
-h4 Unpaired players
+h3 Unpaired players
 - if @round.unpaired_players.any?
   - @round.unpaired_players.each do |player|
     = render player
-  table.pure-table
-    thead
-      tr
-        th Table
-        th Player
-        th
-        th Player
-        th
-    = simple_form_for @round.pairings.build, url: tournament_round_pairings_path(@round.tournament, @round) do |f|
-      tbody
-        tr
-          td= f.input :table_number, label: false
-          td= pairing_player_select(f, :player1_id, @round)
-          td vs
-          td= pairing_player_select(f, :player2_id, @round)
-          td= f.submit 'Create'
+  = simple_form_for @round.pairings.build, url: tournament_round_pairings_path(@round.tournament, @round), html: { class: 'pure-form' } do |f|
+    fieldset
+      h3 Create pairing
+      = f.text_field :table_number, placeholder: 'Table number'
+      =<> pairing_player_select(f, :player1_id, @round)
+      | vs
+      =< pairing_player_select(f, :player2_id, @round)
+      =< button_tag type: :submit, class: 'pure-button button-success' do
+        => fa_icon 'plus'
+        | Create
 - else
   ' None

@@ -3,6 +3,7 @@ module PairingsHelper
     form.input label,
       collection: round.unpaired_players,
       include_blank: '(Bye)',
-      label: false
+      label: false,
+      wrapper: false
   end
 end

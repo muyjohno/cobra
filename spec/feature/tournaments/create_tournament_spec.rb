@@ -16,16 +16,13 @@ RSpec.describe 'creating a tournament' do
 
     subject = Tournament.last
 
-    aggregate_failures do
-      expect(subject.name).to eq('Test Tournament')
-      expect(subject).to be_registering
-    end
+    expect(subject.name).to eq('Test Tournament')
   end
 
   it 'redirects to tournament page' do
     click_button 'Create Tournament'
 
-    expect(page.current_path).to eq(tournament_path(Tournament.last))
+    expect(page.current_path).to eq(tournament_players_path(Tournament.last))
     expect(page).to have_content('Test Tournament')
   end
 end

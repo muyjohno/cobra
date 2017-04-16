@@ -12,7 +12,6 @@ table.pure-table.pure-table-striped
             = f.submit 'Update'
             = link_to 'Delete', tournament_player_path(@tournament, player), method: :delete
 
-- if @tournament.registering?
-  = simple_form_for :player, url: tournament_players_path(@tournament) do |f|
-    = f.input :name
-    = f.submit 'Register Player'
+= simple_form_for :player, url: tournament_players_path(@tournament) do |f|
+  = f.input :name
+  = f.submit 'Register Player'

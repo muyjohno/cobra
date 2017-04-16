@@ -16,16 +16,10 @@ class TournamentsController < ApplicationController
     @new_tournament = Tournament.new(tournament_params)
 
     if @new_tournament.save
-      redirect_to tournament_path(@new_tournament)
+      redirect_to tournament_players_path(@new_tournament)
     else
       render :new
     end
-  end
-
-  def start
-    @tournament.start!
-
-    redirect_to tournament_path(@tournament)
   end
 
   private

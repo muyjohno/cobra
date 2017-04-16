@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   root 'tournaments#index'
-  resources :tournaments, except: [:edit, :update, :destroy] do
-    resources :players, only: [:create, :index, :update]
-    resources :rounds, only: [:create, :index, :show, :destroy] do
+  resources :tournaments, only: [:index, :show, :new, :create] do
+    resources :players, only: [:index, :create, :update, :destroy]
+    resources :rounds, only: [:index, :show, :create, :destroy] do
       resources :pairings, only: [:create, :destroy]
       patch :repair, on: :member
     end

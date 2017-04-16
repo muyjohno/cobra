@@ -1,18 +1,24 @@
 class PlayersController < ApplicationController
   before_action :set_tournament
+  before_action :set_player, only: [:update, :destroy]
 
   def index
   end
 
   def create
-    player = @tournament.players.new(player_params)
+    @tournament.players.create(player_params)
 
-    player.save
     redirect_to tournament_players_path(@tournament)
   end
 
   def update
-    Player.find(params[:id]).update(player_params)
+    @player.update(player_params)
+
+    redirect_to tournament_players_path(@tournament)
+  end
+
+  def destroy
+    @player.destroy
 
     redirect_to tournament_players_path(@tournament)
   end
@@ -25,5 +31,9 @@ class PlayersController < ApplicationController
 
   def player_params
     params.require(:player).permit(:name)
+  end
+
+  def set_player
+    @player = Player.find(params[:id])
   end
 end

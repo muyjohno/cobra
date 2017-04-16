@@ -16,8 +16,8 @@ h4 Unpaired players
         th
         th Player
         th
-    tbody
-      = simple_form_for @round.pairings.build, url: tournament_round_pairings_path(@round.tournament, @round) do |f|
+    = simple_form_for @round.pairings.build, url: tournament_round_pairings_path(@round.tournament, @round) do |f|
+      tbody
         tr
           td= f.input :table_number, label: false
           td= pairing_player_select(f, :player1_id, @round)

@@ -56,8 +56,8 @@ RSpec.describe Pairer do
         expect(
           [pairing.score1, pairing.score2]
         ).to match_array(
-          [0,6]
-        ) if pairing.players.include? nil_player
+          (pairing.players.include? nil_player) ? [0,6] : [nil, nil]
+        )
       end
     end
   end

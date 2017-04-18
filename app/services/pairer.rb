@@ -22,7 +22,9 @@ class Pairer
     {
       table_number: next_table_number,
       player1: player_from_pairing(pairing[0]),
-      player2: player_from_pairing(pairing[1])
+      player2: player_from_pairing(pairing[1]),
+      score1: auto_score(pairing, 0),
+      score2: auto_score(pairing, 1)
     }
   end
 
@@ -32,5 +34,11 @@ class Pairer
 
   def next_table_number
     @table_number += 1
+  end
+
+  def auto_score(pairing, player_index)
+    return unless pairing[0] == Swissper::Bye || pairing[1] == Swissper::Bye
+
+    pairing[player_index] == Swissper::Bye ? 0 : 6
   end
 end

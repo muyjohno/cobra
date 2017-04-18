@@ -1,5 +1,8 @@
 h2= "Round #{@round.number}"
 p
+  => link_to tournament_rounds_path(@round.tournament), class: 'pure-button pure-button-primary' do
+    => fa_icon 'arrow-left'
+    | Back to rounds
   => link_to repair_tournament_round_path(@round.tournament, @round), method: :patch, class: 'pure-button button-warning' do
     => fa_icon 'refresh'
     | Re-pair

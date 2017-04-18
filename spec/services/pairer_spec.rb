@@ -48,5 +48,17 @@ RSpec.describe Pairer do
         round.pairings.map(&:players).flatten
       ).to contain_exactly(snap, crackle, pop, nil_player)
     end
+
+    it 'gives win against bye' do
+      pairer.pair!
+
+      round.reload.pairings.each do |pairing|
+        expect(
+          [pairing.score1, pairing.score2]
+        ).to match_array(
+          (pairing.players.include? nil_player) ? [0,6] : [nil, nil]
+        )
+      end
+    end
   end
 end

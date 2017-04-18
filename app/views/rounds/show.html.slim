@@ -7,7 +7,7 @@ p
     => fa_icon 'trash'
     | Delete round
 
-= render "rounds/pairings", round: @round
+= render "rounds/edit_pairings", round: @round
 
 h3 Unpaired players
 - if @round.unpaired_players.any?

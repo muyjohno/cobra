@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170416075129) do
+ActiveRecord::Schema.define(version: 20170416173315) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,9 @@ ActiveRecord::Schema.define(version: 20170416075129) do
     t.integer "player1_id"
     t.integer "player2_id"
     t.integer "table_number"
+    t.integer "score1"
+    t.integer "score2"
+    t.boolean "reported",     default: false
     t.index ["player1_id"], name: "index_pairings_on_player1_id", using: :btree
     t.index ["player2_id"], name: "index_pairings_on_player2_id", using: :btree
     t.index ["round_id"], name: "index_pairings_on_round_id", using: :btree

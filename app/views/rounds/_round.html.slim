@@ -3,5 +3,5 @@
     h3 Round #{round.number}
     p= link_to tournament_round_path(round.tournament, round), class: 'pure-button pure-button-primary' do
       => fa_icon 'pencil'
-      | Edit
+      | Edit pairings
     = render "rounds/pairings", round: round

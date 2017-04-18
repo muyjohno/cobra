@@ -5,8 +5,14 @@ class PairingsController < ApplicationController
     redirect_to tournament_round_path(tournament, round)
   end
 
+  def report
+    pairing.update(score_params)
+
+    redirect_to tournament_rounds_path(tournament)
+  end
+
   def destroy
-    @pairing = Pairing.find(params[:id]).destroy
+    pairing.destroy
 
     redirect_to tournament_round_path(tournament, round)
   end
@@ -21,7 +27,15 @@ class PairingsController < ApplicationController
     @round ||= Round.find(params[:round_id])
   end
 
+  def pairing
+    @pairing ||= Pairing.find(params[:id])
+  end
+
   def pairing_params
     params.require(:pairing).permit(:player1_id, :player2_id, :table_number)
+  end
+
+  def score_params
+    params.require(:pairing).permit(:score1, :score2)
   end
 end

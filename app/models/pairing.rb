@@ -19,4 +19,8 @@ class Pairing < ApplicationRecord
   def player2
     super || NilPlayer.new
   end
+
+  def reported?
+    score1.present? || score2.present?
+  end
 end

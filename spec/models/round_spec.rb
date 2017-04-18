@@ -6,6 +6,18 @@ RSpec.describe Round do
     allow(Pairer).to receive(:new).and_return(pairer)
   end
 
+  describe 'ordering' do
+    before do
+      create(:pairing, round: round, table_number: 2)
+      create(:pairing, round: round, table_number: 1)
+      create(:pairing, round: round, table_number: 3)
+    end
+
+    it 'returns pairings by table' do
+      expect(round.pairings.map(&:table_number)).to eq([1,2,3])
+    end
+  end
+
   describe '#pair!' do
     it 'invokes Pairer' do
       round.pair!

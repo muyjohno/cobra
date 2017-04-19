@@ -24,4 +24,17 @@ RSpec.describe Tournament do
       end
     end
   end
+
+  describe '#standings' do
+    let(:standings) { instance_double('Standings') }
+
+    before do
+      allow(Standings).to receive(:new).and_return(standings)
+    end
+
+    it 'returns standings object' do
+      expect(tournament.standings).to eq(standings)
+      expect(Standings).to have_received(:new).with(tournament)
+    end
+  end
 end

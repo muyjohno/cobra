@@ -6,4 +6,12 @@ class NilPlayer
   def name
     '(Bye)'
   end
+
+  def pairings
+    []
+  end
+
+  def id
+    nil
+  end
 end

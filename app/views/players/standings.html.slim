@@ -1,0 +1,14 @@
+h2 Standings
+
+table.pure-table.pure-table-striped
+  thead
+    tr
+      th Name
+      th Points
+      th SOS
+  tbody
+    - @standings.each do |standing|
+      tr
+        td= standing.name
+        td= standing.points
+        td= standing.sos

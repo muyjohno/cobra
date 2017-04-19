@@ -23,4 +23,16 @@ class Pairing < ApplicationRecord
   def reported?
     score1.present? || score2.present?
   end
+
+  def score_for(player)
+    return unless players.include? player
+
+    player1 == player ? score1 : score2
+  end
+
+  def opponent_for(player)
+    return unless players.include? player
+
+    player1 == player ? player2 : player1
+  end
 end

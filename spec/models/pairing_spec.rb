@@ -51,4 +51,48 @@ RSpec.describe Pairing do
       end
     end
   end
+
+  describe '#score_for' do
+    before do
+      pairing.update(score1: 4, score2: 1)
+    end
+
+    context 'player1' do
+      it 'returns correct score' do
+        expect(pairing.score_for(jack)).to eq(4)
+      end
+    end
+
+    context 'player2' do
+      it 'returns correct score' do
+        expect(pairing.score_for(jill)).to eq(1)
+      end
+    end
+
+    context 'unrelated player' do
+      it 'returns nil' do
+        expect(pairing.score_for(create(:player))).to eq(nil)
+      end
+    end
+  end
+
+  describe '#opponent_for' do
+    context 'player1' do
+      it 'returns player 2' do
+        expect(pairing.opponent_for(jack)).to eq(jill)
+      end
+    end
+
+    context 'player2' do
+      it 'returns player 1' do
+        expect(pairing.opponent_for(jill)).to eq(jack)
+      end
+    end
+
+    context 'unrelated player' do
+      it 'returns nil' do
+        expect(pairing.opponent_for(create(:player))).to eq(nil)
+      end
+    end
+  end
 end

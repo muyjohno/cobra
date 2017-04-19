@@ -8,4 +8,8 @@ class Tournament < ApplicationRecord
       round.pair!
     end
   end
+
+  def standings
+    Standings.new(self)
+  end
 end

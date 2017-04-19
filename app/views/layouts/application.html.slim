@@ -20,6 +20,7 @@ html
               li.pure-menu-item= link_to tournament_rounds_path(@tournament), class: 'pure-menu-link' do
                 ' Rounds
                 span.count= @tournament.rounds.count
+              li.pure-menu-item= link_to 'Standings', standings_tournament_players_path(@tournament), class: 'pure-menu-link'
       #main.content.pure-u.pure-g
         - if @tournament
           h1= @tournament.name

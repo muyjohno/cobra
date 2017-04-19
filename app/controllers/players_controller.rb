@@ -23,6 +23,10 @@ class PlayersController < ApplicationController
     redirect_to tournament_players_path(@tournament)
   end
 
+  def standings
+    @standings = @tournament.standings
+  end
+
   private
 
   def set_tournament

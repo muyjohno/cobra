@@ -4,6 +4,8 @@ RSpec.describe 'creating a player' do
   before do
     visit tournament_players_path(tournament)
     fill_in :player_name, with: 'Jack'
+    fill_in :player_corp_identity, with: 'Haas-Bioroid: Engineering the Future'
+    fill_in :player_runner_identity, with: 'Noise'
   end
 
   it 'creates player' do
@@ -19,6 +21,8 @@ RSpec.describe 'creating a player' do
 
     aggregate_failures do
       expect(subject.name).to eq('Jack')
+      expect(subject.corp_identity).to eq('Haas-Bioroid: Engineering the Future')
+      expect(subject.runner_identity).to eq('Noise')
       expect(subject.tournament).to eq(tournament)
     end
   end

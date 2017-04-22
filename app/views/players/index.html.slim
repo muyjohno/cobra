@@ -1,8 +1,13 @@
+p
+  => pluralize(@players.count, 'active player')
+  = "(#{@dropped.count} dropped)"
 - @players.each do |player|
   = simple_form_for player, url: tournament_player_path(@tournament, player), html: { class: 'pure-form' } do |f|
     fieldset
-      = f.text_field :name
-      =< button_tag type: :submit, class: 'pure-button pure-button-primary' do
+      => f.text_field :name
+      => f.text_field :corp_identity, placeholder: 'Corporation'
+      => f.text_field :runner_identity, placeholder: 'Runner'
+      = button_tag type: :submit, class: 'pure-button pure-button-primary' do
         => fa_icon 'floppy-o'
         | Save
       =< link_to drop_tournament_player_path(@tournament, player), method: :patch, class: 'pure-button button-warning' do
@@ -15,8 +20,10 @@
 = simple_form_for :player, url: tournament_players_path(@tournament), html: { class: 'pure-form' } do |f|
   fieldset
     legend Create player
-    = f.text_field :name, placeholder: 'Name'
-    =< button_tag type: :submit, class: 'pure-button button-success' do
+    => f.text_field :name, placeholder: 'Name'
+    => f.text_field :corp_identity, placeholder: 'Corporation'
+    => f.text_field :runner_identity, placeholder: 'Runner'
+    = button_tag type: :submit, class: 'pure-button button-success' do
       => fa_icon 'plus'
       | Create
 

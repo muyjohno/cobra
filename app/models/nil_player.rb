@@ -14,4 +14,8 @@ class NilPlayer
   def id
     nil
   end
+
+  def active?
+    true
+  end
 end

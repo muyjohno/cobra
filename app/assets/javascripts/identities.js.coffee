@@ -79,7 +79,10 @@ $ ->
         'Hayley Kaplan: Universal Scholar',
         'Jesminder Sareen: Girl Behind the Curtain',
         'Ele "Smoke" Scovak: Cynosure of the Net',
-        'Ayla "Bios" Rahim: Simulant Specialist'
+        'Ayla "Bios" Rahim: Simulant Specialist',
+        'Apex: Invasive Predator',
+        'Adam: Compulsive Hacker',
+        'Sunny Lebeau: Security Specialist'
       ],
       sort: ->
         false

@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   resources :tournaments, only: [:index, :new, :create] do
     resources :players, only: [:index, :create, :update, :destroy] do
       get :standings, on: :collection
+      patch :drop, on: :member
+      patch :reinstate, on: :member
     end
     resources :rounds, only: [:index, :show, :create, :destroy] do
       resources :pairings, only: [:create, :destroy] do

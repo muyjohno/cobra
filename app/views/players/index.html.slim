@@ -1,10 +1,13 @@
-- @tournament.players.each do |player|
+- @players.each do |player|
   = simple_form_for player, url: tournament_player_path(@tournament, player), html: { class: 'pure-form' } do |f|
     fieldset
       = f.text_field :name
       =< button_tag type: :submit, class: 'pure-button pure-button-primary' do
         => fa_icon 'floppy-o'
         | Save
+      =< link_to drop_tournament_player_path(@tournament, player), method: :patch, class: 'pure-button button-warning' do
+        => fa_icon 'arrow-down'
+        | Drop
       =< link_to tournament_player_path(@tournament, player), method: :delete, class: 'pure-button button-error' do
         => fa_icon 'trash'
         | Delete
@@ -16,3 +19,12 @@
     =< button_tag type: :submit, class: 'pure-button button-success' do
       => fa_icon 'plus'
       | Create
+
+- if @dropped.any?
+  h3 Dropped
+  - @dropped.each do |player|
+    p
+      = player.name
+      =< link_to reinstate_tournament_player_path(@tournament, player), method: :patch, class: 'pure-button button-warning' do
+        => fa_icon 'arrow-up'
+        | Reinstate

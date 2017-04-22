@@ -1,8 +1,10 @@
 class PlayersController < ApplicationController
   before_action :set_tournament
-  before_action :set_player, only: [:update, :destroy]
+  before_action :set_player, only: [:update, :destroy, :drop, :reinstate]
 
   def index
+    @players = @tournament.players.active
+    @dropped = @tournament.players.dropped
   end
 
   def create
@@ -25,6 +27,18 @@ class PlayersController < ApplicationController
 
   def standings
     @standings = @tournament.standings
+  end
+
+  def drop
+    @player.update(active: false)
+
+    redirect_to tournament_players_path(@tournament)
+  end
+
+  def reinstate
+    @player.update(active: true)
+
+    redirect_to tournament_players_path(@tournament)
   end
 
   private

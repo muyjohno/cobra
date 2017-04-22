@@ -3,14 +3,16 @@ h2 Standings
 table.pure-table.pure-table-striped
   thead
     tr
+      th Rank
       th Name
       th Points
       th SOS
       th Extended SOS
   tbody
-    - @standings.each do |standing|
+    - @standings.each_with_index do |standing, i|
       tr
+        td= i+1
         td= standing.name
         td= standing.points
-        td= standing.sos
-        td= standing.extended_sos
+        td= number_with_precision standing.sos, precision: 4
+        td= number_with_precision standing.extended_sos, precision: 4

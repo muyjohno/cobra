@@ -6,9 +6,11 @@ table.pure-table.pure-table-striped
       th Name
       th Points
       th SOS
+      th Extended SOS
   tbody
     - @standings.each do |standing|
       tr
         td= standing.name
         td= standing.points
         td= standing.sos
+        td= standing.extended_sos

@@ -13,20 +13,26 @@ RSpec.describe Standing do
     end
   end
 
-  describe '#sos' do
+  describe 'sos' do
     before do
       other = create(:player)
       # player played two games, including against opponent 'other'
-      create(:pairing, player1: player, player2: other, score2: 2)
-      create(:pairing, player1: player, score2: 3)
+      create(:pairing, player1: player, player2: other, score1: 3, score2: 2)
+      create(:pairing, player1: player, score1: 1, score2: 3)
       # other played one other eligible game
-      create(:pairing, player2: other, score2: 5)
-      # and a bye, which is not eligible
-      create(:pairing, player1: other, player2: nil, score1: 6)
+      create(:pairing, player2: other, score1: 0, score2: 5)
     end
 
-    it 'calculates from other opponents points' do
-      expect(standing.sos).to eq(10)
+    describe '#sos' do
+      it 'calculates sos' do
+        expect(standing.sos).to eq(3.25)
+      end
+    end
+
+    describe '#extended_sos' do
+      it 'calculates extended sos' do
+        expect(standing.extended_sos).to eq(1.5)
+      end
     end
   end
 
@@ -43,7 +49,8 @@ RSpec.describe Standing do
       )
       create(:pairing,
         player1: tied_standing.player,
-        score1: 4
+        score1: 4,
+        score2: 0
       )
     end
 
@@ -53,6 +60,15 @@ RSpec.describe Standing do
 
     it 'sorts correctly by sos' do
       expect([tied_standing, standing].sort).to eq([standing, tied_standing])
+    end
+
+    it 'sorts correctly by extended sos' do
+      s1 = Standing.new(create(:player))
+      s2 = Standing.new(create(:player))
+      allow(s1.calculator).to receive(:extended_sos).and_return(0.1)
+      allow(s2.calculator).to receive(:extended_sos).and_return(0.2)
+
+      expect([s1, s2].sort).to eq([s2, s1])
     end
   end
 end

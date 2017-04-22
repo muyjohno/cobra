@@ -5,6 +5,9 @@ class Player < ApplicationRecord
 
   before_destroy :destroy_pairings
 
+  scope :active, -> { where(active: true) }
+  scope :dropped, -> { where(active: false) }
+
   def pairings
     Pairing.for_player(self)
   end

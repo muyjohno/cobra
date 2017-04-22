@@ -19,7 +19,7 @@ class Pairer
   private
 
   def players
-    round.tournament.players
+    round.tournament.players.active
   end
 
   def pairing_params(pairing)

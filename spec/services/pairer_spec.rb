@@ -109,5 +109,21 @@ RSpec.describe Pairer do
         end
       end
     end
+
+    context 'with drop' do
+      before do
+        pop.update active: false
+      end
+
+      it 'excludes dropped players' do
+        pairer.pair!
+
+        round.reload
+
+        expect(
+          round.pairings.map(&:players).flatten
+        ).to contain_exactly(snap, crackle)
+      end
+    end
   end
 end

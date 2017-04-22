@@ -9,6 +9,17 @@ RSpec.describe Player do
     end
   end
 
+  describe '#non_bye_pairings' do
+    let(:player) { create(:player) }
+    let!(:pairing1) { create(:pairing, player1: player) }
+    let!(:pairing2) { create(:pairing, player2: player) }
+    let!(:bye_pairing) { create(:pairing, player1: player, player2: nil) }
+
+    it 'only returns non-byes' do
+      expect(player.non_bye_pairings).to eq([pairing1, pairing2])
+    end
+  end
+
   describe 'dependent pairings' do
     let!(:pairing) { create(:pairing) }
 
@@ -40,6 +51,12 @@ RSpec.describe Player do
     describe '#non_bye_opponents' do
       it 'returns all opponents' do
         expect(player.non_bye_opponents).to eq([pairing1.player2, pairing2.player2])
+      end
+    end
+
+    describe '#points' do
+      it 'returns points earned against all opponents' do
+        expect(player.points).to eq(15)
       end
     end
 

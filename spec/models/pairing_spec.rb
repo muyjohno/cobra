@@ -32,6 +32,8 @@ RSpec.describe Pairing do
   end
 
   describe '#reported?' do
+    let(:pairing) { create(:pairing, score1: nil, score2: nil) }
+
     context 'no score reported' do
       it 'returns false' do
         expect(pairing.reported?).to eq(false)

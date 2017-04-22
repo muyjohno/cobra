@@ -1,4 +1,6 @@
 class Player < ApplicationRecord
+  include Pairable
+
   belongs_to :tournament
 
   before_destroy :destroy_pairings
@@ -7,18 +9,24 @@ class Player < ApplicationRecord
     Pairing.for_player(self)
   end
 
+  def non_bye_pairings
+    pairings.non_bye
+  end
+
   def opponents
     pairings.map { |p| p.opponent_for(self) }
   end
 
   def non_bye_opponents
-    opponents.select { |o| o.id }
+    non_bye_pairings.map { |p| p.opponent_for(self) }
+  end
+
+  def points
+    @points ||= pairings.reported.sum{ |pairing| pairing.score_for(self) }
   end
 
   def sos_earned
-    pairings.select do |p|
-      p.opponent_for(self).id
-    end.sum { |p| p.score_for(self) }
+    @sos_earned ||= non_bye_pairings.reported.sum { |pairing| pairing.score_for(self) }
   end
 
   private

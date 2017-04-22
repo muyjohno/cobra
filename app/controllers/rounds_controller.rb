@@ -3,6 +3,8 @@ class RoundsController < ApplicationController
   before_action :set_round, only: [:show, :destroy, :repair]
 
   def index
+    @current_round = @tournament.rounds.last
+    @other_rounds = @tournament.rounds - [@current_round]
   end
 
   def show

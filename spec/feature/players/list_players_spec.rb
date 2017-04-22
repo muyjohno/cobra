@@ -3,8 +3,14 @@ RSpec.describe 'listing players' do
 
   before do
     tournament.players << create(:player, name: 'Jack Player')
+    tournament.players << create(:player)
+    tournament.players << create(:player, active: false)
 
     visit tournament_players_path(tournament)
+  end
+
+  it 'displays count' do
+    expect(page.body).to include('2 active players (1 dropped)')
   end
 
   it 'lists players' do

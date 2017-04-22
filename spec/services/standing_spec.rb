@@ -5,10 +5,10 @@ RSpec.describe Standing do
   describe '#points' do
     before do
       create(:pairing, player1: player, score1: 5)
-      create(:pairing, player1: player, score1: 2)
+      create(:pairing, player1: player, score1: 2, player2: nil)
     end
 
-    it 'returns total of all points from pairings' do
+    it 'returns total of all points from pairings including byes' do
       expect(standing.points).to eq(7)
     end
   end

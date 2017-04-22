@@ -7,7 +7,11 @@ class Pairer
   end
 
   def pair!
-    Swissper.pair(players.to_a).each do |pairing|
+    Swissper.pair(
+      players.to_a,
+      delta_key: :points,
+      exclude_key: :unpairable_opponents
+    ).each do |pairing|
       round.pairings.create(pairing_params(pairing))
     end
   end

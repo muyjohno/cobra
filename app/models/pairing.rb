@@ -4,6 +4,9 @@ class Pairing < ApplicationRecord
   belongs_to :player2, class_name: 'Player', optional: true
   has_one :tournament, through: :round
 
+  scope :non_bye, -> { where.not(player1_id: nil, player2_id: nil) }
+  scope :reported, -> { where.not(score1: nil, score2: nil) }
+
   def self.for_player(player)
     where(player1: player).or(where(player2: player))
   end

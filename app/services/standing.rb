@@ -1,7 +1,7 @@
 class Standing
   attr_reader :player
 
-  delegate :name, to: :player
+  delegate :name, :points, to: :player
 
   def initialize(player)
     @player = player
@@ -9,10 +9,6 @@ class Standing
 
   def <=>(other)
     [other.points, other.sos] <=> [points, sos]
-  end
-
-  def points
-    @points ||= player.pairings.sum{ |pairing| pairing.score_for(player) }
   end
 
   def sos

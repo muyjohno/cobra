@@ -1,0 +1,37 @@
+RSpec.describe 'destroying tournaments' do
+  let(:tournament) { create(:tournament) }
+  let(:round) { create(:round, tournament: tournament) }
+
+  before do
+    create(:player, tournament: tournament)
+    create(:player, tournament: tournament)
+
+    round.pair!
+
+    visit tournaments_path
+  end
+
+  it 'destroys tournament' do
+    expect do
+      click_link 'Delete'
+    end.to change(Tournament, :count).by(-1)
+  end
+
+  it 'destroys associated players' do
+    expect do
+      click_link 'Delete'
+    end.to change(Player, :count).by(-2)
+  end
+
+  it 'destroys associated rounds' do
+    expect do
+      click_link 'Delete'
+    end.to change(Round, :count).by(-1)
+  end
+
+  it 'destroys associated pairings' do
+    expect do
+      click_link 'Delete'
+    end.to change(Pairing, :count).by(-1)
+  end
+end

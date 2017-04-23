@@ -2,6 +2,9 @@
   fieldset
     .pure-control-group
       = f.input :name, input_html: { class: 'pure-input-1-2' }
+    .pure-control-group
+      = f.input :pairing_sort, collection: Tournament.pairing_sorts.keys.to_a, include_blank: false, label: 'Assign table numbers by:'
+      span.pure-form-message-inline "Ranked" means the best player will be on table 1. "Random" means the tables will be shuffled.
     .pure-controls
       = button_tag type: :submit, class: 'pure-button pure-button-primary' do |f|
         => fa_icon 'floppy-o'

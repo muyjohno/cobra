@@ -2,7 +2,7 @@ class TournamentsController < ApplicationController
   before_action :set_tournament, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tournaments = Tournament.all
+    @tournaments = Tournament.order(created_at: :desc)
   end
 
   def show
@@ -40,6 +40,6 @@ class TournamentsController < ApplicationController
   end
 
   def tournament_params
-    params.require(:tournament).permit(:name)
+    params.require(:tournament).permit(:name, :pairing_sort)
   end
 end

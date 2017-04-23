@@ -37,4 +37,22 @@ RSpec.describe Tournament do
       expect(Standings).to have_received(:new).with(tournament)
     end
   end
+
+  describe '#pairing_sorter' do
+    context 'random' do
+      let(:tournament) { create(:tournament, pairing_sort: :random) }
+
+      it 'returns correct class' do
+        expect(tournament.pairing_sorter).to eq(PairingSorters::Random)
+      end
+    end
+
+    context 'ranked' do
+      let(:tournament) { create(:tournament, pairing_sort: :ranked) }
+
+      it 'returns correct class' do
+        expect(tournament.pairing_sorter).to eq(PairingSorters::Ranked)
+      end
+    end
+  end
 end

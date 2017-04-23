@@ -60,6 +60,21 @@ RSpec.describe Pairer do
           expect(pairing.players).to match_array([jill, hansel]) if pairing.players.include? jill
         end
       end
+
+      context 'ranked table numbers' do
+        let(:tournament) { create(:tournament, pairing_sort: :ranked) }
+
+        it 'numbers tables by ranking' do
+          pairer.pair!
+
+          round.reload
+
+          round.pairings.each do |pairing|
+            expect(pairing.players).to match_array([jack, hansel]) if pairing.table_number == 1
+            expect(pairing.players).to match_array([jill, gretel]) if pairing.table_number == 2
+          end
+        end
+      end
     end
   end
 

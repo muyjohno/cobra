@@ -1,9 +1,9 @@
 class Pairer
   attr_reader :round
+  delegate :tournament, to: :round
 
   def initialize(round)
     @round = round
-    @table_number = 0
   end
 
   def pair!
@@ -14,17 +14,17 @@ class Pairer
     ).each do |pairing|
       round.pairings.create(pairing_params(pairing))
     end
+    apply_numbers!(tournament.pairing_sorter)
   end
 
   private
 
   def players
-    round.tournament.players.active
+    tournament.players.active
   end
 
   def pairing_params(pairing)
     {
-      table_number: next_table_number,
       player1: player_from_pairing(pairing[0]),
       player2: player_from_pairing(pairing[1]),
       score1: auto_score(pairing, 0),
@@ -36,13 +36,15 @@ class Pairer
     player == Swissper::Bye ? nil : player
   end
 
-  def next_table_number
-    @table_number += 1
-  end
-
   def auto_score(pairing, player_index)
     return unless pairing[0] == Swissper::Bye || pairing[1] == Swissper::Bye
 
     pairing[player_index] == Swissper::Bye ? 0 : 6
+  end
+
+  def apply_numbers!(sorter)
+    sorter.sort(round.pairings).each_with_index do |pairing, i|
+      pairing.update(table_number: i + 1)
+    end
   end
 end

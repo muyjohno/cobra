@@ -1,5 +1,5 @@
 class TournamentsController < ApplicationController
-  before_action :set_tournament, only: [:show, :destroy]
+  before_action :set_tournament, only: [:show, :edit, :update, :destroy]
 
   def index
     @tournaments = Tournament.all
@@ -16,6 +16,15 @@ class TournamentsController < ApplicationController
     else
       render :new
     end
+  end
+
+  def edit
+  end
+
+  def update
+    @tournament.update(tournament_params)
+
+    redirect_to edit_tournament_path(@tournament)
   end
 
   def destroy

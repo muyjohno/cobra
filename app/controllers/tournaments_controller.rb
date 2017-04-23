@@ -8,10 +8,6 @@ class TournamentsController < ApplicationController
   def show
   end
 
-  def new
-    @new_tournament = Tournament.new
-  end
-
   def create
     @new_tournament = Tournament.new(tournament_params)
 

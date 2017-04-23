@@ -15,12 +15,17 @@ html
           - if @tournament
             ul.pure-menu-list
               li.pure-menu-item= link_to tournament_players_path(@tournament), class: 'pure-menu-link' do
-                ' Players
-                span.count= @tournament.players.count
+                => fa_icon 'users'
+                | Players
               li.pure-menu-item= link_to tournament_rounds_path(@tournament), class: 'pure-menu-link' do
-                ' Rounds
-                span.count= @tournament.rounds.count
-              li.pure-menu-item= link_to 'Standings', standings_tournament_players_path(@tournament), class: 'pure-menu-link'
+                => fa_icon 'calendar-check-o'
+                | Rounds
+              li.pure-menu-item= link_to standings_tournament_players_path(@tournament), class: 'pure-menu-link' do
+                => fa_icon 'trophy'
+                | Standings
+              li.pure-menu-item= link_to edit_tournament_path(@tournament), class: 'pure-menu-link' do
+                => fa_icon 'cog'
+                | Settings
       #main.content.pure-u.pure-g
         - if @tournament
           h1= @tournament.name

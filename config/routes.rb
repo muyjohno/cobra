@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root 'tournaments#index'
-  resources :tournaments, only: [:index, :create, :destroy] do
+  resources :tournaments, only: [:index, :create, :edit, :update, :destroy] do
     resources :players, only: [:index, :create, :update, :destroy] do
       get :standings, on: :collection
       patch :drop, on: :member

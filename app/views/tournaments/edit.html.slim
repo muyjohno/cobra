@@ -1,0 +1,8 @@
+= simple_form_for @tournament, html: { class: 'pure-form pure-form-aligned' } do |f|
+  fieldset
+    .pure-control-group
+      = f.input :name, input_html: { class: 'pure-input-1-2' }
+    .pure-controls
+      = button_tag type: :submit, class: 'pure-button pure-button-primary' do |f|
+        => fa_icon 'floppy-o'
+        | Save

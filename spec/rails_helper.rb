@@ -6,6 +6,7 @@ require 'rspec/rails'
 
 require 'capybara/rails'
 require 'database_cleaner'
+require 'vcr'
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
@@ -31,4 +32,9 @@ RSpec.configure do |config|
       example.run
     end
   end
+end
+
+VCR.configure do |config|
+  config.cassette_library_dir = 'spec/fixtures/vcr_cassettes'
+  config.hook_into :faraday
 end

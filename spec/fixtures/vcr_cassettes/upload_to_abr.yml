@@ -1,0 +1,46 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:8000/api/nrtm
+    body:
+      encoding: UTF-8
+      string: "-------------RubyMultipartPost\r\nContent-Disposition: form-data; name=\"jsonresults\";
+        filename=\"local.path\"\r\nContent-Length: 221\r\nContent-Type: text/json\r\nContent-Transfer-Encoding:
+        binary\r\n\r\n{\"name\":\"Tournament Name\",\"cutToTop\":0,\"players\":[{\"corpIdentity\":null,\"runnerIdentity\":null,\"rank\":1,\"id\":1,\"name\":\"Dr.
+        Brown Price\"},{\"corpIdentity\":null,\"runnerIdentity\":null,\"rank\":2,\"id\":2,\"name\":\"Dewitt
+        Ondricka\"}]}\r\n-------------RubyMultipartPost--\r\n\r\n"
+    headers:
+      User-Agent:
+      - Faraday v0.10.0
+      Content-Type:
+      - multipart/form-data; boundary=-----------RubyMultipartPost
+      Content-Length:
+      - '449'
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      host:
+      - localhost:8000
+      connection:
+      - close
+      x-powered-by:
+      - PHP/5.5.38
+      cache-control:
+      - no-cache
+      content-type:
+      - application/json
+      date:
+      - Fri, 05 May 2017 19:51:00 GMT
+      set-cookie:
+      - XSRF-TOKEN=eyJpdiI6InNOcDVnMmJxYmx4VzVGVGdvbU10OXc9PSIsInZhbHVlIjoibEJndDIrT0hpQnc5eGxTZUxFTjB0eEo0MmJaMVBuNkF6dlgzZ1FRcjNLdmFvcVJvS1l3c056OW5tVDUzNXVhNitxQXFhclpFdEZwVUlvOE0zQlpnWVE9PSIsIm1hYyI6ImViNWE0ZDZjODFlOTU3MmM4Yzc3NzQ3NWZjMmQ0YTBlNDRkOTAyYjNkMDZlMTIwNWU1MTI3NmViM2M2NzZiNWYifQ%3D%3D;
+        expires=Fri, 05-May-2017 21:51:00 GMT; Max-Age=7200; path=/, laravel_session=eyJpdiI6InE0eHp1NXB3ZkNxa2NEd1g5T0l6YWc9PSIsInZhbHVlIjoibk1qUjNQMnNGeWV4VmtueXlock9UZXlGVTNIbExTbW45YjkrdFJIZWVIXC9sQklQYXFWRVJyUzdLWms3ZmlWXC9WR3UwOWNGeEZTN1pnOEVTYUpENk5RUT09IiwibWFjIjoiNDdmNWEyN2I0NWIwZWNiYTAzOWI4YjExMzJmNThlNmY5MmI2ZGY5OWMxYzYxMDE4MWQzZTdmOWIyMDFmZjAxNyJ9;
+        expires=Fri, 05-May-2017 21:51:00 GMT; Max-Age=7200; path=/; httponly
+    body:
+      encoding: UTF-8
+      string: '{"code":301063}'
+    http_version: 
+  recorded_at: Fri, 05 May 2017 19:51:00 GMT
+recorded_with: VCR 2.9.3

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170423155133) do
+ActiveRecord::Schema.define(version: 20170505202505) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 20170423155133) do
     t.string   "name"
     t.datetime "created_at"
     t.integer  "pairing_sort", default: 0
+    t.string   "abr_code"
   end
 
   add_foreign_key "pairings", "players", column: "player1_id"

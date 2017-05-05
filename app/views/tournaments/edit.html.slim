@@ -9,3 +9,11 @@
       = button_tag type: :submit, class: 'pure-button pure-button-primary' do |f|
         => fa_icon 'floppy-o'
         | Save
+
+.pure-u-1
+  p
+    => link_to upload_to_abr_tournament_path(@tournament), class: 'pure-button button-success', method: :post do |f|
+      => fa_icon 'arrow-circle-up'
+      | Upload to Always Be Running
+    - if @tournament.abr_code
+      | Uploaded to ABR with code #{@tournament.abr_code}

@@ -14,6 +14,7 @@ gem 'slim-rails'
 gem 'simple_form'
 gem 'purecss-sass'
 gem 'font-awesome-rails'
+gem 'faraday'
 
 group :development, :test do
   gem 'pry'
@@ -25,6 +26,7 @@ group :test do
   gem 'factory_girl_rails'
   gem 'database_cleaner'
   gem 'faker'
+  gem 'vcr'
 end
 
 group :development do

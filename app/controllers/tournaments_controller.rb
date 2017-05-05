@@ -1,5 +1,5 @@
 class TournamentsController < ApplicationController
-  before_action :set_tournament, only: [:show, :edit, :update, :destroy]
+  before_action :set_tournament, except: [:index, :create]
 
   def index
     @tournaments = Tournament.order(created_at: :desc)
@@ -31,6 +31,16 @@ class TournamentsController < ApplicationController
     @tournament.destroy!
 
     redirect_to tournaments_path
+  end
+
+  def upload_to_abr
+    response = AbrUpload.upload!(@tournament)
+
+    if(response[:code])
+      @tournament.update(abr_code: response[:code])
+    end
+
+    redirect_to edit_tournament_path(@tournament)
   end
 
   private

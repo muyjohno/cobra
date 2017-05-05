@@ -12,5 +12,6 @@ Rails.application.routes.draw do
       end
       patch :repair, on: :member
     end
+    post :upload_to_abr, on: :member
   end
 end

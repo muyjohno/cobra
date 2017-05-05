@@ -1,7 +1,7 @@
 class Standing
   attr_reader :player, :calculator
 
-  delegate :name, :points, to: :player
+  delegate :name, :points, :corp_identity, :runner_identity, to: :player
 
   def initialize(player)
     @player = player

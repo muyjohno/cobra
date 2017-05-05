@@ -1,10 +1,11 @@
 h2 Standings
 
-table.pure-table.pure-table-striped
+table.pure-table.pure-table-striped.standings
   thead
     tr
       th Rank
       th Name
+      th IDs
       th Points
       th SOS
       th Extended SOS
@@ -13,6 +14,9 @@ table.pure-table.pure-table-striped
       tr
         td= i+1
         td= standing.name
+        td.ids
+          p= standing.corp_identity
+          p= standing.runner_identity
         td= standing.points
         td= number_with_precision standing.sos, precision: 4
         td= number_with_precision standing.extended_sos, precision: 4

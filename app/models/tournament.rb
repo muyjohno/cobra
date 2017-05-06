@@ -23,4 +23,16 @@ class Tournament < ApplicationRecord
 
     "PairingSorters::#{pairing_sort.to_s.camelize}".constantize
   end
+
+  def corp_counts
+    players.group_by(&:corp_identity).map do |id, players|
+      [id, players.count]
+    end.sort_by(&:last).reverse
+  end
+
+  def runner_counts
+    players.group_by(&:runner_identity).map do |id, players|
+      [id, players.count]
+    end.sort_by(&:last).reverse
+  end
 end

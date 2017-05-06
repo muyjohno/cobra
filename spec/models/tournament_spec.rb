@@ -61,16 +61,14 @@ RSpec.describe Tournament do
       tournament.players = [
         create(:player, corp_identity: 'Something'),
         create(:player, corp_identity: 'Something'),
-        create(:player, corp_identity: 'Something else'),
-        create(:player, corp_identity: 'Another thing')
+        create(:player, corp_identity: 'Something else')
       ]
     end
 
     it 'returns counts' do
       expect(tournament.corp_counts).to eq([
         ['Something', 2],
-        ['Something else', 1],
-        ['Another thing', 1]
+        ['Something else', 1]
       ])
     end
   end

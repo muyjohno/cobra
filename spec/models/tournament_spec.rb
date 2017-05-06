@@ -55,4 +55,35 @@ RSpec.describe Tournament do
       end
     end
   end
+
+  describe '#corp_counts' do
+    before do
+      tournament.players = [
+        create(:player, corp_identity: 'Something'),
+        create(:player, corp_identity: 'Something'),
+        create(:player, corp_identity: 'Something else')
+      ]
+    end
+
+    it 'returns counts' do
+      expect(tournament.corp_counts).to eq([
+        ['Something', 2],
+        ['Something else', 1]
+      ])
+    end
+  end
+
+  describe '#runner_counts' do
+    before do
+      tournament.players = [
+        create(:player, runner_identity: 'Some runner')
+      ]
+    end
+
+    it 'returns counts' do
+      expect(tournament.runner_counts).to eq([
+        ['Some runner', 1]
+      ])
+    end
+  end
 end

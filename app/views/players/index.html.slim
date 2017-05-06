@@ -35,3 +35,27 @@ p
       =< link_to reinstate_tournament_player_path(@tournament, player), method: :patch, class: 'pure-button button-warning' do
         => fa_icon 'arrow-up'
         | Reinstate
+
+h3 ID Breakdown
+.pure-u-1-2
+  table.pure-table.pure-table-striped
+    thead
+      tr
+        th Corp
+        th Players
+    tbody
+      - @tournament.corp_counts.each do |id, count|
+        tr
+          td= id
+          td= count
+.pure-u-1-2
+  table.pure-table.pure-table-striped
+    thead
+      tr
+        th Runner
+        th Players
+    tbody
+      - @tournament.runner_counts.each do |id, count|
+        tr
+          td= id
+          td= count

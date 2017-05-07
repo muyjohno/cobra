@@ -22,4 +22,12 @@ RSpec.describe PairingSorters::Ranked do
   it 'sorts pairings by highest-scoring participant' do
     expect(described_class.sort(pairings)).to eq([pairing2, pairing3, pairing1])
   end
+
+  context 'odd number of players' do
+    let(:pairing3) { create(:pairing, player1: player5, player2: nil) }
+
+    it 'sorts correctly' do
+      expect(described_class.sort(pairings)).to eq([pairing2, pairing1, pairing3])
+    end
+  end
 end

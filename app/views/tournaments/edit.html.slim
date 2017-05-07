@@ -17,3 +17,7 @@
       | Upload to Always Be Running
     - if @tournament.abr_code
       | Uploaded to ABR with code #{@tournament.abr_code}
+  p
+    => link_to save_json_tournament_path(@tournament), class: 'pure-button button-success', target: '_blank' do |f|
+      => fa_icon 'arrow-circle-down'
+      | Download as JSON

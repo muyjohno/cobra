@@ -14,18 +14,6 @@ class AbrUpload
     new(tournament).upload!
   end
 
-  private
-
-  def send_data
-    Faraday.new do |conn|
-      conn.request :multipart
-      conn.adapter :net_http
-    end.post endpoint do |req|
-      upload = Faraday::UploadIO.new(StringIO.new(data.to_json), 'text/json')
-      req.body = { jsonresults: upload }
-    end.body
-  end
-
   def data
     {
       name: tournament.name,
@@ -40,6 +28,18 @@ class AbrUpload
         }
       end
     }
+  end
+
+  private
+
+  def send_data
+    Faraday.new do |conn|
+      conn.request :multipart
+      conn.adapter :net_http
+    end.post endpoint do |req|
+      upload = Faraday::UploadIO.new(StringIO.new(data.to_json), 'text/json')
+      req.body = { jsonresults: upload }
+    end.body
   end
 
   def endpoint

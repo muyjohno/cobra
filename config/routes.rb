@@ -13,5 +13,6 @@ Rails.application.routes.draw do
       patch :repair, on: :member
     end
     post :upload_to_abr, on: :member
+    get :save_json, on: :member
   end
 end

@@ -43,6 +43,15 @@ class TournamentsController < ApplicationController
     redirect_to edit_tournament_path(@tournament)
   end
 
+  def save_json
+    data = AbrUpload.new(@tournament).data
+
+    send_data data.to_json,
+      type: :json,
+      disposition: :attachment,
+      filename: "#{@tournament.name.underscore}.json"
+  end
+
   private
 
   def set_tournament

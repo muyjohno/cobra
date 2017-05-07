@@ -18,4 +18,8 @@ class NilPlayer
   def active?
     true
   end
+
+  def points
+    0
+  end
 end

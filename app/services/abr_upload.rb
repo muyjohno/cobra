@@ -36,6 +36,7 @@ class AbrUpload
     Faraday.new do |conn|
       conn.request :multipart
       conn.adapter :net_http
+      conn.basic_auth 'cobra', Rails.application.secrets.abr_auth
     end.post endpoint do |req|
       upload = Faraday::UploadIO.new(StringIO.new(data.to_json), 'text/json')
       req.body = { jsonresults: upload }

@@ -8,3 +8,4 @@
 !/tmp/.keep
 
 database.yml
+config/secrets.yml

@@ -1,0 +1,3 @@
+dependencies:
+  post:
+    - mv config/secrets.example.yml config/secrets.yml

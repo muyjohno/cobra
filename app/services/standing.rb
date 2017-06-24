@@ -1,23 +1,17 @@
 class Standing
-  attr_reader :player, :calculator
+  attr_reader :player, :points, :sos, :extended_sos
 
-  delegate :name, :points, :corp_identity, :runner_identity, to: :player
+  delegate :name, :corp_identity, :runner_identity, to: :player
 
-  def initialize(player)
+  def initialize(player, values = {})
     @player = player
-    @calculator = SosCalculator.new(player)
+    @points = values.fetch(:points, 0) || 0
+    @sos = values.fetch(:sos, 0) || 0
+    @extended_sos = values.fetch(:extended_sos, 0) || 0
   end
 
   def <=>(other)
     other.tiebreakers <=> tiebreakers
-  end
-
-  def sos
-    @sos ||= calculator.sos
-  end
-
-  def extended_sos
-    @extended_sos ||= calculator.extended_sos
   end
 
   def tiebreakers

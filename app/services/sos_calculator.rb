@@ -1,50 +1,56 @@
 class SosCalculator
-  attr_reader :player
+  def self.calculate!(tournament)
+    players = Hash[tournament.players.map{ |p| [p.id, p] }]
 
-  def self.sos(player)
-    new(player).sos
-  end
+    # calculate points and cache values for sos calculations
+    points = {}
+    games_played = {}
+    opponents = {}
+    points_for_sos = {}
+    tournament.players.map(&:pairings).flatten.uniq.each do |p|
+      points[p.player1_id] ||= 0
+      points[p.player1_id] += p.score1
+      points[p.player2_id] ||= 0
+      points[p.player2_id] += p.score2
+      games_played[p.player1_id] ||= 0
+      games_played[p.player1_id] += 1
+      games_played[p.player2_id] ||= 0
+      games_played[p.player2_id] += 1
+      opponents[p.player1_id] ||= []
+      opponents[p.player1_id] << p.player2_id
+      opponents[p.player2_id] ||= []
+      opponents[p.player2_id] << p.player1_id
+      points_for_sos[p.player1_id] ||= 0
+      points_for_sos[p.player1_id] += p.score1 if p.player2_id
+      points_for_sos[p.player2_id] ||= 0
+      points_for_sos[p.player2_id] += p.score2 if p.player1_id
+    end
 
-  def self.extended_sos(player)
-    new(player).extended_sos
-  end
+    # filter out byes from sos calculations
+    opponents.each do |k, i|
+      opponents[k] = i.compact
+    end
 
-  def initialize(player)
-    @player = player
-  end
+    sos = {}
+    opponents.each do |id, o|
+      sos[id] = o.sum do |player|
+        points_for_sos[player].to_f / opponents[player].count
+      end.to_f / opponents[id].count
+    end
 
-  def sos
-    return 0 unless opponents.any?
+    extended_sos = {}
+    opponents.each do |id, o|
+      extended_sos[id] = o.sum do |player|
+        sos[player]
+      end.to_f / opponents[id].count
+    end
 
-    opponents.sum do |opponent|
-      sos_earned_from(opponent)
-    end.to_f / opponents.count
-  end
-
-  def extended_sos
-    return 0 unless opponents.any?
-
-    opponents.sum do |o|
-      SosCalculator.sos(o)
-    end.to_f / opponents.count
-  end
-
-  private
-
-  def opponents
-    @opponents ||= player.non_bye_opponents
-  end
-
-  def eligible_pairings_for(player)
-    player.pairings.reported
-  end
-
-  def sos_earned_from(player)
-    pairings = eligible_pairings_for(player)
-    return 0 unless pairings.any?
-
-    pairings.sum do |pairing|
-      pairing.score_for(player)
-    end.to_f / pairings.count
+    players.values.map do |p|
+      Standing.new(p,
+        points: points[p.id],
+        sos: sos[p.id],
+        extended_sos: extended_sos[p.id]
+      )
+    end.sort
   end
 end

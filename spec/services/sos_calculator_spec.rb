@@ -1,20 +1,14 @@
 RSpec.describe SosCalculator do
-  let(:snap) { create(:player) }
-  let(:crackle) { create(:player) }
-  let(:pop) { create(:player) }
-  let(:other) { create(:player) }
-
-  context 'no opponents' do
-    it 'calculates sos' do
-      expect(described_class.sos(snap)).to eq(0)
-    end
-
-    it 'calculates extended sos' do
-      expect(described_class.extended_sos(snap)).to eq(0)
-    end
-  end
+  let(:tournament) { create(:tournament) }
+  let!(:snap) { create(:player, tournament: tournament) }
+  let!(:crackle) { create(:player, tournament: tournament) }
+  let!(:pop) { create(:player, tournament: tournament) }
+  let!(:other) { create(:player, tournament: tournament) }
+  let(:results) { described_class.calculate!(tournament) }
+  let(:standing) { results.find{ |p| p.player == snap }}
 
   context 'with opponents' do
+
     before do
       create(:pairing, player1: snap, player2: crackle, score1: 6, score2: 0)
       create(:pairing, player1: pop, player2: other, score1: 6, score2: 0)
@@ -24,11 +18,43 @@ RSpec.describe SosCalculator do
     end
 
     it 'calculates sos' do
-      expect(described_class.sos(snap)).to eq(2.25)
+      expect(standing.sos).to eq(2.25)
     end
 
     it 'calculates extended sos' do
-      expect(described_class.extended_sos(snap)).to eq(3.75)
+      expect(standing.extended_sos).to eq(3.75)
+    end
+  end
+
+  describe 'points' do
+    before do
+      create(:pairing, player1: snap, score1: 5)
+      create(:pairing, player1: snap, score1: 2, player2: nil)
+    end
+
+    it 'returns total of all points from pairings including byes' do
+      expect(standing.points).to eq(7)
+    end
+  end
+
+  describe 'sos' do
+    before do
+      other = create(:player)
+      # player played two games, including against opponent 'other'
+      create(:pairing, player1: snap, player2: other, score1: 3, score2: 2)
+      create(:pairing, player1: snap, score1: 1, score2: 3)
+      # other played one other eligible game
+      create(:pairing, player2: other, score1: 0, score2: 5)
+    end
+
+    it 'calculates sos' do
+      expect(standing.sos).to eq(3.25)
+    end
+
+    describe 'extended_sos' do
+      it 'calculates extended sos' do
+        expect(standing.extended_sos).to eq(1.5)
+      end
     end
   end
 end

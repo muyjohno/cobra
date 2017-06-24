@@ -10,6 +10,6 @@ class Standings
   end
 
   def players
-    @players ||= tournament.players.map{ |p| Standing.new(p) }.sort
+    @players ||= SosCalculator.calculate!(tournament)
   end
 end

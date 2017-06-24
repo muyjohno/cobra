@@ -23,6 +23,13 @@ RSpec.describe AbrUpload do
   end
 
   describe '#upload!' do
+    let(:json) { NrtmJson.new(tournament) }
+
+    before do
+      allow(NrtmJson).to receive(:new).with(tournament).and_return(json)
+      allow(json).to receive(:data).and_return({ some: :data })
+    end
+
     it 'responds with a code' do
       VCR.use_cassette :upload_to_abr do
         response = upload.upload!
@@ -30,25 +37,13 @@ RSpec.describe AbrUpload do
         expect(response[:code]).to eq(301063)
       end
     end
-  end
 
-  describe '#data' do
-    before do
-      allow(tournament).to receive(:standings).and_return([
-        Standing.new(jack),
-        Standing.new(jill)
-      ])
-    end
+    it 'delegates to json class' do
+      VCR.use_cassette :upload_to_abr do
+        upload.upload!
 
-    it 'returns hash of data' do
-      expect(upload.data).to eq({
-        name: 'Some Tournament',
-        cutToTop: 0,
-        players: [
-          { corpIdentity: 'ETF', runnerIdentity: 'Noise', rank: 1, id: jack.id, name: jack.name },
-          { corpIdentity: 'PE', runnerIdentity: 'Gabe', rank: 2, id: jill.id, name: jill.name }
-        ]
-      })
+        expect(json).to have_received(:data)
+      end
     end
   end
 end

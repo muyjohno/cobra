@@ -44,7 +44,7 @@ class TournamentsController < ApplicationController
   end
 
   def save_json
-    data = AbrUpload.new(@tournament).data
+    data = NrtmJson.new(@tournament).data
 
     send_data data.to_json,
       type: :json,

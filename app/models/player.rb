@@ -32,6 +32,10 @@ class Player < ApplicationRecord
     @sos_earned ||= non_bye_pairings.reported.sum { |pairing| pairing.score_for(self) }
   end
 
+  def drop!
+    update(active: false)
+  end
+
   private
 
   def destroy_pairings

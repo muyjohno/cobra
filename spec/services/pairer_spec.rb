@@ -1,143 +1,46 @@
 RSpec.describe Pairer do
-  let(:pairer) { Pairer.new(round) }
+  let(:pairer) { described_class.new(round) }
   let(:round) { create(:round, number: 1, tournament: tournament) }
-  let(:tournament) { create(:tournament) }
-  let(:nil_player) { double('NilPlayer', id: nil) }
 
-  before do
-    allow(NilPlayer).to receive(:new).and_return(nil_player)
-  end
-
-  context 'with four players' do
-    %i(jack jill hansel gretel).each do |name|
-      let!(name) do
-        create(:player, name: name.to_s.humanize, tournament: tournament)
-      end
-    end
-
-    it 'creates pairings' do
-      pairer.pair!
-
-      round.reload
-
-      expect(round.pairings.count).to eq(2)
-    end
-
-    it 'sets table numbers' do
-      pairer.pair!
-
-      round.reload
-
-      expect(round.pairings.map(&:table_number).flatten).to eq([1, 2])
-    end
-
-    context 'after some rounds' do
-      before do
-        create(:pairing, player1: jack, player2: jill, score1: 6, score2: 0)
-        create(:pairing, player1: hansel, player2: gretel, score1: 4, score2: 1)
-      end
-
-      it 'pairs based on points' do
-        pairer.pair!
-
-        round.reload
-
-        round.pairings.each do |pairing|
-          expect(pairing.players).to match_array([jack, hansel]) if pairing.players.include? jack
-          expect(pairing.players).to match_array([jill, gretel]) if pairing.players.include? jill
-        end
-      end
-
-      it 'avoids previous matchups' do
-        create(:pairing, player1: jack, player2: hansel)
-
-        pairer.pair!
-
-        round.reload
-
-        round.pairings.each do |pairing|
-          expect(pairing.players).to match_array([jack, gretel]) if pairing.players.include? jack
-          expect(pairing.players).to match_array([jill, hansel]) if pairing.players.include? jill
-        end
-      end
-
-      context 'ranked table numbers' do
-        let(:tournament) { create(:tournament, pairing_sort: :ranked) }
-
-        it 'numbers tables by ranking' do
-          pairer.pair!
-
-          round.reload
-
-          round.pairings.each do |pairing|
-            expect(pairing.players).to match_array([jack, hansel]) if pairing.table_number == 1
-            expect(pairing.players).to match_array([jill, gretel]) if pairing.table_number == 2
-          end
-        end
-      end
+  %i(jack jill hansel gretel).each do |name|
+    let!(name) do
+      create(:player, name: name.to_s.humanize, tournament: tournament)
     end
   end
 
-  context 'with three players' do
-    %i(snap crackle pop).each do |name|
-      let!(name) do
-        create(:player, name: name.to_s.humanize, tournament: tournament)
-      end
-    end
+  describe '#pair!' do
+    context 'swiss' do
+      let(:tournament) { create(:tournament, stage: :swiss) }
+      let(:strategy) { double('PairingStrategies::Swiss') }
 
-    it 'creates bye' do
-      pairer.pair!
+      it 'delegates to swiss strategy' do
+        allow(PairingStrategies::Swiss).to receive(:new).and_return(strategy)
+        allow(strategy).to receive(:pair!)
 
-      round.reload
-
-      expect(
-        round.pairings.map(&:players).flatten
-      ).to contain_exactly(snap, crackle, pop, nil_player)
-    end
-
-    it 'gives win against bye' do
-      pairer.pair!
-
-      round.reload.pairings.each do |pairing|
-        expect(
-          [pairing.score1, pairing.score2]
-        ).to match_array(
-          (pairing.players.include? nil_player) ? [0,6] : [nil, nil]
-        )
-      end
-    end
-
-    context 'after multiple rounds' do
-      before do
-        create(:pairing, player1: snap, score1: 6)
-        create(:pairing, player1: crackle, score1: 3)
-        create(:pairing, player1: pop, player2: nil, score1: 1, score2: 0)
-      end
-
-      it 'avoids previous byes' do
         pairer.pair!
 
+        expect(strategy).to have_received(:pair!)
+      end
+
+      it 'applies table numbers' do
+        pairer.pair!
         round.reload
 
-        round.pairings.each do |pairing|
-          expect(pairing.players).not_to match_array([pop, nil_player]) if pairing.players.include? pop
-        end
+        expect(round.pairings.map(&:table_number).flatten).to eq([1, 2])
       end
     end
 
-    context 'with drop' do
-      before do
-        pop.update active: false
-      end
+    context 'double elim' do
+      let(:tournament) { create(:tournament, stage: :double_elim) }
+      let(:strategy) { double('PairingStrategies::DoubleElim') }
 
-      it 'excludes dropped players' do
+      it 'delegates to double_elim strategy' do
+        allow(PairingStrategies::DoubleElim).to receive(:new).and_return(strategy)
+        allow(strategy).to receive(:pair!)
+
         pairer.pair!
 
-        round.reload
-
-        expect(
-          round.pairings.map(&:players).flatten
-        ).to contain_exactly(snap, crackle)
+        expect(strategy).to have_received(:pair!)
       end
     end
   end

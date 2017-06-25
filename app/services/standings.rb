@@ -12,4 +12,8 @@ class Standings
   def players
     @players ||= SosCalculator.calculate!(tournament)
   end
+
+  def top(number)
+    players.map(&:player).select(&:active?)[0...number]
+  end
 end

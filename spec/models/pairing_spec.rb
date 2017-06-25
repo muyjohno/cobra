@@ -97,4 +97,20 @@ RSpec.describe Pairing do
       end
     end
   end
+
+  describe '#winner' do
+    let(:pairing) { create(:pairing, player1: jack, player2: jill, score1: 6, score2: 0) }
+
+    it 'returns winner' do
+      expect(pairing.winner).to eq(jack)
+    end
+  end
+
+  describe '#loser' do
+    let(:pairing) { create(:pairing, player1: jack, player2: jill, score1: 6, score2: 0) }
+
+    it 'returns loser' do
+      expect(pairing.loser).to eq(jill)
+    end
+  end
 end

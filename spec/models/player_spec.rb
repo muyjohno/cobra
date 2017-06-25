@@ -1,4 +1,6 @@
 RSpec.describe Player do
+  let(:player) { create(:player) }
+
   describe '#pairings' do
     let(:pairing) { create(:pairing) }
     let(:another) { create(:pairing, player2: pairing.player1) }
@@ -10,7 +12,6 @@ RSpec.describe Player do
   end
 
   describe '#non_bye_pairings' do
-    let(:player) { create(:player) }
     let!(:pairing1) { create(:pairing, player1: player) }
     let!(:pairing2) { create(:pairing, player2: player) }
     let!(:bye_pairing) { create(:pairing, player1: player, player2: nil) }
@@ -31,7 +32,6 @@ RSpec.describe Player do
   end
 
   describe 'opponents' do
-    let(:player) { create(:player) }
     let!(:pairing1) { create(:pairing, player1: player, score1: 6) }
     let!(:pairing2) { create(:pairing, player1: player, score1: 3) }
     let!(:pairing3) { create(:pairing, player1: player, player2: nil, score1: 6) }
@@ -64,6 +64,16 @@ RSpec.describe Player do
       it 'returns points earned against non-bye opponents' do
         expect(player.sos_earned).to eq(9)
       end
+    end
+  end
+
+  describe '#drop!' do
+    before do
+      player.drop!
+    end
+
+    it 'changes player status' do
+      expect(player.tournament.players.dropped).to include(player)
     end
   end
 end

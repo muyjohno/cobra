@@ -18,4 +18,10 @@ module PairingsHelper
       method: :post,
       class: 'pure-button'
   end
+
+  def presets(tournament)
+    return [[3, 0], [0, 3]] if tournament.double_elim?
+
+    [[6, 0], [3, 3], [0, 6]]
+  end
 end

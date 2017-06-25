@@ -24,4 +24,16 @@ module PairingsHelper
 
     [[6, 0], [3, 3], [0, 6]]
   end
+
+  def side_options
+    Pairing.sides.collect { |v, k| [v, v] }
+  end
+
+  def side_label_for(pairing, player)
+    return nil unless pairing.side && pairing.players.include?(player)
+
+    players = pairing.players
+    players.reverse! if pairing.player1_is_runner?
+    players.first == player ? "(C)" : "(R)"
+  end
 end

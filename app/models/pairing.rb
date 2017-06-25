@@ -7,6 +7,11 @@ class Pairing < ApplicationRecord
   scope :non_bye, -> { where.not(player1_id: nil, player2_id: nil) }
   scope :reported, -> { where.not(score1: nil, score2: nil) }
 
+  enum side: {
+    player1_is_corp: 1,
+    player1_is_runner: 2
+  }
+
   def self.for_player(player)
     where(player1: player).or(where(player2: player))
   end

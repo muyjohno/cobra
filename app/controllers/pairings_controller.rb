@@ -8,7 +8,7 @@ class PairingsController < ApplicationController
   def report
     pairing.update(score_params)
 
-    redirect_to tournament_rounds_path(tournament)
+    redirect_back(fallback_location: tournament_rounds_path(tournament))
   end
 
   def destroy
@@ -32,10 +32,10 @@ class PairingsController < ApplicationController
   end
 
   def pairing_params
-    params.require(:pairing).permit(:player1_id, :player2_id, :table_number)
+    params.require(:pairing).permit(:player1_id, :player2_id, :table_number, :side)
   end
 
   def score_params
-    params.require(:pairing).permit(:score1, :score2)
+    params.require(:pairing).permit(:score1, :score2, :side)
   end
 end

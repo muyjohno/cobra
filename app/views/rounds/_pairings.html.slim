@@ -4,6 +4,7 @@
       | Table #{pairing.table_number}
     .pure-u-5-24.left_player_name
       = pairing.player1.name
+      =< side_label_for(pairing, pairing.player1)
     .pure-u-6-24.centre_score
       .preset_score
         - presets(round.tournament).each do |score1, score2|
@@ -18,3 +19,4 @@
           = f.text_field :score2, style: 'width: 2.5em;'
     .pure-u-5-24
       = pairing.player2.name
+      =< side_label_for(pairing, pairing.player2)

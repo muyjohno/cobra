@@ -52,6 +52,15 @@ class TournamentsController < ApplicationController
       filename: "#{@tournament.name.underscore}.json"
   end
 
+  def cut
+    number = params[:number].to_i
+    redirect_to standings_tournament_players_path(@tournament) unless [4,8].include? number
+
+    next_tournament = @tournament.cut_to!(:double_elim, number)
+
+    redirect_to tournament_players_path(next_tournament)
+  end
+
   private
 
   def set_tournament

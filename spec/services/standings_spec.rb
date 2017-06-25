@@ -20,4 +20,20 @@ RSpec.describe Standings do
       expect(standings.players.map(&:player)).to eq([hansel, gretel, jack, jill])
     end
   end
+
+  describe '#top' do
+    it 'returns top players' do
+      expect(standings.top(2)).to eq([hansel, gretel])
+    end
+
+    context 'with dropped player' do
+      before do
+        gretel.drop!
+      end
+
+      it 'returns top players' do
+        expect(standings.top(2)).to eq([hansel, jack])
+      end
+    end
+  end
 end

@@ -38,4 +38,16 @@ class Pairing < ApplicationRecord
 
     player1 == player ? player2 : player1
   end
+
+  def winner
+    return if score1 == score2
+
+    score1 > score2 ? player1 : player2
+  end
+
+  def loser
+    return if score1 == score2
+
+    score1 < score2 ? player1 : player2
+  end
 end

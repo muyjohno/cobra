@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170505202505) do
+ActiveRecord::Schema.define(version: 20170624210921) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20170505202505) do
     t.boolean "active",          default: true
     t.string  "corp_identity"
     t.string  "runner_identity"
+    t.integer "seed"
     t.index ["tournament_id"], name: "index_players_on_tournament_id", using: :btree
   end
 
@@ -48,6 +49,8 @@ ActiveRecord::Schema.define(version: 20170505202505) do
     t.datetime "created_at"
     t.integer  "pairing_sort", default: 0
     t.string   "abr_code"
+    t.integer  "stage",        default: 0
+    t.integer  "previous_id"
   end
 
   add_foreign_key "pairings", "players", column: "player1_id"

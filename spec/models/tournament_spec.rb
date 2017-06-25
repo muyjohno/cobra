@@ -86,4 +86,36 @@ RSpec.describe Tournament do
       ])
     end
   end
+
+  describe '#cut_to!' do
+    let(:cut) do
+      tournament.cut_to! :double_elim, 4
+    end
+
+    before { tournament }
+
+    it 'creates elim tournament' do
+      expect do
+        cut
+      end.to change(Tournament, :count).by(1)
+    end
+
+    it 'clones players' do
+      aggregate_failures do
+        expect(cut.players.map(&:name)).to eq(tournament.top(4).map(&:name))
+        expect(cut.players.map(&:corp_identity)).to eq(tournament.top(4).map(&:corp_identity))
+        expect(cut.players.map(&:runner_identity)).to eq(tournament.top(4).map(&:runner_identity))
+        expect(cut.players.map(&:seed)).to eq([1,2,3,4])
+      end
+    end
+  end
+
+  describe '#previous' do
+    let!(:child) { create(:tournament, previous: tournament) }
+
+    it 'establishes association' do
+      expect(child.previous).to eq(tournament)
+      expect(tournament.next).to eq(child)
+    end
+  end
 end

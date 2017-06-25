@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :tournament do
     name 'Tournament Name'
+    stage :swiss
 
     transient do
       player_count 0

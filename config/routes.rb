@@ -14,5 +14,6 @@ Rails.application.routes.draw do
     end
     post :upload_to_abr, on: :member
     get :save_json, on: :member
+    post :cut, on: :member
   end
 end

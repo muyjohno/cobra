@@ -28,5 +28,5 @@ html
                 | Settings
       #main.content.pure-u.pure-g
         - if @tournament
-          h1= @tournament.name
+          h1.tournament_title= @tournament.name
         = yield

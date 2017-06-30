@@ -7,3 +7,6 @@
     = link_to tournament_round_path(round.tournament, round), class: 'pure-button pure-button-primary' do
       => fa_icon 'pencil'
       | Edit
+    =< link_to tournament_round_pairings_path(round.tournament, round), class: 'pure-button pure-button-primary' do
+      => fa_icon 'list'
+      | Pairings

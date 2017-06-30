@@ -9,9 +9,9 @@ class SosCalculator
     points_for_sos = {}
     tournament.players.map(&:pairings).flatten.uniq.each do |p|
       points[p.player1_id] ||= 0
-      points[p.player1_id] += p.score1
+      points[p.player1_id] += p.score1 || 0
       points[p.player2_id] ||= 0
-      points[p.player2_id] += p.score2
+      points[p.player2_id] += p.score2 || 0
       games_played[p.player1_id] ||= 0
       games_played[p.player1_id] += 1
       games_played[p.player2_id] ||= 0
@@ -21,9 +21,9 @@ class SosCalculator
       opponents[p.player2_id] ||= []
       opponents[p.player2_id] << p.player1_id
       points_for_sos[p.player1_id] ||= 0
-      points_for_sos[p.player1_id] += p.score1 if p.player2_id
+      points_for_sos[p.player1_id] += p.score1 || 0 if p.player2_id
       points_for_sos[p.player2_id] ||= 0
-      points_for_sos[p.player2_id] += p.score2 if p.player1_id
+      points_for_sos[p.player2_id] += p.score2 || 0 if p.player1_id
     end
 
     # filter out byes from sos calculations

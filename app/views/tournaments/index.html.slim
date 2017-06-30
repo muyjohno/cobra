@@ -1,8 +1,9 @@
-= simple_form_for :tournament, url: tournaments_path, html: { class: 'pure-form' } do |f|
-  fieldset
-    => f.text_field :name, placeholder: 'Tournament Name'
-    = button_tag type: :submit, class: 'pure-button button-success' do
-      => fa_icon 'plus'
-      | Create
+- if policy(:tournament).create?
+  = simple_form_for :tournament, url: tournaments_path, html: { class: 'pure-form' } do |f|
+    fieldset
+      => f.text_field :name, placeholder: 'Tournament Name'
+      = button_tag type: :submit, class: 'pure-button button-success' do
+        => fa_icon 'plus'
+        | Create
 
 = render @tournaments

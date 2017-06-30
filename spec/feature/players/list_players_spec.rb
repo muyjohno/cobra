@@ -6,6 +6,7 @@ RSpec.describe 'listing players' do
     tournament.players << create(:player)
     tournament.players << create(:player, active: false)
 
+    sign_in tournament.user
     visit tournament_players_path(tournament)
   end
 

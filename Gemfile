@@ -15,6 +15,8 @@ gem 'simple_form'
 gem 'purecss-sass'
 gem 'font-awesome-rails'
 gem 'faraday'
+gem 'devise'
+gem 'pundit'
 
 group :development, :test do
   gem 'pry'
@@ -27,6 +29,7 @@ group :test do
   gem 'database_cleaner'
   gem 'faker'
   gem 'vcr'
+  gem 'launchy'
 end
 
 group :development do

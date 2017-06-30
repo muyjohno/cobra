@@ -13,6 +13,7 @@ RSpec.describe 'list pairings for a round' do
   end
 
   it 'displays pairings, repeated' do
+    sign_in round.tournament.user
     visit tournament_rounds_path(round.tournament)
     click_link 'Pairings'
 

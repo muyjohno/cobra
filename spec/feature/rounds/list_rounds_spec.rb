@@ -2,6 +2,7 @@ RSpec.describe 'listing rounds' do
   let(:tournament) { create(:tournament) }
 
   before do
+    sign_in tournament.user
     visit tournament_rounds_path(tournament)
   end
 

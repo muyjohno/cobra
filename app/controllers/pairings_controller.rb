@@ -1,7 +1,9 @@
 class PairingsController < ApplicationController
-  before_action :tournament, only: :index
+  before_action :tournament
 
   def index
+    authorize @tournament, :show?
+
     @pairings = round.pairings.inject([]) do |pairings, p|
       pairings << {
         table_number: p.table_number,
@@ -17,18 +19,24 @@ class PairingsController < ApplicationController
   end
 
   def create
+    authorize @tournament, :update?
+
     round.pairings.create(pairing_params)
 
     redirect_to tournament_round_path(tournament, round)
   end
 
   def report
+    authorize @tournament, :update?
+
     pairing.update(score_params)
 
     redirect_back(fallback_location: tournament_rounds_path(tournament))
   end
 
   def destroy
+    authorize @tournament, :update?
+
     pairing.destroy
 
     redirect_to tournament_round_path(tournament, round)

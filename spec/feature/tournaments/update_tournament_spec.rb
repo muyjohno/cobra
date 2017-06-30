@@ -4,6 +4,7 @@ RSpec.describe 'updating tournament' do
   end
 
   before do
+    sign_in tournament.user
     visit edit_tournament_path(tournament)
 
     fill_in :tournament_name, with: 'New Tournament Name'

@@ -12,21 +12,31 @@ html
         = link_to 'Menu', '#', class: 'nav-menu-button'
         .nav-inner
           h1= link_to 'Cobra', root_path
-          - if @tournament
-            ul.pure-menu-list
-              li.pure-menu-item= link_to tournament_players_path(@tournament), class: 'pure-menu-link' do
-                => fa_icon 'users'
-                | Players
-              li.pure-menu-item= link_to tournament_rounds_path(@tournament), class: 'pure-menu-link' do
-                => fa_icon 'calendar-check-o'
-                | Rounds
-              li.pure-menu-item= link_to standings_tournament_players_path(@tournament), class: 'pure-menu-link' do
-                => fa_icon 'trophy'
-                | Standings
-              li.pure-menu-item= link_to edit_tournament_path(@tournament), class: 'pure-menu-link' do
-                => fa_icon 'cog'
-                | Settings
+          ul.pure-menu-list
+            - if user_signed_in?
+              li.pure-menu-item= link_to destroy_user_session_path, method: :delete, class: 'pure-menu-link' do
+                => fa_icon 'sign-out'
+                | Sign out
+            - if @tournament
+              - if policy(@tournament).edit?
+                li.pure-menu-item= link_to tournament_players_path(@tournament), class: 'pure-menu-link' do
+                  => fa_icon 'users'
+                  | Players
+              - if policy(@tournament).show?
+                li.pure-menu-item= link_to tournament_rounds_path(@tournament), class: 'pure-menu-link' do
+                  => fa_icon 'calendar-check-o'
+                  | Rounds
+              - if policy(@tournament).show?
+                li.pure-menu-item= link_to standings_tournament_players_path(@tournament), class: 'pure-menu-link' do
+                  => fa_icon 'trophy'
+                  | Standings
+              - if policy(@tournament).edit?
+                li.pure-menu-item= link_to edit_tournament_path(@tournament), class: 'pure-menu-link' do
+                  => fa_icon 'cog'
+                  | Settings
       #main.content.pure-u.pure-g
         - if @tournament
           h1.tournament_title= @tournament.name
+        p.notice= notice
+        p.alert= alert
         = yield

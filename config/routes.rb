@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   root 'tournaments#index'
   resources :tournaments, only: [:index, :create, :edit, :update, :destroy] do
     resources :players, only: [:index, :create, :update, :destroy] do

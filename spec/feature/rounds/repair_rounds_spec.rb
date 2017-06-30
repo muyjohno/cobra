@@ -4,6 +4,7 @@ RSpec.describe 'Re-pairing rounds' do
   let!(:player2) { create(:player, tournament: round.tournament) }
 
   before do
+    sign_in round.tournament.user
     visit tournament_round_path(round.tournament, round)
   end
 

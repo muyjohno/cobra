@@ -3,6 +3,7 @@ RSpec.describe 'reinstating players' do
   let!(:player) { create(:player, tournament: tournament, active: false) }
 
   before do
+    sign_in tournament.user
     visit tournament_players_path(tournament)
   end
 

@@ -3,6 +3,7 @@ RSpec.describe 'dropping players' do
   let!(:player) { create(:player, tournament: tournament, active: true) }
 
   before do
+    sign_in tournament.user
     visit tournament_players_path(tournament)
   end
 

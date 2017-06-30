@@ -3,6 +3,7 @@ class Tournament < ApplicationRecord
   has_many :rounds, dependent: :destroy
   belongs_to :previous, class_name: Tournament, optional: true
   has_one :next, class_name: Tournament, foreign_key: :previous_id
+  belongs_to :user
 
   enum pairing_sort: {
     random: 0,

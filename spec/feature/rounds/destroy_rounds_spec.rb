@@ -3,6 +3,7 @@ RSpec.describe 'Destroying rounds' do
 
   before do
     round.pairings << create(:pairing)
+    sign_in round.tournament.user
     visit tournament_round_path(round.tournament, round)
   end
 

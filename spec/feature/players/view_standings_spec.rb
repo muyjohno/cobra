@@ -15,6 +15,7 @@ RSpec.describe 'viewing standings' do
       runner_identity: 'Another Runner'
     )
 
+    sign_in tournament.user
     visit standings_tournament_players_path(tournament)
   end
 

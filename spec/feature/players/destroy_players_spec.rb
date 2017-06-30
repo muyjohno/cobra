@@ -3,6 +3,7 @@ RSpec.describe 'destroying players' do
   let!(:player) { create(:player, tournament: tournament) }
 
   before do
+    sign_in tournament.user
     round = create(:round, tournament: tournament)
     create(:pairing, round: round, player1: player, player2: nil)
 

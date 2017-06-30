@@ -2,14 +2,19 @@ class TournamentsController < ApplicationController
   before_action :set_tournament, except: [:index, :create]
 
   def index
+    authorize Tournament
+
     @tournaments = Tournament.order(created_at: :desc)
   end
 
   def show
+    authorize @tournament
   end
 
   def create
-    @new_tournament = Tournament.new(tournament_params)
+    authorize Tournament
+
+    @new_tournament = current_user.tournaments.new(tournament_params)
 
     if @new_tournament.save
       redirect_to tournament_players_path(@new_tournament)
@@ -19,21 +24,28 @@ class TournamentsController < ApplicationController
   end
 
   def edit
+    authorize @tournament
   end
 
   def update
+    authorize @tournament
+
     @tournament.update(tournament_params)
 
     redirect_to edit_tournament_path(@tournament)
   end
 
   def destroy
+    authorize @tournament
+
     @tournament.destroy!
 
     redirect_to tournaments_path
   end
 
   def upload_to_abr
+    authorize @tournament
+
     response = AbrUpload.upload!(@tournament)
 
     if(response[:code])
@@ -44,6 +56,8 @@ class TournamentsController < ApplicationController
   end
 
   def save_json
+    authorize @tournament
+
     data = NrtmJson.new(@tournament).data
 
     send_data data.to_json,
@@ -53,6 +67,8 @@ class TournamentsController < ApplicationController
   end
 
   def cut
+    authorize @tournament
+
     number = params[:number].to_i
     redirect_to standings_tournament_players_path(@tournament) unless [4,8].include? number
 

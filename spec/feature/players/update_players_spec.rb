@@ -4,6 +4,7 @@ RSpec.describe 'updating players' do
   before do
     tournament.players << create(:player, name: 'Jack Player')
 
+    sign_in tournament.user
     visit tournament_players_path(tournament)
     within(first('form')) do
       fill_in :player_name, with: 'Jill Player'

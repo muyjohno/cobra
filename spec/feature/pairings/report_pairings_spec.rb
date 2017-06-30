@@ -7,6 +7,7 @@ RSpec.describe 'reporting scores for pairings' do
     tournament.players << create(:player)
     round.pair!
 
+    sign_in tournament.user
     visit tournament_rounds_path(tournament)
   end
 

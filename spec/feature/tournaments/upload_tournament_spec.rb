@@ -6,6 +6,7 @@ RSpec.describe 'uploading tournament' do
     allow(AbrUpload).to receive(:new).and_return(uploader)
     allow(uploader).to receive(:upload!).and_return({ code: '937521' })
 
+    sign_in tournament.user
     visit edit_tournament_path(tournament)
   end
 

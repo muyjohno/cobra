@@ -1,22 +1,24 @@
 - round.pairings.each do |pairing|
   .pure-g.round_pairing class="table_#{pairing.table_number} #{'reported' if pairing.reported?}"
-    .pure-u-2-24
-      | Table #{pairing.table_number}
+    .pure-u-2-24 Table #{pairing.table_number}
     .pure-u-5-24.left_player_name
       = pairing.player1.name
       =< side_label_for(pairing, pairing.player1)
     .pure-u-6-24.centre_score
-      .preset_score
-        - presets(round.tournament).each do |score1, score2|
-          = preset_score_button score1, score2, pairing
-        = link_to '...', '#', class: 'pure-button toggle_custom_score'
-      .custom_score
-        = simple_form_for pairing, url: report_tournament_round_pairing_path(round.tournament, round, pairing), method: :post, html: { class: 'pure-form' } do |f|
-          = f.text_field :score1, style: 'width: 2.5em;'
-          = button_tag type: :submit, class: 'pure-button pure-button-primary' do
-            => fa_icon 'flag-checkered'
-            | Save
-          = f.text_field :score2, style: 'width: 2.5em;'
+      - if policy(round.tournament).edit?
+        .preset_score
+          - presets(round.tournament).each do |score1, score2|
+            = preset_score_button score1, score2, pairing
+          = link_to '...', '#', class: 'pure-button toggle_custom_score'
+        .custom_score
+          = simple_form_for pairing, url: report_tournament_round_pairing_path(round.tournament, round, pairing), method: :post, html: { class: 'pure-form' } do |f|
+            = f.text_field :score1, style: 'width: 2.5em;'
+            = button_tag type: :submit, class: 'pure-button pure-button-primary' do
+              => fa_icon 'flag-checkered'
+              | Save
+            = f.text_field :score2, style: 'width: 2.5em;'
+      - else
+        | #{pairing.score1} - #{pairing.score2}
     .pure-u-5-24
       = pairing.player2.name
       =< side_label_for(pairing, pairing.player2)

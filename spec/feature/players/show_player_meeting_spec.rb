@@ -7,6 +7,7 @@ RSpec.describe 'show player meeting' do
   let!(:pop) { create(:player, name: 'Pop', tournament: tournament) }
 
   it 'displays meeting pairings' do
+    sign_in tournament.user
     visit tournament_players_path(tournament)
     click_link 'Player meeting'
 

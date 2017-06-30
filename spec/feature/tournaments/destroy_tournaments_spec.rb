@@ -8,6 +8,7 @@ RSpec.describe 'destroying tournaments' do
 
     round.pair!
 
+    sign_in tournament.user
     visit tournaments_path
   end
 

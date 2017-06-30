@@ -1,5 +1,6 @@
 RSpec.describe 'creating a tournament' do
   before do
+    sign_in create(:user)
     visit tournaments_path
 
     fill_in 'Tournament Name', with: 'Test Tournament'

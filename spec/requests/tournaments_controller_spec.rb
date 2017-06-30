@@ -26,6 +26,7 @@ RSpec.describe TournamentsController do
     end
 
     it 'cuts tournament' do
+      sign_in tournament.user
       post cut_tournament_path(tournament, number: 8)
 
       expect(tournament).to have_received(:cut_to!).with(:double_elim, 8)

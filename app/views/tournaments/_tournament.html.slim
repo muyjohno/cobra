@@ -1,10 +1,11 @@
 .tournament.pure-g
   .pure-u-4-5
-    h2= link_to tournament.name, tournament_players_path(tournament)
+    h2= link_to tournament.name, tournament_rounds_path(tournament)
   .pure-u-1-5
-    p= link_to tournament_path(tournament), method: :delete, class: 'pure-button button-error', data: { confirm: 'Are you sure? This cannot be reversed.' } do
-      => fa_icon 'trash-o'
-      | Delete
+    - if policy(tournament).destroy?
+      p= link_to tournament_path(tournament), method: :delete, class: 'pure-button button-error', data: { confirm: 'Are you sure? This cannot be reversed.' } do
+        => fa_icon 'trash-o'
+        | Delete
   .pure-u-1-5
     = "Players: #{tournament.players.count}"
   .pure-u-1-5

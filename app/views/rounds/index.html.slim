@@ -1,6 +1,7 @@
-p= button_to tournament_rounds_path(@tournament), method: :post, class: 'pure-button button-success' do
-  => fa_icon 'plus'
-  | Pair new round!
+- if policy(@tournament).update?
+  p= button_to tournament_rounds_path(@tournament), method: :post, class: 'pure-button button-success' do
+    => fa_icon 'plus'
+    | Pair new round!
 
 = render @other_rounds
 
@@ -12,11 +13,12 @@ p= button_to tournament_rounds_path(@tournament), method: :post, class: 'pure-bu
       p= "#{@current_round.pairings.reported.count} / #{@current_round.pairings.count} pairings reported"
     .pure-u-1-3
       p
-        = link_to tournament_round_path(@tournament, @current_round), class: 'pure-button pure-button-primary' do
-          => fa_icon 'pencil'
-          | Edit
+        - if policy(@tournament).edit?
+          = link_to tournament_round_path(@tournament, @current_round), class: 'pure-button pure-button-primary' do
+            => fa_icon 'pencil'
+            | Edit
         =< link_to tournament_round_pairings_path(@tournament, @current_round), class: 'pure-button pure-button-primary' do
           => fa_icon 'list'
           | Pairings
     .pure-u-1-1
-      = render "rounds/pairings", round: @current_round
+      = render 'rounds/pairings', round: @current_round

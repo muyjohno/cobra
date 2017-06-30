@@ -1,4 +1,21 @@
 class PairingsController < ApplicationController
+  before_action :tournament, only: :index
+
+  def index
+    @pairings = round.pairings.inject([]) do |pairings, p|
+      pairings << {
+        table_number: p.table_number,
+        player1_name: p.player1.name,
+        player2_name: p.player2.name
+      }
+      pairings << {
+        table_number: p.table_number,
+        player1_name: p.player2.name,
+        player2_name: p.player1.name
+      }
+    end.sort_by { |p| p[:player1_name] }
+  end
+
   def create
     round.pairings.create(pairing_params)
 

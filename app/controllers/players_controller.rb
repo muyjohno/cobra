@@ -41,6 +41,9 @@ class PlayersController < ApplicationController
     redirect_to tournament_players_path(@tournament)
   end
 
+  def meeting
+  end
+
   private
 
   def set_tournament

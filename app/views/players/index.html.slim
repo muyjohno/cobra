@@ -1,6 +1,9 @@
 p
   => pluralize(@players.count, 'active player')
   = "(#{@dropped.count} dropped)"
+p= link_to meeting_tournament_players_path(@tournament), class: 'pure-button pure-button-primary' do
+  => fa_icon 'list'
+  | Player meeting
 - @players.each do |player|
   = simple_form_for player, url: tournament_player_path(@tournament, player), html: { class: 'pure-form' } do |f|
     fieldset

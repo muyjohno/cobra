@@ -1,0 +1,29 @@
+- @pairings.each do |p|
+  .match_slip
+    h4 Round #{p.round.number} - Table #{p.table_number}
+    table.pure-table.pure-table-bordered
+      thead
+        tr
+          th Name
+          th Wins
+          th Timed Wins
+          th Draws
+          th Initials
+          th Drop?
+      tbody
+        tr
+          td= p.player1.name
+          td
+          td
+          td
+          td
+          td
+        tr
+          td= p.player2.name
+          td
+          td
+          td
+          td
+          td
+    p Indicate how many wins, timed wins, and draws were earned by each player. Then initial to confirm. Tick "Drop?" if you would like to drop.
+    hr.dotted

@@ -17,6 +17,9 @@
           = link_to tournament_round_path(@tournament, @current_round), class: 'pure-button pure-button-primary' do
             => fa_icon 'pencil'
             | Edit
+          =< link_to match_slips_tournament_round_pairings_path(@tournament, @current_round), class: 'pure-button pure-button-primary' do
+            => fa_icon 'flag-checkered'
+            | Match slips
         =< link_to tournament_round_pairings_path(@tournament, @current_round), class: 'pure-button pure-button-primary' do
           => fa_icon 'list'
           | Pairings

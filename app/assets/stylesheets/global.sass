@@ -102,6 +102,12 @@ a
 .content
   padding: 1em 2em
 
+hr.dotted
+  border: none
+  border-top: 1px dotted #000
+
 @media print
   #nav, .tournament_title
     display: none !important
+  .match_slip
+    page-break-inside: avoid

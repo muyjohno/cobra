@@ -42,6 +42,12 @@ class PairingsController < ApplicationController
     redirect_to tournament_round_path(tournament, round)
   end
 
+  def match_slips
+    authorize @tournament, :edit?
+
+    @pairings = round.pairings
+  end
+
   private
 
   def tournament

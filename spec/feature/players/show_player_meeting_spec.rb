@@ -12,9 +12,9 @@ RSpec.describe 'show player meeting' do
     click_link 'Player meeting'
 
     aggregate_failures do
-      expect(page).to have_content('1JackJill')
-      expect(page).to have_content('2SnapCrackle')
-      expect(page).to have_content('3Pop')
+      expect(page).to have_content('1CrackleJack')
+      expect(page).to have_content('2JillPop')
+      expect(page).to have_content('3Snap')
     end
   end
 

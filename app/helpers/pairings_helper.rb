@@ -34,6 +34,6 @@ module PairingsHelper
 
     players = pairing.players
     players.reverse! if pairing.player1_is_runner?
-    players.first == player ? "(C)" : "(R)"
+    players.first == player ? "(Corp)" : "(Runner)"
   end
 end

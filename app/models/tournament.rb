@@ -28,7 +28,8 @@ class Tournament < ApplicationRecord
     Tournament.create!(
       name: name + " - Top #{number}",
       stage: stage,
-      previous: self
+      previous: self,
+      user: user
     ).tap do |t|
       top(number).each_with_index do |player, i|
         Player.create!(

@@ -1,6 +1,6 @@
 # Cobra
 
-## Setup
+## Setup
 
 ```
 $ git clone [...]

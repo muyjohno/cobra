@@ -33,16 +33,24 @@ class SosCalculator
 
     sos = {}
     opponents.each do |id, o|
-      sos[id] = o.sum do |player|
-        points_for_sos[player].to_f / opponents[player].count
-      end.to_f / opponents[id].count
+      if o.any?
+        sos[id] = o.sum do |player|
+          points_for_sos[player].to_f / opponents[player].count
+        end.to_f / o.count
+      else
+        sos[id] = 0.0
+      end
     end
 
     extended_sos = {}
     opponents.each do |id, o|
-      extended_sos[id] = o.sum do |player|
-        sos[player]
-      end.to_f / opponents[id].count
+      if o.any?
+        extended_sos[id] = o.sum do |player|
+          sos[player]
+        end.to_f / o.count
+      else
+        extended_sos[id] = 0.0
+      end
     end
 
     players.values.map do |p|

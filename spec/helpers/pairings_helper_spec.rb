@@ -35,8 +35,10 @@ RSpec.describe PairingsHelper do
     let(:undeclared) { create(:pairing, side: nil) }
 
     it 'returns side' do
-      expect(helper.side_label_for(pairing, pairing.player1)).to eq("(C)")
-      expect(helper.side_label_for(pairing, pairing.player2)).to eq("(R)")
+      aggregate_failures do
+        expect(helper.side_label_for(pairing, pairing.player1)).to eq("(Corp)")
+        expect(helper.side_label_for(pairing, pairing.player2)).to eq("(Runner)")
+      end
     end
 
     it 'returns nil for undeclared' do

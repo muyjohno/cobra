@@ -14,3 +14,8 @@ $ cp config/secrets.example.yml config/secrets.yml
 $ rake db:create db:migrate
 $ rails server
 ```
+
+## Run tests
+```
+$ rspec
+```

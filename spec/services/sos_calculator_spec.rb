@@ -57,4 +57,18 @@ RSpec.describe SosCalculator do
       end
     end
   end
+
+  context 'player with only byes' do
+    before do
+      create(:pairing, player1: snap, player2: nil, score1: 6, score2: 0)
+    end
+
+    it 'calculates standing' do
+      aggregate_failures do
+        expect(standing.points).to eq(6)
+        expect(standing.sos).to eq(0.0)
+        expect(standing.extended_sos).to eq(0.0)
+      end
+    end
+  end
 end

@@ -100,6 +100,10 @@ RSpec.describe Tournament do
       end.to change(Tournament, :count).by(1)
     end
 
+    it 'assigns tournament to previous tournament\'s user' do
+      expect(cut.user).to eq(tournament.user)
+    end
+
     it 'clones players' do
       aggregate_failures do
         expect(cut.players.map(&:name)).to eq(tournament.top(4).map(&:name))

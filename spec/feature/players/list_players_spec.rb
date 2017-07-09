@@ -3,7 +3,7 @@ RSpec.describe 'listing players' do
 
   before do
     tournament.players << create(:player, name: 'Jack Player')
-    tournament.players << create(:player)
+    tournament.players << create(:player, name: 'Jill Player')
     tournament.players << create(:player, active: false)
 
     sign_in tournament.user

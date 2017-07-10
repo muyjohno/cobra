@@ -21,9 +21,9 @@ class SosCalculator
       opponents[p.player2_id] ||= []
       opponents[p.player2_id] << p.player1_id
       points_for_sos[p.player1_id] ||= 0
-      points_for_sos[p.player1_id] += p.score1 || 0 if p.player2_id
+      points_for_sos[p.player1_id] += p.score1 || 0
       points_for_sos[p.player2_id] ||= 0
-      points_for_sos[p.player2_id] += p.score2 || 0 if p.player1_id
+      points_for_sos[p.player2_id] += p.score2 || 0
     end
 
     # filter out byes from sos calculations
@@ -35,7 +35,7 @@ class SosCalculator
     opponents.each do |id, o|
       if o.any?
         sos[id] = o.sum do |player|
-          points_for_sos[player].to_f / opponents[player].count
+          points_for_sos[player].to_f / games_played[player]
         end.to_f / o.count
       else
         sos[id] = 0.0

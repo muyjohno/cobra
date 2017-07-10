@@ -71,4 +71,36 @@ RSpec.describe SosCalculator do
       end
     end
   end
+
+  context 'three person tourney example' do
+    let(:three_person) { create(:tournament) }
+    let(:laurie) { create(:player, tournament: three_person) }
+    let(:dan) { create(:player, tournament: three_person) }
+    let(:johno) { create(:player, tournament: three_person) }
+    let(:results) { described_class.calculate!(three_person) }
+
+    before do
+      create(:pairing, player1: dan, player2: johno, score1: 3, score2: 3)
+      create(:pairing, player1: laurie, player2: nil, score1: 6, score2: 0)
+      create(:pairing, player1: laurie, player2: johno, score1: 6, score2: 0)
+      create(:pairing, player1: dan, player2: nil, score1: 6, score2: 0)
+    end
+
+    it 'calculates standings' do
+      aggregate_failures do
+        expect(results[0].player).to eq(laurie)
+        expect(results[0].points).to eq(12)
+        expect(results[0].sos).to eq(1.5)
+        expect(results[0].extended_sos).to eq(5.25)
+        expect(results[1].player).to eq(dan)
+        expect(results[1].points).to eq(9)
+        expect(results[1].sos).to eq(1.5)
+        expect(results[1].extended_sos).to eq(5.25)
+        expect(results[2].player).to eq(johno)
+        expect(results[2].points).to eq(3)
+        expect(results[2].sos).to eq(5.25)
+        expect(results[2].extended_sos).to eq(1.5)
+      end
+    end
+  end
 end

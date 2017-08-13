@@ -14,6 +14,7 @@ RSpec.describe 'creating a player' do
       fill_in :player_name, with: 'Jack'
       fill_in :player_corp_identity, with: 'Haas-Bioroid: Engineering the Future'
       fill_in :player_runner_identity, with: 'Noise'
+      check :player_first_round_bye
     end
 
     it 'creates player' do
@@ -31,6 +32,7 @@ RSpec.describe 'creating a player' do
         expect(subject.name).to eq('Jack')
         expect(subject.corp_identity).to eq('Haas-Bioroid: Engineering the Future')
         expect(subject.runner_identity).to eq('Noise')
+        expect(subject.first_round_bye).to eq(true)
         expect(subject.tournament).to eq(tournament)
       end
     end

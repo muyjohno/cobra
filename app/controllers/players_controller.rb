@@ -66,7 +66,8 @@ class PlayersController < ApplicationController
   end
 
   def player_params
-    params.require(:player).permit(:name, :corp_identity, :runner_identity)
+    params.require(:player)
+      .permit(:name, :corp_identity, :runner_identity, :first_round_bye)
   end
 
   def set_player

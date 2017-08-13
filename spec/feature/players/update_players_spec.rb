@@ -10,6 +10,7 @@ RSpec.describe 'updating players' do
       fill_in :player_name, with: 'Jill Player'
       fill_in :player_corp_identity, with: 'Jinteki: Personal Evolution'
       fill_in :player_runner_identity, with: 'Gabriel Santiago'
+      check :player_first_round_bye
       click_button 'Save'
     end
   end
@@ -24,6 +25,10 @@ RSpec.describe 'updating players' do
 
   it 'can update player runner' do
     expect(tournament.players.first.runner_identity).to eq('Gabriel Santiago')
+  end
+
+  it 'can update first round bye' do
+    expect(tournament.players.first.first_round_bye).to eq(true)
   end
 
   it 'redirects to tournament player page' do

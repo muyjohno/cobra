@@ -23,6 +23,45 @@ RSpec.describe PairingStrategies::Swiss do
       expect(round.pairings.count).to eq(2)
     end
 
+    context 'with first round byes' do
+      before do
+        jack.update first_round_bye: true
+        jill.update first_round_bye: true
+      end
+
+      it 'creates pairings' do
+        pairer.pair!
+
+        round.reload
+
+        round.pairings.each do |pairing|
+          expect(pairing.players).to match_array([jack, nil_player]) if pairing.players.include? jack
+          expect(pairing.players).to match_array([jill, nil_player]) if pairing.players.include? jill
+          expect(pairing.players).to match_array([hansel, gretel]) if pairing.players.include? hansel
+        end
+      end
+
+      context 'in second round' do
+        let(:round2_pairer) { described_class.new(round2) }
+        let(:round2) { create(:round, number: 2, tournament: tournament) }
+
+        before do
+          pairer.pair!
+        end
+
+        it 'does not create byes' do
+          round2_pairer.pair!
+
+          round2.reload
+
+          expect(round2.pairings.count).to eq(2)
+          expect(
+            round2.pairings.map(&:players).flatten
+          ).to contain_exactly(jack, jill, hansel, gretel)
+        end
+      end
+    end
+
     context 'after some rounds' do
       before do
         create(:pairing, player1: jack, player2: jill, score1: 6, score2: 0)

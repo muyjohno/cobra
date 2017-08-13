@@ -8,7 +8,7 @@ module PairingStrategies
     end
 
     def players
-      tournament.players.active
+      @players ||= tournament.players.active
     end
   end
 end

@@ -7,6 +7,7 @@ class Player < ApplicationRecord
 
   scope :active, -> { where(active: true) }
   scope :dropped, -> { where(active: false) }
+  scope :with_first_round_bye, -> { where(first_round_bye: true) }
 
   def pairings
     Pairing.for_player(self)

@@ -1,17 +1,34 @@
 module PairingStrategies
   class Swiss < Base
+    BYE_WINNER_SCORE = 6
+    BYE_LOSER_SCORE = 0
+
     def pair!
+      assign_byes!
+
       Swissper.pair(
-        players.to_a,
+        (players - players_with_byes).to_a,
         delta_key: :points,
         exclude_key: :unpairable_opponents
       ).each do |pairing|
         round.pairings.create(pairing_params(pairing))
       end
+
       apply_numbers!(tournament.pairing_sorter)
     end
 
     private
+
+    def assign_byes!
+      players_with_byes.each do |player|
+        round.pairings.create(
+          player1: player,
+          player2: nil,
+          score1: BYE_WINNER_SCORE,
+          score2: BYE_LOSER_SCORE
+        )
+      end
+    end
 
     def pairing_params(pairing)
       {
@@ -29,13 +46,19 @@ module PairingStrategies
     def auto_score(pairing, player_index)
       return unless pairing[0] == Swissper::Bye || pairing[1] == Swissper::Bye
 
-      pairing[player_index] == Swissper::Bye ? 0 : 6
+      pairing[player_index] == Swissper::Bye ? BYE_LOSER_SCORE : BYE_WINNER_SCORE
     end
 
     def apply_numbers!(sorter)
       sorter.sort(round.pairings).each_with_index do |pairing, i|
         pairing.update(table_number: i + 1)
       end
+    end
+
+    def players_with_byes
+      return players.with_first_round_bye if (tournament.rounds - [round]).empty?
+
+      []
     end
   end
 end

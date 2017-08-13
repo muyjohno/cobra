@@ -10,6 +10,7 @@ p= link_to meeting_tournament_players_path(@tournament), class: 'pure-button pur
       => f.text_field :name
       => f.text_field :corp_identity, placeholder: 'Corporation', class: 'corp_identities'
       => f.text_field :runner_identity, placeholder: 'Runner', class: 'runner_identities'
+      => f.input_field :first_round_bye, as: :boolean, inline_label: 'First round bye?'
       = button_tag type: :submit, class: 'pure-button pure-button-primary' do
         => fa_icon 'floppy-o'
         | Save
@@ -26,6 +27,7 @@ p= link_to meeting_tournament_players_path(@tournament), class: 'pure-button pur
     => f.text_field :name, placeholder: 'Name'
     => f.text_field :corp_identity, placeholder: 'Corporation', class: 'corp_identities'
     => f.text_field :runner_identity, placeholder: 'Runner', class: 'runner_identities'
+    => f.input_field :first_round_bye, as: :boolean, inline_label: 'First round bye?'
     = button_tag type: :submit, class: 'pure-button button-success' do
       => fa_icon 'plus'
       | Create

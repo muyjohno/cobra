@@ -17,6 +17,9 @@ class NrtmJson
           rank: i+1,
           id: standing.player.id,
           name: standing.name,
+          matchPoints: standing.points,
+          strengthOfSchedule: standing.sos,
+          extendedStrengthOfSchedule: standing.extended_sos
         }
       end
     }

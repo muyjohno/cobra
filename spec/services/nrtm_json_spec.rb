@@ -13,8 +13,8 @@ RSpec.describe NrtmJson do
   describe '#data' do
     before do
       allow(tournament).to receive(:standings).and_return([
-        Standing.new(jack),
-        Standing.new(jill)
+        Standing.new(jack, points: 6),
+        Standing.new(jill, points: 0)
       ])
     end
 
@@ -23,8 +23,26 @@ RSpec.describe NrtmJson do
         name: 'Some Tournament',
         cutToTop: 0,
         players: [
-          { corpIdentity: 'ETF', runnerIdentity: 'Noise', rank: 1, id: jack.id, name: jack.name },
-          { corpIdentity: 'PE', runnerIdentity: 'Gabe', rank: 2, id: jill.id, name: jill.name }
+          {
+            corpIdentity: 'ETF',
+            runnerIdentity: 'Noise',
+            rank: 1,
+            id: jack.id,
+            name: jack.name,
+            matchPoints: 6,
+            strengthOfSchedule: 0,
+            extendedStrengthOfSchedule: 0
+          },
+          {
+            corpIdentity: 'PE',
+            runnerIdentity: 'Gabe',
+            rank: 2,
+            id: jill.id,
+            name: jill.name,
+            matchPoints: 0,
+            strengthOfSchedule: 0,
+            extendedStrengthOfSchedule: 0
+          }
         ]
       })
     end

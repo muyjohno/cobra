@@ -11,7 +11,7 @@ RSpec.describe Pairable do
     end
 
     it 'returns opponents with special bye class' do
-      expect(player.unpairable_opponents).to eq([jack, jill, Swissper::Bye])
+      expect(player.unpairable_opponents).to match_array([jack, jill, Swissper::Bye])
     end
   end
 end

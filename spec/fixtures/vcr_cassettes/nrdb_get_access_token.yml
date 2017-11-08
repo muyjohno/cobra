@@ -1,0 +1,36 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://netrunnerdb.com/oauth/v2/token?client_id=test_id&client_secret=test_secret&code=123&grant_type=authorization_code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Foauth%2Fcallback
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.10.0
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      date:
+      - Wed, 08 Nov 2017 15:15:46 GMT
+      server:
+      - Apache/2.4.7 (Ubuntu)
+      cache-control:
+      - no-store, private
+      pragma:
+      - no-cache
+      content-length:
+      - '263'
+      connection:
+      - close
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"access_token":"some_token","expires_in":3600,"token_type":"bearer","scope":null,"refresh_token":"some_refresh_token"}'
+    http_version:
+  recorded_at: Wed, 08 Nov 2017 15:15:47 GMT
+recorded_with: VCR 2.9.3

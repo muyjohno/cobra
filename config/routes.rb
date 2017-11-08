@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  devise_for :users
   root 'tournaments#index'
   resources :tournaments, only: [:index, :create, :edit, :update, :destroy] do
     resources :players, only: [:index, :create, :update, :destroy] do
@@ -18,5 +17,12 @@ Rails.application.routes.draw do
     post :upload_to_abr, on: :member
     get :save_json, on: :member
     post :cut, on: :member
+  end
+
+  get :login, to: 'oauth#auth'
+  get :logout, to: 'oauth#logout'
+
+  namespace :oauth do
+    get :callback
   end
 end

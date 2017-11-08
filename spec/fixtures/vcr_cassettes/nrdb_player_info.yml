@@ -1,0 +1,36 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://netrunnerdb.com/api/2.0/private/account/info
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - Bearer a_token
+      User-Agent:
+      - Faraday v0.10.0
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      date:
+      - Wed, 08 Nov 2017 16:00:35 GMT
+      server:
+      - Apache/2.4.7 (Ubuntu)
+      cache-control:
+      - private
+      content-length:
+      - '152'
+      connection:
+      - close
+      content-type:
+      - application/json; charset=UTF-8
+    body:
+      encoding: UTF-8
+      string: '{"version_number":"2.0","data":[{"id":123,"username":"test_user","email":"test@test.com","reputation":1,"sharing":true}],"total":1,"success":true}'
+    http_version:
+  recorded_at: Wed, 08 Nov 2017 16:00:35 GMT
+recorded_with: VCR 2.9.3

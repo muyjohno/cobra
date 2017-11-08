@@ -14,9 +14,13 @@ html
           h1= link_to 'Cobra', root_path
           ul.pure-menu-list
             - if user_signed_in?
-              li.pure-menu-item= link_to destroy_user_session_path, method: :delete, class: 'pure-menu-link' do
+              li.pure-menu-item= link_to logout_path, class: 'pure-menu-link' do
                 => fa_icon 'sign-out'
                 | Sign out
+            - else
+              li.pure-menu-item= link_to login_path, class: 'pure-menu-link' do
+                => fa_icon 'sign-in'
+                | Sign in
             - if @tournament
               - if policy(@tournament).edit?
                 li.pure-menu-item= link_to tournament_players_path(@tournament), class: 'pure-menu-link' do

@@ -7,4 +7,9 @@
 !/log/.keep
 !/tmp/.keep
 
-database.yml
+config/database.yml
+config/secrets.yml
+
+# Ignore db for sqlite
+cobra
+cobra_test

@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 5.0.1'
+gem 'rails', '~> 5.0.2'
 gem 'pg'
 gem 'puma', '~> 3.0'
 gem 'sass-rails', '~> 5.0'
@@ -15,8 +15,8 @@ gem 'simple_form'
 gem 'purecss-sass'
 gem 'font-awesome-rails'
 gem 'faraday'
-gem 'devise'
 gem 'pundit'
+gem 'sqlite3'
 
 group :development, :test do
   gem 'pry'

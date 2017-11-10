@@ -21,13 +21,15 @@ RSpec.describe TournamentsController do
   describe '#cut' do
     let(:cut) { create(:tournament) }
     before do
-      allow(Tournament).to receive(:find).with(tournament.id.to_s).and_return(tournament)
+      allow(Tournament).to receive(:find)
+        .with(tournament.to_param)
+        .and_return(tournament)
       allow(tournament).to receive(:cut_to!).and_return(cut)
     end
 
     it 'cuts tournament' do
       sign_in tournament.user
-      post cut_tournament_path(tournament, number: 8)
+      post cut_tournament_path(tournament), params: { number: 8 }
 
       expect(tournament).to have_received(:cut_to!).with(:double_elim, 8)
     end

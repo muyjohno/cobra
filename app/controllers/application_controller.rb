@@ -15,6 +15,12 @@ class ApplicationController < ActionController::Base
     !!current_user
   end
 
+  protected
+
+  def set_tournament
+    @tournament = Tournament.find(params[:tournament_id])
+  end
+
   private
 
   def user_not_authorised

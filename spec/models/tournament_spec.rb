@@ -1,6 +1,19 @@
 RSpec.describe Tournament do
   let(:tournament) { create(:tournament, player_count: 4) }
 
+  it "automatically populates slug" do
+    sample = create(:tournament, slug: nil)
+
+    expect(sample).to be_valid
+    expect(sample.slug).not_to eq(nil)
+  end
+
+  it "does not overwrite slug" do
+    expect do
+      tournament.update(name: "new name")
+    end.not_to change(tournament, :slug)
+  end
+
   describe '#pair_new_round!' do
     it 'creates new round with pairings' do
       expect do

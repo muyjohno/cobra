@@ -1,6 +1,14 @@
 Rails.application.routes.draw do
   root 'tournaments#index'
-  resources :tournaments, only: [:index, :create, :edit, :update, :destroy] do
+
+  get :login, to: 'oauth#auth'
+  get :logout, to: 'oauth#logout'
+
+  namespace :oauth do
+    get :callback
+  end
+
+  resources :tournaments, only: [:show, :index, :create, :edit, :update, :destroy] do
     resources :players, only: [:index, :create, :update, :destroy] do
       get :standings, on: :collection
       get :meeting, on: :collection
@@ -19,10 +27,5 @@ Rails.application.routes.draw do
     post :cut, on: :member
   end
 
-  get :login, to: 'oauth#auth'
-  get :logout, to: 'oauth#logout'
-
-  namespace :oauth do
-    get :callback
-  end
+  get ':slug', to: 'tournaments#shortlink'
 end

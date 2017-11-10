@@ -17,6 +17,11 @@ class Tournament < ApplicationRecord
 
   delegate :top, to: :standings
 
+  validates :name, :slug, presence: true
+  validates :slug, uniqueness: true
+
+  before_validation :generate_slug, on: :create, unless: :slug
+
   def pair_new_round!
     number = (rounds.pluck(:number).max || 0) + 1
     rounds.create(number: number).tap do |round|
@@ -64,5 +69,12 @@ class Tournament < ApplicationRecord
     players.group_by(&:runner_identity).map do |id, players|
       [id, players.count]
     end.sort_by(&:last).reverse
+  end
+
+  private
+
+  def generate_slug
+    self.slug = rand(36**4).to_s(36).upcase
+    generate_slug if Tournament.exists?(slug: slug)
   end
 end

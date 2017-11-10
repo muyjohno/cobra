@@ -1,5 +1,5 @@
 class TournamentsController < ApplicationController
-  before_action :set_tournament, except: [:index, :create]
+  before_action :set_tournament, except: [:index, :create, :shortlink]
 
   def index
     authorize Tournament
@@ -9,6 +9,8 @@ class TournamentsController < ApplicationController
 
   def show
     authorize @tournament
+
+    redirect_to tournament_rounds_path(@tournament)
   end
 
   def create
@@ -75,6 +77,14 @@ class TournamentsController < ApplicationController
     next_tournament = @tournament.cut_to!(:double_elim, number)
 
     redirect_to tournament_players_path(next_tournament)
+  end
+
+  def shortlink
+    tournament = Tournament.find_by!(slug: params[:slug].upcase)
+
+    authorize tournament, :show?
+
+    redirect_to tournament_path(tournament)
   end
 
   private

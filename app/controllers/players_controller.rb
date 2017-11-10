@@ -61,10 +61,6 @@ class PlayersController < ApplicationController
 
   private
 
-  def set_tournament
-    @tournament = Tournament.find(params[:tournament_id])
-  end
-
   def player_params
     params.require(:player)
       .permit(:name, :corp_identity, :runner_identity, :first_round_bye)

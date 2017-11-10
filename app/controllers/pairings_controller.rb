@@ -1,5 +1,6 @@
 class PairingsController < ApplicationController
-  before_action :tournament
+  before_action :set_tournament
+  attr_reader :tournament
 
   def index
     authorize @tournament, :show?
@@ -49,10 +50,6 @@ class PairingsController < ApplicationController
   end
 
   private
-
-  def tournament
-    @tournament ||= Tournament.find(params[:tournament_id])
-  end
 
   def round
     @round ||= Round.find(params[:round_id])

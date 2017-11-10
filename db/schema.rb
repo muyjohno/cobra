@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171108103642) do
+ActiveRecord::Schema.define(version: 20171109112856) do
 
   create_table "pairings", force: :cascade do |t|
     t.integer "round_id"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20171108103642) do
     t.integer  "stage",        default: 0
     t.integer  "previous_id"
     t.integer  "user_id"
+    t.string   "slug"
     t.index ["user_id"], name: "index_tournaments_on_user_id"
   end
 

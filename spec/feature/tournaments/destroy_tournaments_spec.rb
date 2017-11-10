@@ -9,7 +9,7 @@ RSpec.describe 'destroying tournaments' do
     round.pair!
 
     sign_in tournament.user
-    visit tournaments_path
+    visit root_path
   end
 
   it 'destroys tournament' do

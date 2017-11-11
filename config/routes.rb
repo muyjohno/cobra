@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'tournaments#index'
+  root 'home#home'
 
   get :login, to: 'oauth#auth'
   get :logout, to: 'oauth#logout'
@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     get :save_json, on: :member
     post :cut, on: :member
     get :shortlink, on: :collection
+    get :not_found, on: :collection
   end
 
   get ':slug', to: 'tournaments#shortlink'

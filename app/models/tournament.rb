@@ -21,6 +21,7 @@ class Tournament < ApplicationRecord
   validates :slug, uniqueness: true
 
   before_validation :generate_slug, on: :create, unless: :slug
+  before_create :default_date, unless: :date
 
   def pair_new_round!
     number = (rounds.pluck(:number).max || 0) + 1
@@ -74,5 +75,11 @@ class Tournament < ApplicationRecord
   def generate_slug
     self.slug = rand(36**4).to_s(36).upcase
     generate_slug if Tournament.exists?(slug: slug)
+  end
+
+  private
+
+  def default_date
+    self.date = Date.today
   end
 end

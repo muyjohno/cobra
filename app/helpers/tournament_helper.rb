@@ -1,7 +1,7 @@
 module TournamentHelper
   def short_date(tournament)
-    return unless tournament.created_at
+    return unless tournament.date
 
-    tournament.created_at.strftime('%-d %b %Y')
+    tournament.date.strftime('%-d %b %Y')
   end
 end

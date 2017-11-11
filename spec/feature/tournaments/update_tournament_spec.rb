@@ -8,6 +8,7 @@ RSpec.describe 'updating tournament' do
     visit edit_tournament_path(tournament)
 
     fill_in :tournament_name, with: 'New Tournament Name'
+    fill_in :tournament_date, with: '2017/01/01'
     select 'ranked', from: :tournament_pairing_sort
   end
 
@@ -19,6 +20,7 @@ RSpec.describe 'updating tournament' do
     aggregate_failures do
       expect(tournament.name).to eq('New Tournament Name')
       expect(tournament.pairing_sort).to eq('ranked')
+      expect(tournament.date.to_s).to eq('2017-01-01')
     end
   end
 end

@@ -8,7 +8,7 @@ html
     = favicon_link_tag 'favicon.ico'
 
   body
-    nav.navbar.navbar-expand-lg.fixed-top.dontprint
+    nav.navbar.navbar-expand-lg.fixed-top.navbar-dark.dontprint
       .container
         = link_to "Cobra #{(' - ' + @tournament.name) if @tournament}", root_path, class: 'navbar-brand'
         button.navbar-toggler type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"

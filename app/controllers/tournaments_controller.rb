@@ -10,7 +10,7 @@ class TournamentsController < ApplicationController
   def show
     authorize @tournament
 
-    redirect_to tournament_rounds_path(@tournament)
+    redirect_to tournament_players_path(@tournament)
   end
 
   def create

@@ -3,10 +3,15 @@ class PlayersController < ApplicationController
   before_action :set_player, only: [:update, :destroy, :drop, :reinstate]
 
   def index
-    authorize @tournament, :edit?
+    authorize @tournament, :show?
 
     @players = @tournament.players.active.sort_by(&:name)
     @dropped = @tournament.players.dropped.sort_by(&:name)
+    @qr = RQRCode::QRCode.new(
+      "http://cobr.ai/#{@tournament.slug.downcase}",
+      size: 4,
+      level: :h
+    ) if @tournament.slug
   end
 
   def create

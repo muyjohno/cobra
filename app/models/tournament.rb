@@ -71,8 +71,6 @@ class Tournament < ApplicationRecord
     end.sort_by(&:last).reverse
   end
 
-  private
-
   def generate_slug
     self.slug = rand(36**4).to_s(36).upcase
     generate_slug if Tournament.exists?(slug: slug)

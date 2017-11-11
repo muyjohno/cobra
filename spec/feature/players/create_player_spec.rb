@@ -1,12 +1,6 @@
 RSpec.describe 'creating a player' do
   let(:tournament) { create(:tournament) }
 
-  it 'protects from unauthorized users' do
-    visit tournament_players_path(tournament)
-
-    expect(page).to have_content 'You are not authorised to perform this action.'
-  end
-
   context 'signed in' do
     before do
       sign_in tournament.user

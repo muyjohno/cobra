@@ -7,40 +7,39 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
 
   body
-    #layout.pure-g
-      #nav.pure-u
-        = link_to 'Menu', '#', class: 'nav-menu-button'
-        .nav-inner
-          h1= link_to 'Cobra', root_path
-          ul.pure-menu-list
+    nav.navbar.navbar-expand-lg.fixed-top.dontprint
+      .container
+        = link_to "Cobra #{(' - ' + @tournament.name) if @tournament}", root_path, class: 'navbar-brand'
+        button.navbar-toggler type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+          span.navbar-toggler-icon
+        #navbarNav.collapse.navbar-collapse
+          ul.navbar-nav.ml-auto
             - if user_signed_in?
-              li.pure-menu-item= link_to logout_path, class: 'pure-menu-link' do
+              li.nav-item= link_to logout_path, class: 'nav-link' do
                 => fa_icon 'sign-out'
                 | Sign out
             - else
-              li.pure-menu-item= link_to login_path, class: 'pure-menu-link' do
+              li.nav-item= link_to login_path, class: 'nav-link' do
                 => fa_icon 'sign-in'
-                | Sign in
-            - if @tournament
-              - if policy(@tournament).edit?
-                li.pure-menu-item= link_to tournament_players_path(@tournament), class: 'pure-menu-link' do
-                  => fa_icon 'users'
-                  | Players
-              - if policy(@tournament).show?
-                li.pure-menu-item= link_to tournament_rounds_path(@tournament), class: 'pure-menu-link' do
-                  => fa_icon 'calendar-check-o'
-                  | Rounds
-              - if policy(@tournament).show?
-                li.pure-menu-item= link_to standings_tournament_players_path(@tournament), class: 'pure-menu-link' do
-                  => fa_icon 'trophy'
-                  | Standings
-              - if policy(@tournament).edit?
-                li.pure-menu-item= link_to edit_tournament_path(@tournament), class: 'pure-menu-link' do
-                  => fa_icon 'cog'
-                  | Settings
-      #main.content.pure-u.pure-g
-        - if @tournament
-          h1.tournament_title= @tournament.name
-        p.notice= notice
-        p.alert= alert
+                | Sign in as TO
+    - if @tournament
+      ul.nav.nav-tabs.container.dontprint
+        - if policy(@tournament).show?
+          li.nav-item= link_to tournament_players_path(@tournament), class: "nav-link #{'active' if controller_name == 'players' && action_name != 'standings'}" do
+            => fa_icon 'users'
+            | Tournament
+        - if policy(@tournament).show?
+          li.nav-item= link_to tournament_rounds_path(@tournament), class: "nav-link #{'active' if controller_name == 'rounds' || controller_name == 'pairings'}" do
+            => fa_icon 'calendar-check-o'
+            | Pairings
+        - if policy(@tournament).show?
+          li.nav-item= link_to standings_tournament_players_path(@tournament), class: "nav-link #{'active' if controller_name == 'players' && action_name == 'standings'}" do
+            => fa_icon 'trophy'
+            | Standings
+        - if policy(@tournament).edit?
+          li.nav-item= link_to edit_tournament_path(@tournament), class: "nav-link #{'active' if controller_name == 'tournaments'}" do
+            => fa_icon 'cog'
+            | Settings
+    .container
+      .row.py-3
         = yield

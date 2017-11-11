@@ -15,7 +15,7 @@ RSpec.describe 'list pairings for a round' do
   it 'displays pairings, repeated' do
     sign_in round.tournament.user
     visit tournament_rounds_path(round.tournament)
-    click_link 'Pairings'
+    click_link 'Pairings by name'
 
     aggregate_failures do
       expect(page).to have_content('3(Bye)Pop')

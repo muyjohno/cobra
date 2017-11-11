@@ -18,6 +18,7 @@ gem 'faraday'
 gem 'pundit'
 gem 'sqlite3'
 gem 'rqrcode'
+gem 'bootstrap-datepicker-rails'
 
 group :development, :test do
   gem 'pry'

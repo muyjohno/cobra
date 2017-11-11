@@ -1,10 +1,13 @@
 class TournamentsController < ApplicationController
-  before_action :set_tournament, except: [:index, :create, :shortlink]
+  before_action :set_tournament, only: [
+      :show, :edit, :update, :destroy,
+      :upload_to_abr, :save_json, :cut
+    ]
 
   def index
     authorize Tournament
 
-    @tournaments = Tournament.order(created_at: :desc)
+    @tournaments = Tournament.order(created_at: :desc).limit(20)
   end
 
   def show
@@ -85,6 +88,16 @@ class TournamentsController < ApplicationController
     authorize tournament, :show?
 
     redirect_to tournament_path(tournament)
+  rescue ActiveRecord::RecordNotFound
+    skip_authorization
+
+    redirect_to not_found_tournaments_path(code: params[:slug])
+  end
+
+  def not_found
+    skip_authorization
+
+    @code = params[:code]
   end
 
   private
@@ -94,6 +107,6 @@ class TournamentsController < ApplicationController
   end
 
   def tournament_params
-    params.require(:tournament).permit(:name, :pairing_sort)
+    params.require(:tournament).permit(:name, :pairing_sort, :date)
   end
 end

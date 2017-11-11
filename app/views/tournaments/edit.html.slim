@@ -3,6 +3,8 @@
       .form-group
         = f.input :name, input_html: { class: 'form-control' }
       .form-group
+        = f.input :date, html5: true, input_html: { class: 'form-control' }
+      .form-group
         = f.input :pairing_sort, collection: Tournament.pairing_sorts.keys.to_a, include_blank: false, label: 'Assign table numbers by:', input_html: { class: 'form-control' }
         p "Ranked" means the best player will be on table 1. "Random" means the tables will be shuffled.
       .form-group

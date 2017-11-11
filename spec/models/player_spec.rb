@@ -21,6 +21,19 @@ RSpec.describe Player do
     end
   end
 
+  describe 'eligible_pairings' do
+    let(:complete) { create(:round, completed: true) }
+    let(:incomplete) { create(:round, completed: false) }
+    let!(:pairing1) { create(:pairing, round: complete, player1: player) }
+    let!(:pairing2) { create(:pairing, round: complete, player1: player) }
+    let!(:pairing3) { create(:pairing, round: incomplete, player1: player) }
+    let!(:another) { create(:pairing, round: complete) }
+
+    it 'only returns pairings from complete rounds' do
+      expect(player.eligible_pairings).to match_array([pairing1, pairing2])
+    end
+  end
+
   describe 'dependent pairings' do
     let!(:pairing) { create(:pairing) }
 

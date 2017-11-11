@@ -21,6 +21,7 @@ Rails.application.routes.draw do
         get :match_slips, on: :collection
       end
       patch :repair, on: :member
+      patch :complete, on: :member
     end
     post :upload_to_abr, on: :member
     get :save_json, on: :member

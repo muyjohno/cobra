@@ -13,6 +13,10 @@
         = link_to tournament_round_path(round.tournament, round), class: 'btn btn-warning' do
           => fa_icon 'pencil'
           | Edit
+        - unless round.completed?
+          =< link_to complete_tournament_round_path(round.tournament, round, completed: true), method: :patch, class: 'btn btn-warning' do
+            => fa_icon 'check'
+            | Complete
         =< link_to match_slips_tournament_round_pairings_path(round.tournament, round), class: 'btn btn-primary' do
           => fa_icon 'flag-checkered'
           | Match slips

@@ -4,7 +4,8 @@ module PairingsHelper
       collection: round.unpaired_players,
       include_blank: '(Bye)',
       label: false,
-      wrapper: false
+      wrapper: false,
+      input_html: { class: 'form-control mx-2' }
   end
 
   def preset_score_button(score1, score2, pairing)
@@ -16,7 +17,7 @@ module PairingsHelper
         pairing: { score1: score1, score2: score2}
       ),
       method: :post,
-      class: 'pure-button'
+      class: 'btn btn-primary'
   end
 
   def presets(tournament)

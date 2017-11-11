@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     post :upload_to_abr, on: :member
     get :save_json, on: :member
     post :cut, on: :member
+    get :shortlink, on: :collection
   end
 
   get ':slug', to: 'tournaments#shortlink'

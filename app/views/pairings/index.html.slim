@@ -1,14 +1,15 @@
-h3 Round #{@round.number} pairings
+.col-12
+  h3 Round #{@round.number} pairings
 
-table.pure-table.pure-table-striped
-  thead
-    tr
-      th Table
-      th Player 1
-      th Player 2
-  tbody
-    - @pairings.each do |p|
+  table.table.table-striped
+    thead
       tr
-        td= p[:table_number]
-        td= p[:player1_name]
-        td= p[:player2_name]
+        th Table
+        th Player Name
+        th Opponent
+    tbody
+      - @pairings.each do |p|
+        tr
+          td= p[:table_number]
+          td= p[:player1_name]
+          td= p[:player2_name]

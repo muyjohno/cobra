@@ -46,7 +46,14 @@ class PairingsController < ApplicationController
   def match_slips
     authorize @tournament, :edit?
 
-    @pairings = round.pairings
+    if params[:collate]
+      @pairings = round.pairings
+        .each_slice(round.pairings.count/4).to_a
+        .transpose
+        .flatten
+    else
+      @pairings = round.pairings
+    end
   end
 
   private

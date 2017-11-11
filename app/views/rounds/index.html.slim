@@ -1,27 +1,10 @@
-- if policy(@tournament).update?
-  p= button_to tournament_rounds_path(@tournament), method: :post, class: 'pure-button button-success' do
-    => fa_icon 'plus'
-    | Pair new round!
-
-= render @other_rounds
-
-- if @current_round
-  .tournament.pure-g
-    .pure-u-1-3
-      h3 Current Round: Round #{@current_round.number}
-    .pure-u-1-3
-      p= "#{@current_round.pairings.reported.count} / #{@current_round.pairings.count} pairings reported"
-    .pure-u-1-3
-      p
-        - if policy(@tournament).edit?
-          = link_to tournament_round_path(@tournament, @current_round), class: 'pure-button pure-button-primary' do
-            => fa_icon 'pencil'
-            | Edit
-          =< link_to match_slips_tournament_round_pairings_path(@tournament, @current_round), class: 'pure-button pure-button-primary' do
-            => fa_icon 'flag-checkered'
-            | Match slips
-        =< link_to tournament_round_pairings_path(@tournament, @current_round), class: 'pure-button pure-button-primary' do
-          => fa_icon 'list'
-          | Pairings
-    .pure-u-1-1
-      = render 'rounds/pairings', round: @current_round
+.col-12
+  .accordion.mb-3 role="tablist"
+    = render @rounds, show_round: @current_round
+  - if policy(@tournament).update?
+    p= button_to tournament_rounds_path(@tournament), method: :post, class: 'btn btn-success' do
+      => fa_icon 'plus'
+      | Pair new round!
+  p= link_to meeting_tournament_players_path(@tournament), class: 'btn btn-primary' do
+    => fa_icon 'list'
+    | Player meeting

@@ -12,7 +12,9 @@ RSpec.describe 'destroying pairings' do
 
   it 'deletes pairing' do
     expect do
-      click_link 'Delete'
+      within '.round_pairing' do
+        click_on class: 'btn-danger'
+      end
     end.to change(Pairing, :count).by(-1)
 
     expect(round.reload.unpaired_players).to eq([player1, player2])

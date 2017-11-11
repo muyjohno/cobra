@@ -1,29 +1,43 @@
-- @pairings.each do |p|
-  .match_slip
-    h4 Round #{p.round.number} - Table #{p.table_number}
-    table.pure-table.pure-table-bordered
-      thead
-        tr
-          th Name
-          th Wins
-          th Timed Wins
-          th Draws
-          th Initials
-          th Drop?
-      tbody
-        tr
-          td= p.player1.name
-          td
-          td
-          td
-          td
-          td
-        tr
-          td= p.player2.name
-          td
-          td
-          td
-          td
-          td
-    p Indicate how many wins, timed wins, and draws were earned by each player. Then initial to confirm. Tick "Drop?" if you would like to drop.
-    hr.dotted
+.dontprint.col-12.mb-3
+  => link_to tournament_rounds_path(@round.tournament), class: 'btn btn-primary' do
+    => fa_icon 'arrow-left'
+    | Back to rounds
+  - if params[:collate]
+    =link_to match_slips_tournament_round_pairings_path(@round.tournament, @round), class: 'btn btn-primary' do
+      => fa_icon 'flag-checkered'
+      | Uncollate
+  - else
+    =link_to match_slips_tournament_round_pairings_path(@round.tournament, @round, collate: true), class: 'btn btn-primary' do
+      => fa_icon 'flag-checkered'
+      | Collate
+
+.slips
+  - @pairings.each do |p|
+    .match_slip
+      h4 Round #{p.round.number} - Table #{p.table_number}
+      table.table.table-bordered
+        thead
+          tr
+            th Name
+            th Wins
+            th Timed Wins
+            th Draws
+            th Initials
+            th Drop?
+        tbody
+          tr
+            td= p.player1.name
+            td
+            td
+            td
+            td
+            td
+          tr
+            td= p.player2.name
+            td
+            td
+            td
+            td
+            td
+      p Indicate how many wins, timed wins, and draws were earned by each player. Then initial to confirm. Tick "Drop?" if you would like to drop.
+      hr

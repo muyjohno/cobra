@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20171109112856) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "pairings", force: :cascade do |t|
     t.integer "round_id"
     t.integer "player1_id"
@@ -20,9 +23,9 @@ ActiveRecord::Schema.define(version: 20171109112856) do
     t.integer "score1"
     t.integer "score2"
     t.integer "side"
-    t.index ["player1_id"], name: "index_pairings_on_player1_id"
-    t.index ["player2_id"], name: "index_pairings_on_player2_id"
-    t.index ["round_id"], name: "index_pairings_on_round_id"
+    t.index ["player1_id"], name: "index_pairings_on_player1_id", using: :btree
+    t.index ["player2_id"], name: "index_pairings_on_player2_id", using: :btree
+    t.index ["round_id"], name: "index_pairings_on_round_id", using: :btree
   end
 
   create_table "players", force: :cascade do |t|
@@ -33,13 +36,13 @@ ActiveRecord::Schema.define(version: 20171109112856) do
     t.string  "runner_identity"
     t.integer "seed"
     t.boolean "first_round_bye", default: false
-    t.index ["tournament_id"], name: "index_players_on_tournament_id"
+    t.index ["tournament_id"], name: "index_players_on_tournament_id", using: :btree
   end
 
   create_table "rounds", force: :cascade do |t|
     t.integer "tournament_id"
     t.integer "number"
-    t.index ["tournament_id"], name: "index_rounds_on_tournament_id"
+    t.index ["tournament_id"], name: "index_rounds_on_tournament_id", using: :btree
   end
 
   create_table "tournaments", force: :cascade do |t|
@@ -51,7 +54,7 @@ ActiveRecord::Schema.define(version: 20171109112856) do
     t.integer  "previous_id"
     t.integer  "user_id"
     t.string   "slug"
-    t.index ["user_id"], name: "index_tournaments_on_user_id"
+    t.index ["user_id"], name: "index_tournaments_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -61,7 +64,13 @@ ActiveRecord::Schema.define(version: 20171109112856) do
     t.string   "nrdb_username"
     t.string   "nrdb_access_token"
     t.string   "nrdb_refresh_token"
-    t.index ["nrdb_id"], name: "index_users_on_nrdb_id"
+    t.index ["nrdb_id"], name: "index_users_on_nrdb_id", using: :btree
   end
 
+  add_foreign_key "pairings", "players", column: "player1_id"
+  add_foreign_key "pairings", "players", column: "player2_id"
+  add_foreign_key "pairings", "rounds"
+  add_foreign_key "players", "tournaments"
+  add_foreign_key "rounds", "tournaments"
+  add_foreign_key "tournaments", "users"
 end

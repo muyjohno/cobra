@@ -1,28 +1,28 @@
-= simple_form_for @tournament, html: { class: 'pure-form pure-form-aligned' } do |f|
-  fieldset
-    .pure-control-group
-      = f.input :name, input_html: { class: 'pure-input-1-2' }
-    .pure-control-group
-      = f.input :pairing_sort, collection: Tournament.pairing_sorts.keys.to_a, include_blank: false, label: 'Assign table numbers by:'
-      span.pure-form-message-inline "Ranked" means the best player will be on table 1. "Random" means the tables will be shuffled.
-    .pure-controls
-      = button_tag type: :submit, class: 'pure-button pure-button-primary' do |f|
-        => fa_icon 'floppy-o'
-        | Save
+  .col-md-6
+    = simple_form_for @tournament do |f|
+      .form-group
+        = f.input :name, input_html: { class: 'form-control' }
+      .form-group
+        = f.input :pairing_sort, collection: Tournament.pairing_sorts.keys.to_a, include_blank: false, label: 'Assign table numbers by:', input_html: { class: 'form-control' }
+        p "Ranked" means the best player will be on table 1. "Random" means the tables will be shuffled.
+      .form-group
+        = button_tag type: :submit, class: 'btn btn-primary' do |f|
+          => fa_icon 'floppy-o'
+          | Save
 
-.pure-u-1
-  p
-    => link_to upload_to_abr_tournament_path(@tournament), class: 'pure-button button-success', method: :post do |f|
+  .col-md-3
+  .col-md-3
+    p=> link_to upload_to_abr_tournament_path(@tournament), class: 'btn btn-success', method: :post do |f|
       => fa_icon 'arrow-circle-up'
       | Upload to Always Be Running
     - if @tournament.abr_code
       | Uploaded to ABR with code #{@tournament.abr_code}
-  p= link_to save_json_tournament_path(@tournament), class: 'pure-button button-success', target: '_blank' do |f|
-    => fa_icon 'arrow-circle-down'
-    | Download as JSON
-  p= button_to cut_tournament_path(@tournament, number: 4), method: :post, class: 'pure-button button-success' do
-    => fa_icon 'scissors'
-    | Cut to Top 4
-  p= button_to cut_tournament_path(@tournament, number: 8), method: :post, class: 'pure-button button-success' do
-    => fa_icon 'scissors'
-    | Cut to Top 8
+    p= link_to save_json_tournament_path(@tournament), class: 'btn btn-success', target: '_blank' do |f|
+      => fa_icon 'arrow-circle-down'
+      | Download as JSON
+    p= button_to cut_tournament_path(@tournament, number: 4), method: :post, class: 'btn btn-success' do
+      => fa_icon 'scissors'
+      | Cut to Top 4
+    p= button_to cut_tournament_path(@tournament, number: 8), method: :post, class: 'btn btn-success' do
+      => fa_icon 'scissors'
+      | Cut to Top 8

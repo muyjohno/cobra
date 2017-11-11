@@ -1,16 +1,22 @@
-.tournament.pure-g
-  .pure-u-1-3
-    h4 Round #{round.number}
-  .pure-u-1-3
-    p= "#{round.pairings.reported.count} / #{round.pairings.count} pairings reported"
-  .pure-u-1-3
-    - if policy(round.tournament).edit?
-      = link_to tournament_round_path(round.tournament, round), class: 'pure-button pure-button-primary' do
-        => fa_icon 'pencil'
-        | Edit
-      =< link_to match_slips_tournament_round_pairings_path(round.tournament, round), class: 'pure-button pure-button-primary' do
-        => fa_icon 'flag-checkered'
-        | Match slips
-    =< link_to tournament_round_pairings_path(round.tournament, round), class: 'pure-button pure-button-primary' do
-      => fa_icon 'list'
-      | Pairings
+.card
+  .card-header role="tab"
+    .row
+      .col-sm-9
+        a data-toggle="collapse" href="#round#{round.number}"
+          h5.mb-0 Round #{round.number}
+      .col-sm-3
+        | #{round.pairings.reported.count} / #{round.pairings.count} pairings reported
+
+  .collapse id="round#{round.number}" class=("show" if round.number == show_round)
+    .col-12.mt-3
+      - if policy(round.tournament).edit?
+        = link_to tournament_round_path(round.tournament, round), class: 'btn btn-warning' do
+          => fa_icon 'pencil'
+          | Edit
+        =< link_to match_slips_tournament_round_pairings_path(round.tournament, round), class: 'btn btn-primary' do
+          => fa_icon 'flag-checkered'
+          | Match slips
+      =< link_to tournament_round_pairings_path(round.tournament, round), class: 'btn btn-primary' do
+        => fa_icon 'list-ul'
+        | Pairings by name
+    = render 'pairings', round: round

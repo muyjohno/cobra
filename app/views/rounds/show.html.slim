@@ -1,32 +1,31 @@
-h2= "Round #{@round.number}"
-p
-  => link_to tournament_rounds_path(@round.tournament), class: 'pure-button pure-button-primary' do
-    => fa_icon 'arrow-left'
-    | Back to rounds
-  => link_to repair_tournament_round_path(@round.tournament, @round), method: :patch, class: 'pure-button button-warning' do
-    => fa_icon 'refresh'
-    | Re-pair
-  = link_to tournament_round_path(@round.tournament, @round), method: :delete, class: 'pure-button button-error' do
-    => fa_icon 'trash'
-    | Delete round
+.col-12
+  h2= "Round #{@round.number}"
+  p
+    => link_to tournament_rounds_path(@round.tournament), class: 'btn btn-primary' do
+      => fa_icon 'arrow-left'
+      | Back to rounds
+    => link_to repair_tournament_round_path(@round.tournament, @round), method: :patch, class: 'btn btn-warning', data: { confirm: 'Are you sure? This cannot be reversed.' } do
+      => fa_icon 'refresh'
+      | Re-pair
+    = link_to tournament_round_path(@round.tournament, @round), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure? This cannot be reversed.' } do
+      => fa_icon 'trash'
+      | Delete round
+  = render 'pairings', round: @round
 
-= render "rounds/edit_pairings", round: @round
-
-h3 Unpaired players
+h3.mt-2.col-12 Unpaired players
 - if @round.unpaired_players.any?
   - @round.unpaired_players.each do |player|
     = render player
-  = simple_form_for @round.pairings.build, url: tournament_round_pairings_path(@round.tournament, @round), html: { class: 'pure-form' } do |f|
-    fieldset
-      h3 Create pairing
-      = f.text_field :table_number, placeholder: 'Table number'
-      =<> pairing_player_select(f, :player1_id, @round)
-      | vs
-      =< pairing_player_select(f, :player2_id, @round)
-      - unless @round.tournament.swiss?
-        =< f.select :side, side_options, include_blank: true
-      =< button_tag type: :submit, class: 'pure-button button-success' do
-        => fa_icon 'plus'
-        | Create
+  h3.mt-2.col-12 Create pairing
+  = simple_form_for @round.pairings.build, url: tournament_round_pairings_path(@round.tournament, @round), html: { class: 'form-inline col-12' } do |f|
+    = f.text_field :table_number, placeholder: 'Table number', class: 'form-control'
+    = pairing_player_select(f, :player1_id, @round)
+    | vs
+    = pairing_player_select(f, :player2_id, @round)
+    - unless @round.tournament.swiss?
+      = f.select :side, side_options, include_blank: true
+    = button_tag type: :submit, class: 'btn btn-success' do
+      => fa_icon 'plus'
+      | Create
 - else
   ' None

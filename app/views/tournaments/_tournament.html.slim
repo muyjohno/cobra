@@ -1,16 +1,9 @@
-.tournament.pure-g
-  .pure-u-4-5
-    h2= link_to tournament.name, tournament_path(tournament)
-  .pure-u-1-5
-    - if policy(tournament).destroy?
-      p= link_to tournament_path(tournament), method: :delete, class: 'pure-button button-error', data: { confirm: 'Are you sure? This cannot be reversed.' } do
-        => fa_icon 'trash-o'
-        | Delete
-  .pure-u-1-5
-    = "Players: #{tournament.players.count}"
-  .pure-u-1-5
-    = "Rounds: #{tournament.rounds.count}"
-  .pure-u-1-5
-    = "Pairings: #{tournament.rounds.map(&:pairings).flatten.count}"
-  .pure-u-2-5
-    = short_date(tournament)
+= link_to tournament_path(tournament) do
+  .tournament.card.m-3
+    .card-body
+      h4.card-title= tournament.name
+      h6.card-subtitle.mb-2.text-muted= short_date(tournament)
+      - if policy(tournament).destroy?
+        .delete_action= link_to tournament_path(tournament), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure? This cannot be reversed.' } do
+          => fa_icon 'trash-o'
+          | Delete

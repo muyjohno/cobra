@@ -12,11 +12,12 @@ gem 'jbuilder', '~> 2.5'
 gem 'swissper', '~> 0.2'
 gem 'slim-rails'
 gem 'simple_form'
-gem 'purecss-sass'
+gem 'bootstrap'
 gem 'font-awesome-rails'
 gem 'faraday'
 gem 'pundit'
 gem 'sqlite3'
+gem 'rqrcode'
 
 group :development, :test do
   gem 'pry'

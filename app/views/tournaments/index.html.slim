@@ -1,12 +1,10 @@
-.col-12.row
-  .col-sm
-  = simple_form_for :shortcode, url: shortlink_tournaments_path, method: :get, html: { class: 'form-inline col-sm-7' } do |f|
+.col-12
+  = simple_form_for :shortcode, url: shortlink_tournaments_path, method: :get, html: { class: 'form-inline justify-content-center' } do |f|
     label.mx-2 Got a shortcode?
     => f.text_field :slug, class: 'form-control mr-2', placeholder: 'SHRT', name: :slug
     = button_tag type: :submit, class: 'btn btn-primary mr-2' do
       => fa_icon 'arrow-right'
       | Go to tournament
-  .col-sm
 
 .col-12
   = render @tournaments

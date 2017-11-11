@@ -9,7 +9,7 @@
       b #{@tournament.slug}
     p
       ' URL:
-      = link_to "cobr.ai/#{@tournament.slug.downcase}", "cobr.ai/#{@tournament.slug}"
+      = link_to "cobr.ai/#{@tournament.slug.downcase}", "http://cobr.ai/#{@tournament.slug}"
   - else
     h2= @tournament.name
   p

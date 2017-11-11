@@ -7,8 +7,12 @@
     => link_to repair_tournament_round_path(@round.tournament, @round), method: :patch, class: 'btn btn-warning', data: { confirm: 'Are you sure? This cannot be reversed.' } do
       => fa_icon 'refresh'
       | Re-pair
-    - unless @round.completed?
-      => link_to complete_tournament_round_path(@round.tournament, @round), method: :patch, class: 'btn btn-warning' do
+    - if @round.completed?
+      => link_to complete_tournament_round_path(@round.tournament, @round, completed: false), method: :patch, class: 'btn btn-warning' do
+        => fa_icon 'backward'
+        | Uncomplete
+    - else
+      => link_to complete_tournament_round_path(@round.tournament, @round, completed: true), method: :patch, class: 'btn btn-warning' do
         => fa_icon 'check'
         | Complete
     = link_to tournament_round_path(@round.tournament, @round), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure? This cannot be reversed.' } do

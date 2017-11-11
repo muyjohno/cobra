@@ -40,7 +40,7 @@ class RoundsController < ApplicationController
   def complete
     authorize @tournament, :update?
 
-    @round.update!(completed: true)
+    @round.update!(completed: params[:completed])
 
     redirect_to tournament_rounds_path(@tournament)
   end

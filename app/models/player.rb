@@ -37,6 +37,10 @@ class Player < ApplicationRecord
     update(active: false)
   end
 
+  def eligible_pairings
+    pairings.completed
+  end
+
   private
 
   def destroy_pairings

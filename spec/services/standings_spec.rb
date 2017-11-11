@@ -4,8 +4,8 @@ RSpec.describe Standings do
   let!(:jill) { create(:player, tournament: tournament) }
   let!(:hansel) { create(:player, tournament: tournament) }
   let!(:gretel) { create(:player, tournament: tournament) }
-  let(:round1) { create(:round, tournament: tournament) }
-  let(:round2) { create(:round, tournament: tournament) }
+  let(:round1) { create(:round, tournament: tournament, completed: true) }
+  let(:round2) { create(:round, tournament: tournament, completed: true) }
   let(:standings) { described_class.new(tournament.reload) }
 
   before do

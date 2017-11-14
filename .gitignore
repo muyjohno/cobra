@@ -7,6 +7,8 @@
 !/log/.keep
 !/tmp/.keep
 
+.env
+
 config/database.yml
 config/secrets.yml
 

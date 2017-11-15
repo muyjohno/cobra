@@ -16,9 +16,10 @@ gem 'bootstrap'
 gem 'font-awesome-rails'
 gem 'faraday'
 gem 'pundit'
-gem 'sqlite3'
 gem 'rqrcode'
 gem 'bootstrap-datepicker-rails'
+gem 'unicorn'
+gem 'execjs'
 
 group :development, :test do
   gem 'pry'

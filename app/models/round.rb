@@ -16,4 +16,13 @@ class Round < ApplicationRecord
     pairings.destroy_all
     pair!
   end
+
+  def collated_pairings
+    return pairings if pairings.count < 5
+
+    pairings
+      .in_groups_of((pairings.count/4.0).ceil)
+      .transpose
+      .flatten
+  end
 end

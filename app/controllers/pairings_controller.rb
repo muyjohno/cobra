@@ -47,10 +47,7 @@ class PairingsController < ApplicationController
     authorize @tournament, :edit?
 
     if params[:collate]
-      @pairings = round.pairings
-        .each_slice(round.pairings.count/4).to_a
-        .transpose
-        .flatten
+      @pairings = round.collated_pairings
     else
       @pairings = round.pairings
     end

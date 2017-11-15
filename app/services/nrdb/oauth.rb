@@ -4,7 +4,7 @@ module Nrdb
       URI("https://netrunnerdb.com/oauth/v2/auth").tap do |uri|
         uri.query = {
           client_id: Rails.application.secrets[:nrdb]["client_id"],
-          redirect_uri: "http://localhost:3000/oauth/callback",
+          redirect_uri: "#{Rails.application.secrets[:domain]}/oauth/callback",
           response_type: :code
         }.to_query
       end.to_s
@@ -23,7 +23,7 @@ module Nrdb
         uri.query = {
           client_id: Rails.application.secrets[:nrdb]["client_id"],
           client_secret: Rails.application.secrets[:nrdb]["client_secret"],
-          redirect_uri: "http://localhost:3000/oauth/callback",
+          redirect_uri: "#{Rails.application.secrets[:domain]}/oauth/callback",
           grant_type: :authorization_code,
           code: code
         }.to_query

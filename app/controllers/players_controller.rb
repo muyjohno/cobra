@@ -7,11 +7,6 @@ class PlayersController < ApplicationController
 
     @players = @tournament.players.active.sort_by(&:name)
     @dropped = @tournament.players.dropped.sort_by(&:name)
-    @qr = RQRCode::QRCode.new(
-      "http://cobr.ai/#{@tournament.slug.downcase}",
-      size: 4,
-      level: :h
-    ) if @tournament.slug
   end
 
   def create

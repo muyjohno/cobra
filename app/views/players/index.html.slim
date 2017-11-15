@@ -1,6 +1,6 @@
 .col-12
   - if @tournament.slug
-    p.float-right= raw @qr.as_svg(offset: 0, color: '000',
+    p.float-right= raw @tournament.qr.as_svg(offset: 0, color: '000',
                     shape_rendering: 'crispEdges',
                     module_size: 5)
     h2= @tournament.name
@@ -18,9 +18,13 @@
 
 - if policy(@tournament).edit?
   .col-12
-    p= link_to meeting_tournament_players_path(@tournament), class: 'btn btn-primary' do
-      => fa_icon 'list'
-      | Player meeting
+    p
+      => link_to meeting_tournament_players_path(@tournament), class: 'btn btn-primary' do
+        => fa_icon 'list'
+        | Player meeting
+      = link_to qr_tournament_path(@tournament), class: 'btn btn-primary' do
+        => fa_icon 'qrcode'
+        | Printable QR code
 
     - @players.each do |player|
       = simple_form_for player, url: tournament_player_path(@tournament, player), html: { class: 'form-inline mb-2' } do |f|
@@ -59,26 +63,27 @@
             => fa_icon 'arrow-up'
             | Reinstate
 
-.col-12.mt-3.row
-  .col-md-6
-    table.table
-      thead
-        tr
-          th Corp
-          th Players
-      tbody
-        - @tournament.corp_counts.each do |id, count|
+- if @tournament.rounds.any? || policy(@tournament).edit?
+  .col-12.mt-3.row
+    .col-md-6
+      table.table
+        thead
           tr
-            td= id
-            td= count
-  .col-md-6
-    table.table
-      thead
-        tr
-          th Runner
-          th Players
-      tbody
-        - @tournament.runner_counts.each do |id, count|
+            th Corp
+            th Players
+        tbody
+          - @tournament.corp_counts.each do |id, count|
+            tr
+              td= id
+              td= count
+    .col-md-6
+      table.table
+        thead
           tr
-            td= id
-            td= count
+            th Runner
+            th Players
+        tbody
+          - @tournament.runner_counts.each do |id, count|
+            tr
+              td= id
+              td= count

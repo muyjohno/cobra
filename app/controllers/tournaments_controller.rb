@@ -1,7 +1,7 @@
 class TournamentsController < ApplicationController
   before_action :set_tournament, only: [
       :show, :edit, :update, :destroy,
-      :upload_to_abr, :save_json, :cut
+      :upload_to_abr, :save_json, :cut, :qr
     ]
 
   def index
@@ -98,6 +98,10 @@ class TournamentsController < ApplicationController
     skip_authorization
 
     @code = params[:code]
+  end
+
+  def qr
+    authorize @tournament, :edit?
   end
 
   private

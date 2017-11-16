@@ -1,8 +1,5 @@
 .col-12
   - if @tournament.slug
-    p.float-right= raw @tournament.qr.as_svg(offset: 0, color: '000',
-                    shape_rendering: 'crispEdges',
-                    module_size: 5)
     h2= @tournament.name
     p
       ' Tournament shortcode:

@@ -6,6 +6,7 @@ RSpec.describe "list today's tournaments" do
   before do
     create(:tournament, date: Date.yesterday, name: 'YesterdayGNK', slug: '1234')
     create(:tournament, date: Date.tomorrow, name: 'TomorrowGNK', slug: '5678')
+    create(:tournament, date: Date.today, name: 'PrivateGNK', private: true)
 
     visit root_path
   end
@@ -16,6 +17,10 @@ RSpec.describe "list today's tournaments" do
       expect(page).to have_content('TodayGNK')
       expect(page).not_to have_content('TomorrowGNK')
     end
+  end
+
+  it 'does not show private tournaments' do
+    expect(page).not_to have_content('PrivateGNK')
   end
 
   it 'links to more tournaments' do

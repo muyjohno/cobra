@@ -42,6 +42,10 @@ html
             => fa_icon 'cog'
             | Settings
     .container
+      - if alert
+        .row.py-3
+          .col-12
+            .alert.alert-danger= alert
       .row.py-3
         = yield
     .footer.dontprint

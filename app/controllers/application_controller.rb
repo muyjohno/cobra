@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   include Pundit
   after_action :verify_authorized
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorised
+  rescue_from ActiveRecord::RecordNotFound, with: :error
 
   helper_method :current_user, :user_signed_in?
 
@@ -24,7 +25,11 @@ class ApplicationController < ActionController::Base
   private
 
   def user_not_authorised
-    flash[:alert] = 'You are not authorised to perform this action.'
+    flash[:alert] = "🔒 Sorry, you can't do that"
     redirect_to(request.referrer || root_path)
+  end
+
+  def error
+    redirect_to error_path
   end
 end

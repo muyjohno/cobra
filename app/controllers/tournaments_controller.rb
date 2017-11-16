@@ -7,7 +7,9 @@ class TournamentsController < ApplicationController
   def index
     authorize Tournament
 
-    @tournaments = Tournament.order(created_at: :desc).limit(20)
+    @tournaments = Tournament.where(private: false)
+      .order(created_at: :desc)
+      .limit(20)
   end
 
   def show
@@ -111,6 +113,6 @@ class TournamentsController < ApplicationController
   end
 
   def tournament_params
-    params.require(:tournament).permit(:name, :pairing_sort, :date)
+    params.require(:tournament).permit(:name, :pairing_sort, :date, :private)
   end
 end

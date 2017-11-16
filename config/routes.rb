@@ -31,5 +31,9 @@ Rails.application.routes.draw do
     get :not_found, on: :collection
   end
 
+  get '/error', to: 'errors#show'
+
   get ':slug', to: 'tournaments#shortlink'
+
+  match '*path', to: redirect('/error'), via: :all
 end

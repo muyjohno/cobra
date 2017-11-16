@@ -1,4 +1,8 @@
 class TournamentPolicy < ApplicationPolicy
+  def show?
+    !record.private? || record.user == user
+  end
+
   def create?
     user
   end

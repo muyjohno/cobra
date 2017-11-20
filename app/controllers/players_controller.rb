@@ -57,7 +57,7 @@ class PlayersController < ApplicationController
   end
 
   def meeting
-    authorize @tournament, :edit?
+    authorize @tournament, :show?
   end
 
   private

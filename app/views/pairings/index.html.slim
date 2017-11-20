@@ -1,4 +1,8 @@
 .col-12
+  p.dontprint= link_to tournament_rounds_path(@tournament), class: 'btn btn-primary' do
+    => fa_icon 'arrow-left'
+    | Back to pairings
+
   h3 Round #{@round.number} pairings
 
   table.table.table-striped

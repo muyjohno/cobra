@@ -3,7 +3,7 @@
   p
     => link_to tournament_rounds_path(@round.tournament), class: 'btn btn-primary' do
       => fa_icon 'arrow-left'
-      | Back to rounds
+      | Back to pairings
     => link_to repair_tournament_round_path(@round.tournament, @round), method: :patch, class: 'btn btn-warning', data: { confirm: 'Are you sure? This cannot be reversed.' } do
       => fa_icon 'refresh'
       | Re-pair

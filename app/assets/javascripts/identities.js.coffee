@@ -1,4 +1,4 @@
-$ ->
+$(document).on 'turbolinks:load', ->
   $('.corp_identities').each (i, input) ->
     new Awesomplete(input, {
       list: [

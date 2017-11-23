@@ -5,7 +5,7 @@ RSpec.describe 'updating players' do
     tournament.players << create(:player, name: 'Jack Player')
 
     sign_in tournament.user
-    visit tournament_players_path(tournament)
+    visit tournament_path(tournament)
     within(first('form')) do
       fill_in :player_name, with: 'Jill Player'
       fill_in :player_corp_identity, with: 'Jinteki: Personal Evolution'
@@ -32,6 +32,6 @@ RSpec.describe 'updating players' do
   end
 
   it 'redirects to tournament player page' do
-    expect(current_path).to eq tournament_players_path(tournament)
+    expect(current_path).to eq tournament_path(tournament)
   end
 end

@@ -1,9 +1,9 @@
 RSpec.describe 'creating a tournament' do
   before do
     sign_in create(:user)
-    visit tournaments_path
+    visit new_tournament_path
 
-    fill_in 'Tournament Name', with: 'Test Tournament'
+    fill_in 'Tournament name', with: 'Test Tournament'
   end
 
   it 'creates a tournament' do
@@ -26,7 +26,7 @@ RSpec.describe 'creating a tournament' do
   it 'redirects to tournament page' do
     click_button 'Create'
 
-    expect(page.current_path).to eq(tournament_players_path(Tournament.last))
+    expect(page.current_path).to eq(tournament_path(Tournament.last))
     expect(page).to have_content('Test Tournament')
   end
 end

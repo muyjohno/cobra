@@ -1,0 +1,147 @@
+.col-3
+  #help_contents.sticky-top.navbar.navbar-light
+    nav.nav.nav-pills.flex-column
+      a.nav-link href="#help_login"
+        i Top of Page
+      a.nav-link href="#help_login" Log In
+      a.nav-link href="#help_create" Create a Tournament
+      nav.nav.nav-pills.flex-column
+        a.nav-link.ml-3 href="#help_shortcode" What's a shortcode?
+      a.nav-link href="#help_register" Register Players
+      nav.nav.nav-pills.flex-column
+        a.nav-link.ml-3 href="#help_otherplayers" Can players see other players when I register them?
+        a.nav-link.ml-3 href="#help_playermeeting" What is the "Player Meeting"?
+      a.nav-link href="#help_rounds" Create Rounds and Pairings
+      a.nav-link href="#help_results" Enter Results
+      nav.nav.nav-pills.flex-column
+        a.nav-link.ml-3 href="#help_completing" What is "Completing" a round?
+      a.nav-link href="#help_editround" Something Went Wrong!
+      a.nav-link href="#help_standings" Standings
+      a.nav-link href="#help_settings" Settings
+      nav.nav.nav-pills.flex-column
+        a.nav-link.ml-3 href="#help_abr" What is "Upload to Always Be Running?"
+        a.nav-link.ml-3 href="#help_cut" What is "Cut to Top X"?
+
+
+
+.col-9.help_targets
+  h1 How to use Cobra
+  p Use Cobra to run your tournament!
+
+  hr.my-4
+
+  h2#help_login Log In
+  p Click on "Sign in as TO" in the top bar to use NetrunnerDB to log in.
+  .alert.alert-warning
+    => fa_icon 'warning'
+    | Cobra uses NRDB to identify you but will not manipulate your decks in any way.
+
+  hr.my-4
+
+  h2#help_create Create a Tournament
+  p To create a tournament, click "Create tournament" in the header. Enter your tournament's name and change the settings if necessary, then click "Create".
+
+  h4#help_shortcode What's a "shortcode"?
+  p The tournament page displays a shortcode which you can share with players.
+  p They will be able to enter the shortcode on the homepage, or go straight to the short URL, to see pairings and standings for your tournament.
+  .alert.alert-info
+    => fa_icon 'qrcode'
+    | A printable QR code is available, to let players quickly read the tournament's short URL.
+
+  hr.my-4
+
+  h2#help_register Register Players
+  p On the tournament page is the player management area, visible only to the TO. Enter a name and optional identity info and click "Create". You can also assign players a first-round bye here.
+  .alert.alert-info
+    => fa_icon 'magic'
+    | The identity fields will auto-complete. If you fill these correctly, the data will transfer correctly to Always Be Running.
+
+  p Once you've created players, you can modify them on this page (make sure to click "Save" on the correct row.
+  p You can "Drop" players to automatically exclude them from future round pairings, but keep them in the standings and apply SOS from them, etc. You can "Reinstate" players if you dropped them in error, or would like to include them in pairings again for some reason.
+  .alert.alert-danger
+    => fa_icon 'warning'
+    ' You can "Delete" players, but be careful! This will delete them from the standings,
+    b> AND ALSO DELETE ALL PAIRINGS THEY WERE INVOLVED IN.
+    | Only use this feature for an incorrect registration. If you need to remove a player from future pairings, "Drop" them instead.
+
+  h4#help_otherplayers Can players see other players when I register them?
+  p Players cannot see the player management on this page, only the shortcode/URL and ID breakdown
+  p In addition, the ID breakdown and standings (which contains player and ID information) will only become visible once the first round has been paired. Players cannot gain an advantage by knowing which identities other players are registering with.
+
+  h4#help_playermeeting What is the "Player Meeting"?
+  p Player meetings are used in particular in very large tournaments to finalise registration. All players are paired alphabetically to ensure that registration was correct (no one missed, no one registered twice etc). No game is played with these pairings, and it does not affect standings in any way.
+
+  hr.my-4
+
+  h2#help_rounds Create Rounds and Pairings
+
+  p Use the "Pairings" tab on your tournament page to manage the tournament after registration is complete. Click "Pair new round!" to create a new round and automatically pair off all players.
+  p "Pairings by name" provides clear printable pairings. These pairings list all pairings twice (once flipped), so players can scan down the alphabetical left hand column for their name to easily find their pairing. Players can view this page online as well.
+  p "Match slips" provides you with printable match slips you can cut out and distribute.
+  .alert.alert-info
+    => fa_icon 'magic'
+    | The "Collate" option will collate the slips so that you can slice all the pages in one stack and they will already be sorted by table number.
+
+  hr.my-4
+
+  h2#help_results Enter Results
+
+  p You can enter a result for a pairing and quickly enter 6-0, 3-3 or 0-6 results by clicking the appropriate button. For other results, click "..." to reveal two fields to enter a manual score, then click "Save".
+  .alert.alert-warning
+    => fa_icon 'frown-o'
+    | At this time, Cobra does not differentiate between Runner splits and Corporation splits, or handle game-level results. Sorry.
+  p Once a result has been entered, you can edit it; don't forget to click "Save" again.
+
+  h4#help_completing What is "Completing" a round?
+  p Results intentionally do not update the standings as they come in. To allow them to apply to the standings, you must "Complete" the round. This simply indicates that the standings should include this round's results.
+  .alert.alert-warning
+    => fa_icon 'hand-stop-o'
+    | You will not be able to create a new round until the previous round has been "Completed"
+
+  .alert.alert-danger
+    => fa_icon 'warning'
+    | You can edit results from previous rounds at any time! This will update the standings, but will not affect previous rounds' pairings. It will affect any future pairings you create.
+
+  hr.my-4
+
+  h2#help_editround Something Went Wrong!
+  p If you have a problem at some point, you may be able to resolve by "Editing" the round.
+  p You can click "Delete round" on this page to delete the round AND ALL ASSOCIATED PAIRINGS. No players will be affected, but obviously the standings could well be affected by removing results.
+  p You can "Uncomplete" a round if you erroneously marked it as complete. Remember, this will hide the round's results from the standings.
+  p You can "Re-pair" the round. This will delete ALL pairings in this round (the result data for the round, if any, will be lost, so be careful!) and recalculate pairings again. This may be useful if you had to edit a misreported result from the previous round.
+  p You can also use this page to manually edit the pairings. Delete the pairings that are incorrect by clicking the bin/trash button on that row. Then a list of "Unpaired players" will be displayed, and a "Create pairing" form will appear. You can create pairings with any unpaired players (including dropped players if necessary) and also byes.
+
+  hr.my-4
+
+  h2#help_standings Standings
+
+  p The "Standings" tab displays the current standings, based on all pairings from completed rounds, and is visible to the public online.
+
+  hr.my-4
+
+  h2#help_settings Settings
+
+  p In the "Settings" tab, which only you can see, you can rename the tournament and change some details, such as the date.
+  .alert.alert-info
+    => fa_icon 'calendar'
+    | The homepage of the site will display all events taking place today to make it easier for your players to find.
+  p You can also amend how table numbers are assigned. By default, they are "random", which means that while players will be paired correctly, they will be assigned random table numbers, and good players will be distributed around the room. If you set this setting to "ranked", the better pairings will take place on higher tables, so the best players will be on tables 1, 2 etc.
+  p Finally, you can set your tournament to "Private" so that only you can access it, and it will not be publicly listed anywhere.
+  .alert.alert-warning
+    => fa_icon 'warning'
+    | Make sure to note down your tournament's shortcode before marking it as "Private" or you won't be able to find it!
+
+  h4#help_abr What is "Upload to Always Be Running"?
+  p Always Be Running is a tournament results aggregator, and results from your tournament on Cobra can be uploaded directly to it!
+  p Click "Upload to Always Be Running" and you will receive a short upload code which you can enter in ABR when concluding the tournament there. The standings and identities will pull through.
+  .alert.alert-info
+    => fa_icon 'upload'
+    | Choose the "Conclude with NRTM code" option when importing Cobra tournaments into ABR; Cobra uses NRTM's upload process.
+  p You can also download the standings as JSON. Cobra uses NRTM's tournament JSON format. This JSON can be uploaded to Always Be Running, for instance.
+
+  h4#help_cut What is "Cut to Top X"?
+  p You can cut to a double elimination bracket on this page. Currently only top 4 and top 8 are supported. This will create a new tournament with only the top N (non-dropped) players from the standings, and this new tournament will pair all rounds following the correct bracket structure, rather than using Swiss pairings.
+  .alert.alert-warning
+    => fa_icon 'warning'
+    | This feature is somewhat experimental
+  p In a double elimination bracket, it's important to edit the pairings in the first round to indicate which side each player played. Cobra can determine in future rounds which side each player in a pairing should play.

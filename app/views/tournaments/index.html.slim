@@ -1,11 +1,2 @@
 .col-12
   = render @tournaments
-
-  - if policy(:tournament).create?
-    = simple_form_for :tournament, url: tournaments_path do |f|
-      .tournament.card.m-3
-        .card-body
-          h4.card-title=> f.text_field :name, placeholder: 'Tournament Name', class: 'form-control'
-          h6.card-subtitle.mb-2.text-muted= button_tag type: :submit, class: 'btn btn-success' do
-            => fa_icon 'plus'
-            | Create tournament

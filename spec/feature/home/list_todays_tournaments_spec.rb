@@ -38,7 +38,7 @@ RSpec.describe "list today's tournaments" do
       fill_in :slug, with: 'TEST'
       click_button 'Go to tournament'
 
-      expect(page.current_path).to eq(tournament_players_path(today))
+      expect(page.current_path).to eq(tournament_path(today))
     end
 
     it 'handles invalid shortcode' do

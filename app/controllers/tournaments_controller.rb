@@ -15,7 +15,15 @@ class TournamentsController < ApplicationController
   def show
     authorize @tournament
 
-    redirect_to tournament_players_path(@tournament)
+    @players = @tournament.players.active.sort_by(&:name)
+    @dropped = @tournament.players.dropped.sort_by(&:name)
+  end
+
+  def new
+    authorize Tournament
+
+    @new_tournament = current_user.tournaments.new
+    @new_tournament.date = Date.today
   end
 
   def create
@@ -24,7 +32,7 @@ class TournamentsController < ApplicationController
     @new_tournament = current_user.tournaments.new(tournament_params)
 
     if @new_tournament.save
-      redirect_to tournament_players_path(@new_tournament)
+      redirect_to tournament_path(@new_tournament)
     else
       render :new
     end
@@ -81,7 +89,7 @@ class TournamentsController < ApplicationController
 
     next_tournament = @tournament.cut_to!(:double_elim, number)
 
-    redirect_to tournament_players_path(next_tournament)
+    redirect_to tournament_path(next_tournament)
   end
 
   def shortlink

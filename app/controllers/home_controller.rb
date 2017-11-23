@@ -4,4 +4,8 @@ class HomeController < ApplicationController
 
     @tournaments = Tournament.where(date: Date.today, private: false)
   end
+
+  def help
+    skip_authorization
+  end
 end

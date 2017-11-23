@@ -16,6 +16,9 @@ html
         #navbarNav.collapse.navbar-collapse
           ul.navbar-nav.ml-auto
             - if user_signed_in?
+              li.nav-item= link_to new_tournament_path, class: 'nav-link' do
+                => fa_icon 'plus'
+                | Create tournament
               li.nav-item= link_to logout_path, class: 'nav-link' do
                 => fa_icon 'sign-out'
                 | Sign out
@@ -23,25 +26,29 @@ html
               li.nav-item= link_to login_path, class: 'nav-link' do
                 => fa_icon 'sign-in'
                 | Sign in as TO
-    - if @tournament
-      ul.nav.nav-tabs.container.dontprint
-        - if policy(@tournament).show?
-          li.nav-item= link_to tournament_players_path(@tournament), class: "nav-link #{'active' if controller_name == 'players' && action_name != 'standings'}" do
-            => fa_icon 'users'
-            | Tournament
-        - if policy(@tournament).show?
-          li.nav-item= link_to tournament_rounds_path(@tournament), class: "nav-link #{'active' if controller_name == 'rounds' || controller_name == 'pairings'}" do
-            => fa_icon 'calendar-check-o'
-            | Pairings
-        - if policy(@tournament).show?
-          li.nav-item= link_to standings_tournament_players_path(@tournament), class: "nav-link #{'active' if controller_name == 'players' && action_name == 'standings'}" do
-            => fa_icon 'trophy'
-            | Standings
-        - if policy(@tournament).edit?
-          li.nav-item= link_to edit_tournament_path(@tournament), class: "nav-link #{'active' if controller_name == 'tournaments'}" do
-            => fa_icon 'cog'
-            | Settings
+            li.nav-item= link_to help_path, class: 'nav-link' do
+              => fa_icon 'life-ring'
+              | How to
     .container
+      - if @tournament
+        h1= @tournament.name
+        ul.nav.nav-tabs.dontprint
+          - if policy(@tournament).show?
+            li.nav-item= link_to tournament_path(@tournament), class: "nav-link #{'active' if controller_name == 'tournaments' && action_name == 'show'}" do
+              => fa_icon 'users'
+              | Tournament
+          - if policy(@tournament).show?
+            li.nav-item= link_to tournament_rounds_path(@tournament), class: "nav-link #{'active' if controller_name == 'rounds' || controller_name == 'pairings'}" do
+              => fa_icon 'calendar-check-o'
+              | Pairings
+          - if policy(@tournament).show?
+            li.nav-item= link_to standings_tournament_players_path(@tournament), class: "nav-link #{'active' if controller_name == 'players'}" do
+              => fa_icon 'trophy'
+              | Standings
+          - if policy(@tournament).edit?
+            li.nav-item= link_to edit_tournament_path(@tournament), class: "nav-link #{'active' if controller_name == 'tournaments' && action_name != 'show'}" do
+              => fa_icon 'cog'
+              | Settings
       - if alert
         .row.py-3
           .col-12

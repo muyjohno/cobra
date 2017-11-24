@@ -20,8 +20,33 @@ module PairingsHelper
       class: 'btn btn-primary'
   end
 
+  def side_value(player, side, pairing)
+    return unless pairing.players.include? player
+
+    [:player1_is_corp, :player1_is_runner].tap do |options|
+      options.reverse! if (side == :runner) ^ (pairing.player2 == player)
+    end.first
+  end
+
+  def set_side_button(player, side, pairing)
+    return unless pairing.players.include? player
+
+    value = side_value(player, side, pairing)
+    active = (pairing.side.to_sym == value)
+
+    link_to side.capitalize,
+      report_tournament_round_pairing_path(
+        pairing.tournament,
+        pairing.round,
+        pairing,
+        pairing: { side: value }
+      ),
+      method: :post,
+      class: "btn btn-sm mr-1 #{active ? 'btn-dark' : 'btn-outline-dark'}"
+  end
+
   def presets(tournament)
-    return [[3, 0], [0, 3]] if tournament.double_elim?
+    return [[3, 0], [0, 3]] if tournament.single_sided?
 
     [[6, 0], [3, 3], [0, 6]]
   end

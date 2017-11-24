@@ -49,4 +49,21 @@ RSpec.describe PairingsHelper do
       expect(helper.side_label_for(pairing, undeclared.player1)).to eq(nil)
     end
   end
+
+  describe '#side_value' do
+    let(:jack) { create(:player) }
+    let(:jill) { create(:player) }
+    let(:other) { create(:player) }
+    let(:pairing) { create(:pairing, player1: jack, player2: jill) }
+
+    it 'calculates side correctly' do
+      aggregate_failures do
+        expect(helper.side_value(other, :corp, pairing)).to eq(nil)
+        expect(helper.side_value(jack, :corp, pairing)).to eq(:player1_is_corp)
+        expect(helper.side_value(jill, :corp, pairing)).to eq(:player1_is_runner)
+        expect(helper.side_value(jack, :runner, pairing)).to eq(:player1_is_runner)
+        expect(helper.side_value(jill, :runner, pairing)).to eq(:player1_is_corp)
+      end
+    end
+  end
 end

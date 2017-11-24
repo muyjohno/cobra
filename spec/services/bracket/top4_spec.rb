@@ -5,17 +5,6 @@ RSpec.describe Bracket::Top4 do
     let!(name) { create(:player, tournament: tournament, name: name, seed: i+1) }
   end
 
-  def report(round, number, p1, score1, p2, score2)
-    create(:pairing,
-      round: round,
-      player1: p1,
-      player2: p2,
-      score1: score1,
-      score2: score2,
-      table_number: number
-    )
-  end
-
   describe '#pair' do
     context 'round 1' do
       let(:pair) { bracket.pair(1) }
@@ -108,6 +97,28 @@ RSpec.describe Bracket::Top4 do
           { table_number: 7, player1: bravo, player2: alpha }
         ])
       end
+    end
+  end
+
+  describe '#standings' do
+    before do
+      r1 = create(:round, tournament: tournament)
+      report r1, 1, alpha, 3, delta, 0
+      report r1, 2, bravo, 3, charlie, 0
+
+      r2 = create(:round, tournament: tournament)
+      report r2, 3, alpha, 3, bravo, 0
+      report r2, 4, delta, 0, charlie, 3
+
+      report r2, 5, bravo, 3, charlie, 0
+      report r2, 6, alpha, 0, bravo, 3
+      report r2, 7, bravo, 3, alpha, 0
+    end
+
+    it 'returns correct standings' do
+      expect(bracket.standings.map(&:player)).to eq(
+        [bravo, alpha, charlie, delta]
+      )
     end
   end
 end

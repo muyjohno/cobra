@@ -21,5 +21,16 @@ module Bracket
     game 14, winner(9), winner(13), round: 6
 
     game 15, winner(14), loser(14), round: 7
+
+    STANDINGS = [
+      [winner(15), winner(14)],
+      [loser(15), loser(14)],
+      loser(13),
+      loser(12),
+      seed_of([loser(10), loser(11)], 1),
+      seed_of([loser(10), loser(11)], 2),
+      seed_of([loser(7), loser(8)], 1),
+      seed_of([loser(7), loser(8)], 2)
+    ]
   end
 end

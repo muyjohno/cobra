@@ -1,1 +1,28 @@
-p Standings are not currently supported for elimination brackets
+table.table.table-striped.standings
+  thead
+    tr
+      th Rank
+      th Name
+      th IDs
+      th Seed
+  tbody
+    - standings.each_with_index do |standing, i|
+      tr
+        td= i+1
+        - if standing.player
+          td= standing.name
+          td.ids
+            p= standing.corp_identity
+            p= standing.runner_identity
+          td= standing.seed
+        - else
+          td ???
+          td.ids
+            p ???
+            p ???
+          td ???
+
+- if tournament.previous
+  h3 Previous stage
+  p After #{pluralize(tournament.previous.rounds.count, 'round')}
+  = render "players/standings/#{tournament.previous.stage}", standings: tournament.previous.standings, tournament: tournament.previous

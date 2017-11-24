@@ -11,5 +11,12 @@ module Bracket
     game 6, winner(3), winner(5), round: 4
 
     game 7, winner(6), loser(6), round: 5
+
+    STANDINGS = [
+      [winner(7), winner(6)],
+      [loser(7), loser(6)],
+      loser(5),
+      loser(4)
+    ]
   end
 end

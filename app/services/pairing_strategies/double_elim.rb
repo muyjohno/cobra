@@ -14,10 +14,7 @@ module PairingStrategies
     private
 
     def bracket
-      num_players = tournament.players.count
-      raise "bracket size not supported" unless [4,8].include? num_players
-
-      "Bracket::Top#{num_players}".constantize
+      Bracket::Factory.bracket_for tournament.players.count
     end
   end
 end

@@ -2,19 +2,19 @@ RSpec.describe TournamentsController do
   let(:tournament) { create(:tournament, name: 'My Tournament') }
 
   describe '#save_json' do
+    before do
+      allow(NrtmJson).to receive(:new).with(tournament).and_return(
+        double(:json, data: { some: :data })
+      )
+    end
+
     it 'responds with json file' do
       get save_json_tournament_path(tournament)
 
       expect(response.headers['Content-Disposition']).to eq(
         'attachment; filename="my tournament.json"'
       )
-      expect(response.body).to eq(
-        {
-          name: 'My Tournament',
-          cutToTop: 0,
-          players: []
-        }.to_json
-      )
+      expect(response.body).to eq("{\"some\":\"data\"}")
     end
   end
 

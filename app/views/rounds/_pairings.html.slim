@@ -3,7 +3,7 @@
     .col-sm-2 Table #{pairing.table_number}
     .col-sm.left_player_name
       = pairing.player1.name
-      =< side_label_for(pairing, pairing.player1)
+      =< render 'player_side', pairing: pairing, player: pairing.player1
     .col-sm-3.centre_score
       - if policy(round.tournament).edit?
         .preset_score
@@ -22,8 +22,8 @@
         | #{pairing.score1} - #{pairing.score2}
     .col-sm.right_player_name
       = pairing.player2.name
-      =< side_label_for(pairing, pairing.player2)
-    - if policy(@tournament).update?
+      =< render 'player_side', pairing: pairing, player: pairing.player2
+    - if policy(round.tournament).update?
       .col-sm-1
-        = link_to tournament_round_pairing_path(pairing.tournament, pairing.round, pairing), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure? This cannot be reversed.' } do
+        = link_to tournament_round_pairing_path(round.tournament, round, pairing), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure? This cannot be reversed.' } do
           => fa_icon 'trash'

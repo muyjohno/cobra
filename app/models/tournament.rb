@@ -86,6 +86,10 @@ class Tournament < ApplicationRecord
     ) if slug
   end
 
+  def single_sided?
+    double_elim?
+  end
+
   private
 
   def default_date

@@ -28,6 +28,10 @@ module Bracket
       def loser(x)
         lambda { |context| context.loser(x) }
       end
+
+      def seed_of(players, pos)
+        lambda { |context| context.seed_of(players, pos) }
+      end
     end
 
     def games

@@ -44,7 +44,8 @@ class Tournament < ApplicationRecord
           corp_identity: player.corp_identity,
           runner_identity: player.runner_identity,
           tournament: t,
-          seed: i + 1
+          seed: i + 1,
+          previous: player
         )
       end
     end

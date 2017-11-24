@@ -1,0 +1,85 @@
+{
+  "name": "Some Tournament",
+  "date": "2017-01-01",
+  "cutToTop": 0,
+  "preliminaryRounds": 1,
+  "tournamentOrganiser": {
+    "nrdbId": 123,
+    "nrdbUsername": "username"
+  },
+  "players": [
+    {
+      "id": 1001, "name": "Jack", "rank": 1, "corpIdentity": "ETF",
+      "runnerIdentity": "Noise", "matchPoints": 6, "strengthOfSchedule": 1.6,
+      "extendedStrengthOfSchedule": 2.6
+    },
+    {
+      "id": 1003, "name": "Hansel", "rank": 2, "corpIdentity": "MN",
+      "runnerIdentity": "Kate", "matchPoints": 5, "strengthOfSchedule": 1.5,
+      "extendedStrengthOfSchedule": 2.5
+    },
+    {
+      "id": 1005, "name": "Snap", "rank": 3, "corpIdentity": "ST",
+      "runnerIdentity": "Chaos Theory", "matchPoints": 4, "strengthOfSchedule": 1.4,
+      "extendedStrengthOfSchedule": 2.4
+    },
+    {
+      "id": 1007, "name": "Pop", "rank": 4, "corpIdentity": "TWIY",
+      "runnerIdentity": "Reina", "matchPoints": 3, "strengthOfSchedule": 1.3,
+      "extendedStrengthOfSchedule": 2.3
+    },
+    {
+      "id": 1006, "name": "Crackle", "rank": 5, "corpIdentity": "RP",
+      "runnerIdentity": "Andromeda", "matchPoints": 2, "strengthOfSchedule": 1.2,
+      "extendedStrengthOfSchedule": 2.2
+    },
+    {
+      "id": 1004, "name": "Gretel", "rank": 6, "corpIdentity": "BABW",
+      "runnerIdentity": "Whizzard", "matchPoints": 1, "strengthOfSchedule": 1.1,
+      "extendedStrengthOfSchedule": 2.1
+    },
+    {
+      "id": 1002, "name": "Jill", "rank": 7, "corpIdentity": "PE",
+      "runnerIdentity": "Gabe", "matchPoints": 0, "strengthOfSchedule": 1.0,
+      "extendedStrengthOfSchedule": 2.0
+    }
+  ],
+  "eliminationPlayers": [],
+  "rounds": [
+    [
+      {
+        "table": 1,
+        "player1": { "id": 1001, "runnerScore": 0, "corpScore": 0, "combinedScore": 6 },
+        "player2": { "id": 1002, "runnerScore": 0, "corpScore": 0, "combinedScore": 0 },
+        "intentionalDraw": false,
+        "eliminationGame": false
+      },
+      {
+        "table": 2,
+        "player1": { "id": 1003, "runnerScore": 0, "corpScore": 0, "combinedScore": 5 },
+        "player2": { "id": 1004, "runnerScore": 0, "corpScore": 0, "combinedScore": 1 },
+        "intentionalDraw": false,
+        "eliminationGame": false
+      },
+      {
+        "table": 3,
+        "player1": { "id": 1005, "runnerScore": 0, "corpScore": 0, "combinedScore": 4 },
+        "player2": { "id": 1006, "runnerScore": 0, "corpScore": 0, "combinedScore": 2 },
+        "intentionalDraw": false,
+        "eliminationGame": false
+      },
+      {
+        "table": 4,
+        "player1": { "id": 1007, "runnerScore": 0, "corpScore": 0, "combinedScore": 3 },
+        "player2": { "id": null, "runnerScore": 0, "corpScore": 0, "combinedScore": 0 },
+        "intentionalDraw": false,
+        "eliminationGame": false
+      }
+    ]
+  ],
+  "uploadedFrom": "Cobra",
+  "links": [
+    { "rel": "schemaderivedfrom", "href": "http://steffens.org/nrtm/nrtm-schema.json" },
+    { "rel": "uploadedfrom", "href": "http://cobr.ai/SLUG" }
+  ]
+}

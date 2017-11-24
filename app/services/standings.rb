@@ -10,10 +10,18 @@ class Standings
   end
 
   def players
-    @players ||= SosCalculator.calculate!(tournament)
+    @players ||= strategy.new(tournament).calculate!
   end
 
   def top(number)
     players.map(&:player).select(&:active?)[0...number]
+  end
+
+  private
+
+  def strategy
+    return StandingStrategies::Swiss unless %w(swiss double_elim).include? tournament.stage
+
+    "StandingStrategies::#{tournament.stage.camelize}".constantize
   end
 end

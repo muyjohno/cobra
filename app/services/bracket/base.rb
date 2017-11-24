@@ -26,14 +26,32 @@ module Bracket
       tournament.rounds
         .map(&:pairings).flatten
         .find{ |i| i.table_number == number }
-        .winner
+        .try(:winner)
     end
 
     def loser(number)
       tournament.rounds
         .map(&:pairings).flatten
         .find{ |i| i.table_number == number }
-        .loser
+        .try(:loser)
+    end
+
+    def seed_of(players, pos)
+      players.map do |lam|
+        lam.call(self)
+      end.tap do |players|
+        return nil unless players.all?
+      end.sort_by(&:seed)[pos - 1]
+    end
+
+    def standings
+      self.class::STANDINGS.map do |lam|
+        if lam.is_a? Array
+          lam.map { |l| l.call(self) }.compact.try(:first)
+        else
+          lam.call(self)
+        end
+      end.map { |p| Standing.new(p) }
     end
   end
 end

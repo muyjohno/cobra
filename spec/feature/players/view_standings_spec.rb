@@ -36,8 +36,8 @@ RSpec.describe 'viewing standings' do
 
     it 'displays corp and runner' do
       aggregate_failures do
-        expect(page).to have_content('Some CorpSome Runner')
-        expect(page).to have_content('Another CorpAnother Runner')
+        expect(page).to have_content('Some Corp Some Runner')
+        expect(page).to have_content('Another Corp Another Runner')
       end
     end
   end

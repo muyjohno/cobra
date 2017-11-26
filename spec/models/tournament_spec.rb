@@ -74,6 +74,9 @@ RSpec.describe Tournament do
   end
 
   describe '#corp_counts' do
+    let!(:identity) { create(:identity, name: 'Something') }
+    let!(:other_identity) { create(:identity, name: 'Something else') }
+
     before do
       tournament.players = [
         create(:player, corp_identity: 'Something'),
@@ -84,13 +87,15 @@ RSpec.describe Tournament do
 
     it 'returns counts' do
       expect(tournament.corp_counts).to eq([
-        ['Something', 2],
-        ['Something else', 1]
+        [identity, 2],
+        [other_identity, 1]
       ])
     end
   end
 
   describe '#runner_counts' do
+    let!(:identity) { create(:identity, name: 'Some runner') }
+
     before do
       tournament.players = [
         create(:player, runner_identity: 'Some runner')
@@ -99,7 +104,7 @@ RSpec.describe Tournament do
 
     it 'returns counts' do
       expect(tournament.runner_counts).to eq([
-        ['Some runner', 1]
+        [identity, 1]
       ])
     end
   end

@@ -17,4 +17,18 @@ class Standing
   def tiebreakers
     [points, sos, extended_sos]
   end
+
+  def corp_identity
+    identity(player.corp_identity)
+  end
+
+  def runner_identity
+    identity(player.runner_identity)
+  end
+
+  private
+
+  def identity(id)
+    Identity.find_or_initialize_by(name: id)
+  end
 end

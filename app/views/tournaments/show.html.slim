@@ -68,7 +68,7 @@
         tbody
           - @tournament.corp_counts.each do |id, count|
             tr
-              td= id
+              td= render id
               td= count
     .col-md-6
       table.table
@@ -79,5 +79,5 @@
         tbody
           - @tournament.runner_counts.each do |id, count|
             tr
-              td= id
+              td= render id
               td= count

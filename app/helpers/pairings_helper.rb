@@ -32,7 +32,7 @@ module PairingsHelper
     return unless pairing.players.include? player
 
     value = side_value(player, side, pairing)
-    active = (pairing.side.to_sym == value)
+    active = (pairing.side.try(:to_sym) == value)
 
     link_to side.capitalize,
       report_tournament_round_pairing_path(

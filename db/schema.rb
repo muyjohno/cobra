@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171123214634) do
+ActiveRecord::Schema.define(version: 20171126092352) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "identities", force: :cascade do |t|
+    t.string  "name"
+    t.integer "side"
+    t.string  "faction"
+    t.string  "nrdb_code"
+    t.index ["side"], name: "index_identities_on_side", using: :btree
+  end
 
   create_table "pairings", force: :cascade do |t|
     t.integer "round_id"

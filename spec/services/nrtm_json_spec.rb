@@ -5,7 +5,7 @@ RSpec.describe NrtmJson do
   let(:jill) { create(:player, name: 'Jill', corp_identity: 'PE', runner_identity: 'Gabe', id: 1002) }
   let(:hansel) { create(:player, name: 'Hansel', corp_identity: 'MN', runner_identity: 'Kate', id: 1003) }
   let(:gretel) { create(:player, name: 'Gretel', corp_identity: 'BABW', runner_identity: 'Whizzard', id: 1004) }
-  let(:snap) { create(:player, name: 'Snap', corp_identity: 'ST', runner_identity: 'Chaos Theory', id: 1005) }
+  let(:snap) { create(:player, name: 'Snap', corp_identity: 'ST', runner_identity: 'Invalid', id: 1005) }
   let(:crackle) { create(:player, name: 'Crackle', corp_identity: 'RP', runner_identity: 'Andromeda', id: 1006) }
   let(:pop) { create(:player, name: 'Pop', corp_identity: 'TWIY', runner_identity: 'Reina', id: 1007) }
   let(:round) { create(:round, tournament: tournament) }
@@ -17,6 +17,10 @@ RSpec.describe NrtmJson do
     round.pairings << create(:pairing, player1: hansel, player2: gretel, table_number: 2, score1: 5, score2: 1)
     round.pairings << create(:pairing, player1: snap, player2: crackle, table_number: 3, score1: 4, score2: 2)
     round.pairings << create(:pairing, player1: pop, player2: nil, table_number: 4, score1: 3, score2: 0)
+
+    %w(ETF Noise PE Gabe MN Kate BABW Whizzard ST RP Andromeda TWIY Reina).each do |id|
+      create(:identity, name: id)
+    end
   end
 
   describe '#data' do

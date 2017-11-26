@@ -30,6 +30,7 @@ Rails.application.routes.draw do
     get :shortlink, on: :collection
     get :not_found, on: :collection
   end
+  resources :identities, only: [:index]
 
   get '/error', to: 'errors#show'
 

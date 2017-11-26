@@ -3,18 +3,22 @@ RSpec.describe Standing do
   let(:standing) { Standing.new(player) }
 
   describe '#corp_identity' do
+    let!(:identity) { create(:identity, name: 'RP') }
+
     before { player.corp_identity = 'RP' }
 
     it 'delegates to player' do
-      expect(standing.corp_identity).to eq('RP')
+      expect(standing.corp_identity).to eq(identity)
     end
   end
 
   describe '#runner_identity' do
+    let!(:identity) { create(:identity, name: 'Reina Roja') }
+
     before { player.runner_identity = 'Reina Roja' }
 
     it 'delegates to player' do
-      expect(standing.runner_identity).to eq('Reina Roja')
+      expect(standing.runner_identity).to eq(identity)
     end
   end
 

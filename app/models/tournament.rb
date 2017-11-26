@@ -63,13 +63,19 @@ class Tournament < ApplicationRecord
 
   def corp_counts
     players.group_by(&:corp_identity).map do |id, players|
-      [id, players.count]
+      [
+        Identity.find_or_initialize_by(name: id),
+        players.count
+      ]
     end.sort_by(&:last).reverse
   end
 
   def runner_counts
     players.group_by(&:runner_identity).map do |id, players|
-      [id, players.count]
+      [
+        Identity.find_or_initialize_by(name: id),
+        players.count
+      ]
     end.sort_by(&:last).reverse
   end
 

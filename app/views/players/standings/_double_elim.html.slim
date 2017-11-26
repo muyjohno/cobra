@@ -12,8 +12,8 @@ table.table.table-striped.standings
         - if standing.player
           td= standing.name
           td.ids
-            p= standing.corp_identity
-            p= standing.runner_identity
+            = render standing.corp_identity
+            = render standing.runner_identity
           td= standing.seed
         - else
           td ???

@@ -20,7 +20,7 @@
     },
     {
       "id": 1005, "name": "Snap", "rank": 3, "corpIdentity": "ST",
-      "runnerIdentity": "Chaos Theory", "matchPoints": 4, "strengthOfSchedule": 1.4,
+      "runnerIdentity": null, "matchPoints": 4, "strengthOfSchedule": 1.4,
       "extendedStrengthOfSchedule": 2.4
     },
     {

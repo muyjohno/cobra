@@ -54,3 +54,11 @@ $ rails server
 ```
 $ rspec
 ```
+
+## Identities
+Identities are stored in the database and can be seeded/updated by running a rake task:
+```
+$ rake ids:update
+```
+This rake task queries the NRDB API and creates/updates identities as appropriate.  
+Identities not in the database are stripped out of ABR uploads to avoid errors.

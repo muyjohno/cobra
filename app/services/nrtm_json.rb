@@ -20,8 +20,8 @@ class NrtmJson
           id: standing.player.id,
           name: standing.name,
           rank: i+1,
-          corpIdentity: standing.corp_identity,
-          runnerIdentity: standing.runner_identity,
+          corpIdentity: (standing.corp_identity if Identity.valid?(standing.corp_identity)),
+          runnerIdentity: (standing.runner_identity if Identity.valid?(standing.runner_identity)),
           matchPoints: standing.points,
           strengthOfSchedule: standing.sos,
           extendedStrengthOfSchedule: standing.extended_sos

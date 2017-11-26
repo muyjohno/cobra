@@ -18,6 +18,7 @@
                 => fa_icon 'flag-checkered'
                 | Save
               = f.text_field :score2, style: 'width: 2.5em;', class: 'form-control'
+              =< link_to '...', '#', class: 'btn btn-primary toggle_custom_score'
       - else
         | #{pairing.score1} - #{pairing.score2}
     .col-sm.right_player_name

@@ -8,7 +8,7 @@ class TournamentsController < ApplicationController
     authorize Tournament
 
     @tournaments = Tournament.where(private: false)
-      .order(created_at: :desc)
+      .order(date: :desc)
       .limit(20)
   end
 

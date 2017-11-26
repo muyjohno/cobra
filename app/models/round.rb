@@ -14,6 +14,7 @@ class Round < ApplicationRecord
 
   def repair!
     pairings.destroy_all
+    update(completed: false)
     pair!
   end
 

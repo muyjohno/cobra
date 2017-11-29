@@ -56,4 +56,22 @@ class Pairing < ApplicationRecord
 
     score1 < score2 ? player1 : player2
   end
+
+  def player1_side
+    return unless side
+
+    player1_is_corp? ? :corp : :runner
+  end
+
+  def player2_side
+    return unless side
+
+    player1_is_corp? ? :runner : :corp
+  end
+
+  def side_for(player)
+    return unless players.include? player
+
+    player1 == player ? player1_side : player2_side
+  end
 end

@@ -58,8 +58,6 @@ module PairingsHelper
   def side_label_for(pairing, player)
     return nil unless pairing.side && pairing.players.include?(player)
 
-    players = pairing.players
-    players.reverse! if pairing.player1_is_runner?
-    players.first == player ? "(Corp)" : "(Runner)"
+    "(#{pairing.side_for(player).to_s.titleize})"
   end
 end

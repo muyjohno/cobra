@@ -80,6 +80,59 @@
         "intentionalDraw": false,
         "eliminationGame": false
       }
+    ],
+    [
+      {
+        "table": 1,
+        "player1": { "id": 1001, "role": "corp", "winner": true  },
+        "player2": { "id": 1007, "role": "runner", "winner": false  },
+        "intentionalDraw": false,
+        "eliminationGame": true
+      },
+      {
+        "table": 2,
+        "player1": { "id": 1003, "role": "corp", "winner": true },
+        "player2": { "id": 1005, "role": "runner", "winner": false },
+        "intentionalDraw": false,
+        "eliminationGame": true
+      }
+    ],
+    [
+      {
+        "table": 3,
+        "player1": { "id": 1001, "role": "corp", "winner": true },
+        "player2": { "id": 1003, "role": "runner", "winner": false },
+        "intentionalDraw": false,
+        "eliminationGame": true
+      },
+      {
+        "table": 4,
+        "player1": { "id": 1007, "role": "runner", "winner": false },
+        "player2": { "id": 1005, "role": "corp", "winner": true },
+        "intentionalDraw": false,
+        "eliminationGame": true
+      },
+      {
+        "table": 5,
+        "player1": { "id": 1003, "role": "runner", "winner": true },
+        "player2": { "id": 1005, "role": "corp", "winner": false },
+        "intentionalDraw": false,
+        "eliminationGame": true
+      },
+      {
+        "table": 6,
+        "player1": { "id": 1001, "role": "corp", "winner": false },
+        "player2": { "id": 1003, "role": "runner", "winner": true },
+        "intentionalDraw": false,
+        "eliminationGame": true
+      },
+      {
+        "table": 7,
+        "player1": { "id": 1003, "role": "runner", "winner": true },
+        "player2": { "id": 1001, "role": "corp", "winner": false },
+        "intentionalDraw": false,
+        "eliminationGame": true
+      }
     ]
   ],
   "uploadedFrom": "Cobra",

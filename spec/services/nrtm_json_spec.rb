@@ -57,20 +57,20 @@ RSpec.describe NrtmJson do
         cut.update(date: '2017-01-02', slug: 'CUTT')
 
         r1 = create(:round, tournament: cut)
-        report r1, 1, jack.next, 3, pop.next, 0
-        report r1, 2, hansel.next, 3, snap.next, 0
+        report r1, 1, jack.next, 3, pop.next, 0, :player1_is_corp
+        report r1, 2, hansel.next, 3, snap.next, 0, :player1_is_corp
 
         r2 = create(:round, tournament: cut)
-        report r2, 3, jack.next, 3, hansel.next, 0
-        report r2, 4, pop.next, 0, snap.next, 3
+        report r2, 3, jack.next, 3, hansel.next, 0, :player1_is_corp
+        report r2, 4, pop.next, 0, snap.next, 3, :player1_is_runner
 
-        report r2, 5, hansel.next, 3, snap.next, 0
-        report r2, 6, jack.next, 0, hansel.next, 3
-        report r2, 7, hansel.next, 3, jack.next, 0
+        report r2, 5, hansel.next, 3, snap.next, 0, :player1_is_runner
+        report r2, 6, jack.next, 0, hansel.next, 3, :player1_is_corp
+        report r2, 7, hansel.next, 3, jack.next, 0, :player1_is_runner
       end
 
       it 'returns hash of data' do
-        expect(json.data.with_indifferent_access).to eq(
+        expect(JSON.parse(json.data.to_json)).to eq(
           JSON.parse(File.read('spec/fixtures/nrtm_json_cut.json'))
         )
       end

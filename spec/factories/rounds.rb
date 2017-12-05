@@ -3,5 +3,6 @@ FactoryGirl.define do
     number 1
     tournament
     completed false
+    weight 1.0
   end
 end

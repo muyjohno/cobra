@@ -104,4 +104,43 @@ RSpec.describe SosCalculator do
       end
     end
   end
+
+  context 'weighted round example' do
+    let(:weighted) { create(:tournament) }
+    let(:alpha) { create(:player, tournament: weighted) }
+    let(:beta) { create(:player, tournament: weighted) }
+    let(:gamma) { create(:player, tournament: weighted) }
+    let(:delta) { create(:player, tournament: weighted) }
+    let(:round1) { create(:round, tournament: weighted, weight: 1.0, completed: true) }
+    let(:round2) { create(:round, tournament: weighted, weight: 0.5, completed: true) }
+    let(:results) { described_class.calculate!(weighted) }
+
+    before do
+      create(:pairing, player1: alpha, player2: beta, score1: 6, score2: 0, round: round1)
+      create(:pairing, player1: gamma, player2: delta, score1: 3, score2: 3, round: round1)
+      create(:pairing, player1: alpha, player2: gamma, score1: 3, score2: 0, round: round2)
+      create(:pairing, player1: beta, player2: delta, score1: 0, score2: 3, round: round2)
+    end
+
+    it 'calculates weighted SOS' do
+      aggregate_failures do
+        expect(results[0].player).to eq(alpha)
+        expect(results[0].points).to eq(9)
+        expect(results[0].sos.round(4)).to eq(0.6667)
+        expect(results[0].extended_sos.round(4)).to eq(5.1111)
+        expect(results[1].player).to eq(delta)
+        expect(results[1].points).to eq(6)
+        expect(results[1].sos.round(4)).to eq(1.3333)
+        expect(results[1].extended_sos.round(4)).to eq(4.8889)
+        expect(results[2].player).to eq(gamma)
+        expect(results[2].points).to eq(3)
+        expect(results[2].sos.round(4)).to eq(4.6667)
+        expect(results[2].extended_sos.round(4)).to eq(1.1111)
+        expect(results[3].player).to eq(beta)
+        expect(results[3].points).to eq(0)
+        expect(results[3].sos.round(4)).to eq(5.3333)
+        expect(results[3].extended_sos.round(4)).to eq(0.8889)
+      end
+    end
+  end
 end

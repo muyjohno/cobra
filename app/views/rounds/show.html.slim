@@ -15,6 +15,9 @@
       => link_to complete_tournament_round_path(@round.tournament, @round, completed: true), method: :patch, class: 'btn btn-warning' do
         => fa_icon 'check'
         | Complete
+    => link_to edit_tournament_round_path(@round.tournament, @round), class: 'btn btn-warning' do
+      => fa_icon 'wrench'
+      | Advanced
     = link_to tournament_round_path(@round.tournament, @round), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure? This cannot be reversed.' } do
       => fa_icon 'trash'
       | Delete round

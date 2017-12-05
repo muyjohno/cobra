@@ -15,7 +15,7 @@ Rails.application.routes.draw do
       patch :drop, on: :member
       patch :reinstate, on: :member
     end
-    resources :rounds, only: [:index, :show, :create, :destroy] do
+    resources :rounds, only: [:index, :show, :create, :edit, :update, :destroy] do
       resources :pairings, only: [:index, :create, :destroy] do
         post :report, on: :member
         get :match_slips, on: :collection

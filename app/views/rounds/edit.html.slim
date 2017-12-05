@@ -1,0 +1,15 @@
+.col-12
+  h2= "Round #{@round.number}: Advanced Settings"
+  => link_to tournament_round_path(@tournament, @round), class: 'btn btn-primary' do
+    => fa_icon 'arrow-left'
+    | Back to round
+.col-12.mt-3
+  .row
+    .col-4
+      = simple_form_for @round, url: tournament_round_path(@tournament, @round) do |f|
+        .form-group
+          = f.input :weight, input_html: { class: 'form-control' }, label: 'SOS Weighting'
+        .form-group
+          = button_tag type: :submit, class: 'btn btn-primary' do |f|
+            => fa_icon 'floppy-o'
+            | Save

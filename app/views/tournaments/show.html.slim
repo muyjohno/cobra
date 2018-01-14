@@ -6,6 +6,7 @@
     p
       ' URL:
       = link_to "cobr.ai/#{@tournament.slug.downcase}", "http://cobr.ai/#{@tournament.slug}"
+  p Organiser: #{@tournament.user.nrdb_username}
   p
     => pluralize(@players.count, 'active player')
     = "(#{@dropped.count} dropped)"

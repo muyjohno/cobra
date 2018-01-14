@@ -31,7 +31,7 @@ html
               | How to
     .container
       - if @tournament
-        h1= @tournament.name
+        h1.dontprint= @tournament.name
         ul.nav.nav-tabs.dontprint
           - if policy(@tournament).show?
             li.nav-item= link_to tournament_path(@tournament), class: "nav-link #{'active' if controller_name == 'tournaments' && action_name == 'show'}" do

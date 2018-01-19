@@ -8,15 +8,12 @@ RSpec.describe IdentitiesController do
     end
 
     it 'lists corp identities' do
-      get identities_path(side: :corp)
+      get identities_path
 
-      expect(JSON.parse(response.body)).to match_array(['Conglomo', 'DystopiaTech'])
-    end
-
-    it 'lists runner identities' do
-      get identities_path(side: :runner)
-
-      expect(JSON.parse(response.body)).to match_array(['Jack', 'Jill'])
+      expect(JSON.parse(response.body)).to eq(
+        'corp' => ['Conglomo', 'DystopiaTech'],
+        'runner' => ['Jack', 'Jill']
+      )
     end
   end
 end

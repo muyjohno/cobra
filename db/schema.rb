@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171205104445) do
+ActiveRecord::Schema.define(version: 20180114220350) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20171205104445) do
     t.integer "side"
     t.string  "faction"
     t.string  "nrdb_code"
+    t.string  "autocomplete"
     t.index ["side"], name: "index_identities_on_side", using: :btree
   end
 

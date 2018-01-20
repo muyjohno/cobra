@@ -4,5 +4,6 @@ FactoryGirl.define do
     side :runner
     faction :shaper
     nrdb_code '00001'
+    autocomplete 'Mr Runner'
   end
 end

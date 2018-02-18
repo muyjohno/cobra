@@ -14,7 +14,7 @@ module PairingStrategies
         round.pairings.create(pairing_params(pairing))
       end
 
-      apply_numbers!(tournament.pairing_sorter)
+      apply_numbers!(PairingSorters::Random)
     end
 
     private

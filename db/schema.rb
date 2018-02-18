@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180114220350) do
+ActiveRecord::Schema.define(version: 20180218182930) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,17 +57,23 @@ ActiveRecord::Schema.define(version: 20180114220350) do
     t.index ["tournament_id"], name: "index_rounds_on_tournament_id", using: :btree
   end
 
+  create_table "stages", force: :cascade do |t|
+    t.integer "tournament_id"
+    t.integer "number",        default: 1
+    t.integer "format",        default: 0, null: false
+    t.index ["tournament_id"], name: "index_stages_on_tournament_id", using: :btree
+  end
+
   create_table "tournaments", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at"
-    t.integer  "pairing_sort", default: 0
     t.string   "abr_code"
-    t.integer  "stage",        default: 0
+    t.integer  "stage",       default: 0
     t.integer  "previous_id"
     t.integer  "user_id"
     t.string   "slug"
     t.date     "date"
-    t.boolean  "private",      default: false
+    t.boolean  "private",     default: false
     t.index ["user_id"], name: "index_tournaments_on_user_id", using: :btree
   end
 
@@ -86,5 +92,6 @@ ActiveRecord::Schema.define(version: 20180114220350) do
   add_foreign_key "pairings", "rounds"
   add_foreign_key "players", "tournaments"
   add_foreign_key "rounds", "tournaments"
+  add_foreign_key "stages", "tournaments"
   add_foreign_key "tournaments", "users"
 end

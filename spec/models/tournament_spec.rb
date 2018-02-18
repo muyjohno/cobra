@@ -18,6 +18,17 @@ RSpec.describe Tournament do
     expect(tournament.date).to eq(Date.today)
   end
 
+  it 'automatically creates stage' do
+    expect do
+      tournament
+    end.to change(Stage, :count).by(1)
+
+    stage = tournament.stages.last
+
+    expect(stage.number).to eq(1)
+    expect(stage.swiss?).to be(true)
+  end
+
   describe '#pair_new_round!' do
     it 'creates new round with pairings' do
       expect do
@@ -52,24 +63,6 @@ RSpec.describe Tournament do
     it 'returns standings object' do
       expect(tournament.standings).to eq(standings)
       expect(Standings).to have_received(:new).with(tournament)
-    end
-  end
-
-  describe '#pairing_sorter' do
-    context 'random' do
-      let(:tournament) { create(:tournament, pairing_sort: :random) }
-
-      it 'returns correct class' do
-        expect(tournament.pairing_sorter).to eq(PairingSorters::Random)
-      end
-    end
-
-    context 'ranked' do
-      let(:tournament) { create(:tournament, pairing_sort: :ranked) }
-
-      it 'returns correct class' do
-        expect(tournament.pairing_sorter).to eq(PairingSorters::Ranked)
-      end
     end
   end
 

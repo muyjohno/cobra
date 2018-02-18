@@ -4,11 +4,7 @@ class Tournament < ApplicationRecord
   belongs_to :previous, class_name: Tournament, optional: true
   has_one :next, class_name: Tournament, foreign_key: :previous_id
   belongs_to :user
-
-  enum pairing_sort: {
-    random: 0,
-    ranked: 1
-  }
+  has_many :stages, dependent: :destroy
 
   enum stage: {
     swiss: 0,
@@ -22,6 +18,7 @@ class Tournament < ApplicationRecord
 
   before_validation :generate_slug, on: :create, unless: :slug
   before_create :default_date, unless: :date
+  after_create :create_stage
 
   def pair_new_round!
     number = (rounds.pluck(:number).max || 0) + 1
@@ -53,12 +50,6 @@ class Tournament < ApplicationRecord
 
   def standings
     Standings.new(self)
-  end
-
-  def pairing_sorter
-    return PairingSorter::Random unless self.class.pairing_sorts.keys.include? pairing_sort
-
-    "PairingSorters::#{pairing_sort.to_s.camelize}".constantize
   end
 
   def corp_counts
@@ -100,5 +91,12 @@ class Tournament < ApplicationRecord
 
   def default_date
     self.date = Date.today
+  end
+
+  def create_stage
+    stages.create(
+      number: 1,
+      format: :swiss
+    )
   end
 end

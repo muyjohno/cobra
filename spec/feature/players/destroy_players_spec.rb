@@ -7,7 +7,7 @@ RSpec.describe 'destroying players' do
     round = create(:round, tournament: tournament)
     create(:pairing, round: round, player1: player, player2: nil)
 
-    visit tournament_path(tournament)
+    visit tournament_players_path(tournament)
   end
 
   it 'deletes player' do
@@ -23,6 +23,6 @@ RSpec.describe 'destroying players' do
   it 'redirects to players page' do
     click_link 'Delete'
 
-    expect(current_path).to eq(tournament_path(tournament))
+    expect(current_path).to eq(tournament_players_path(tournament))
   end
 end

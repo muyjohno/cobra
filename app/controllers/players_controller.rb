@@ -2,12 +2,19 @@ class PlayersController < ApplicationController
   before_action :set_tournament
   before_action :set_player, only: [:update, :destroy, :drop, :reinstate]
 
+  def index
+    authorize @tournament, :update?
+
+    @players = @tournament.players.active.sort_by(&:name)
+    @dropped = @tournament.players.dropped.sort_by(&:name)
+  end
+
   def create
     authorize @tournament, :update?
 
     @tournament.players.create(player_params)
 
-    redirect_to tournament_path(@tournament)
+    redirect_to tournament_players_path(@tournament)
   end
 
   def update
@@ -15,7 +22,7 @@ class PlayersController < ApplicationController
 
     @player.update(player_params)
 
-    redirect_to tournament_path(@tournament)
+    redirect_to tournament_players_path(@tournament)
   end
 
   def destroy
@@ -23,7 +30,7 @@ class PlayersController < ApplicationController
 
     @player.destroy
 
-    redirect_to tournament_path(@tournament)
+    redirect_to tournament_players_path(@tournament)
   end
 
   def standings
@@ -38,7 +45,7 @@ class PlayersController < ApplicationController
 
     @player.update(active: false)
 
-    redirect_to tournament_path(@tournament)
+    redirect_to tournament_players_path(@tournament)
   end
 
   def reinstate
@@ -46,7 +53,7 @@ class PlayersController < ApplicationController
 
     @player.update(active: true)
 
-    redirect_to tournament_path(@tournament)
+    redirect_to tournament_players_path(@tournament)
   end
 
   def meeting

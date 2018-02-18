@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   end
 
   resources :tournaments do
-    resources :players, only: [:create, :update, :destroy] do
+    resources :players, only: [:index, :create, :update, :destroy] do
       get :standings, on: :collection
       get :meeting, on: :collection
       patch :drop, on: :member

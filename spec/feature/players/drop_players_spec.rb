@@ -4,7 +4,7 @@ RSpec.describe 'dropping players' do
 
   before do
     sign_in tournament.user
-    visit tournament_path(tournament)
+    visit tournament_players_path(tournament)
   end
 
   it 'drops player' do
@@ -18,6 +18,6 @@ RSpec.describe 'dropping players' do
   it 'redirects to players page' do
     click_link 'Drop'
 
-    expect(current_path).to eq(tournament_path(tournament))
+    expect(current_path).to eq(tournament_players_path(tournament))
   end
 end

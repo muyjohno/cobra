@@ -23,8 +23,8 @@ RSpec.describe 'viewing standings' do
       visit standings_tournament_players_path(tournament)
     end
 
-    it 'does not display standings' do
-      expect(page).not_to have_content('Jack')
+    it 'does not display identities' do
+      expect(page).not_to have_content('Some Corp')
     end
   end
 

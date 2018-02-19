@@ -25,4 +25,33 @@ RSpec.describe Stage do
       end
     end
   end
+
+  describe '#standings' do
+    let(:standings) { instance_double('Standings') }
+
+    before do
+      allow(Standings).to receive(:new).and_return(standings)
+    end
+
+    it 'returns standings object' do
+      expect(stage.standings).to eq(standings)
+      expect(Standings).to have_received(:new).with(stage)
+    end
+  end
+
+  describe '#players', :skip do
+    it 'only returns players from this stage' do
+    end
+  end
+
+  describe '#eligible_pairings' do
+    let(:round1) { create(:round, stage: stage, completed: true) }
+    let(:round2) { create(:round, stage: stage, completed: false) }
+    let!(:pairing1) { create(:pairing, round: round1) }
+    let!(:pairing2) { create(:pairing, round: round2) }
+
+    it 'only returns pairings from completed rounds' do
+      expect(stage.eligible_pairings).to eq([pairing1])
+    end
+  end
 end

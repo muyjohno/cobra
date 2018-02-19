@@ -35,9 +35,6 @@ class PlayersController < ApplicationController
 
   def standings
     authorize @tournament, :show?
-
-    @standings = @tournament.standings
-    @up_to = @tournament.rounds.select(&:completed?).map(&:number).max
   end
 
   def drop

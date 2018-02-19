@@ -13,8 +13,11 @@ table.table.table-striped.standings
         td= i+1
         td= standing.name
         td.ids
-          = render standing.corp_identity
-          = render standing.runner_identity
+          - if tournament.rounds.complete.any?
+            = render standing.corp_identity
+            = render standing.runner_identity
+          - else
+            | -
         td= standing.points
         td= number_with_precision standing.sos, precision: 4
         td= number_with_precision standing.extended_sos, precision: 4

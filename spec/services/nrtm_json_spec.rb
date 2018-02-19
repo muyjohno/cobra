@@ -1,4 +1,4 @@
-RSpec.describe NrtmJson do
+RSpec.describe NrtmJson, :pending do
   let(:to) { create(:user, nrdb_id: 123, nrdb_username: 'username') }
   let(:tournament) { create(:tournament, name: 'Some Tournament', user: to, slug: 'SLUG', date: '2017-01-01') }
   let(:jack) { create(:player, name: 'Jack', corp_identity: 'ETF', runner_identity: 'Noise', id: 1001) }

@@ -42,10 +42,6 @@ class Tournament < ApplicationRecord
     end
   end
 
-  def standings
-    Standings.new(self)
-  end
-
   def corp_counts
     players.group_by(&:corp_identity).map do |id, players|
       [

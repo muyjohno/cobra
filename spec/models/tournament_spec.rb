@@ -29,19 +29,6 @@ RSpec.describe Tournament do
     expect(stage.swiss?).to be(true)
   end
 
-  describe '#standings' do
-    let(:standings) { instance_double('Standings') }
-
-    before do
-      allow(Standings).to receive(:new).and_return(standings)
-    end
-
-    it 'returns standings object' do
-      expect(tournament.standings).to eq(standings)
-      expect(Standings).to have_received(:new).with(tournament)
-    end
-  end
-
   describe '#corp_counts' do
     let!(:identity) { create(:identity, name: 'Something') }
     let!(:other_identity) { create(:identity, name: 'Something else') }
@@ -78,7 +65,7 @@ RSpec.describe Tournament do
     end
   end
 
-  describe '#cut_to!' do
+  describe '#cut_to!', :pending do
     let(:cut) do
       tournament.cut_to! :double_elim, 4
     end

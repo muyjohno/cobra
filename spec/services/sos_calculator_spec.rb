@@ -1,11 +1,12 @@
 RSpec.describe SosCalculator do
   let(:tournament) { create(:tournament) }
-  let(:round) { create(:round, completed: true) }
+  let(:stage) { tournament.current_stage }
+  let(:round) { create(:round, stage: stage, completed: true) }
   let!(:snap) { create(:player, tournament: tournament) }
   let!(:crackle) { create(:player, tournament: tournament) }
   let!(:pop) { create(:player, tournament: tournament) }
   let!(:other) { create(:player, tournament: tournament) }
-  let(:results) { described_class.calculate!(tournament) }
+  let(:results) { described_class.calculate!(stage) }
   let(:standing) { results.find{ |p| p.player == snap }}
 
   context 'with opponents' do
@@ -75,10 +76,11 @@ RSpec.describe SosCalculator do
 
   context 'three person tourney example' do
     let(:three_person) { create(:tournament) }
+    let(:stage) { three_person.current_stage }
     let(:laurie) { create(:player, tournament: three_person) }
     let(:dan) { create(:player, tournament: three_person) }
     let(:johno) { create(:player, tournament: three_person) }
-    let(:results) { described_class.calculate!(three_person) }
+    let(:results) { described_class.calculate!(stage) }
 
     before do
       create(:pairing, player1: dan, player2: johno, score1: 3, score2: 3, round: round)
@@ -107,13 +109,14 @@ RSpec.describe SosCalculator do
 
   context 'weighted round example' do
     let(:weighted) { create(:tournament) }
+    let(:stage) { weighted.current_stage }
     let(:alpha) { create(:player, tournament: weighted) }
     let(:beta) { create(:player, tournament: weighted) }
     let(:gamma) { create(:player, tournament: weighted) }
     let(:delta) { create(:player, tournament: weighted) }
-    let(:round1) { create(:round, tournament: weighted, weight: 1.0, completed: true) }
-    let(:round2) { create(:round, tournament: weighted, weight: 0.5, completed: true) }
-    let(:results) { described_class.calculate!(weighted) }
+    let(:round1) { create(:round, stage: stage, weight: 1.0, completed: true) }
+    let(:round2) { create(:round, stage: stage, weight: 0.5, completed: true) }
+    let(:results) { described_class.calculate!(stage) }
 
     before do
       create(:pairing, player1: alpha, player2: beta, score1: 6, score2: 0, round: round1)

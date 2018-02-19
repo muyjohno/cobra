@@ -1,9 +1,9 @@
 module StandingStrategies
   class Base
-    attr_reader :tournament
+    attr_reader :stage
 
-    def initialize(tournament)
-      @tournament = tournament
+    def initialize(stage)
+      @stage = stage
     end
   end
 end

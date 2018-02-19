@@ -13,4 +13,16 @@ class Stage < ApplicationRecord
       round.pair!
     end
   end
+
+  def standings
+    Standings.new(self)
+  end
+
+  def players
+    @players ||= tournament.players
+  end
+
+  def eligible_pairings
+    rounds.complete.map(&:pairings).flatten
+  end
 end

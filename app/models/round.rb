@@ -1,5 +1,6 @@
 class Round < ApplicationRecord
-  belongs_to :tournament
+  belongs_to :stage
+  has_one :tournament, through: :stage
   has_many :pairings, -> { order(:table_number) }, dependent: :destroy
 
   default_scope { order(number: :asc) }

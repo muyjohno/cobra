@@ -1,10 +1,10 @@
 class Tournament < ApplicationRecord
   has_many :players, -> { order(:id) }, dependent: :destroy
-  has_many :rounds, dependent: :destroy
   belongs_to :previous, class_name: Tournament, optional: true
   has_one :next, class_name: Tournament, foreign_key: :previous_id
   belongs_to :user
-  has_many :stages, dependent: :destroy
+  has_many :stages, -> { order(:number) }, dependent: :destroy
+  has_many :rounds, through: :stages
 
   enum stage: {
     swiss: 0,
@@ -12,6 +12,7 @@ class Tournament < ApplicationRecord
   }
 
   delegate :top, to: :standings
+  delegate :pair_new_round!, to: :current_stage
 
   validates :name, :slug, presence: true
   validates :slug, uniqueness: true
@@ -19,13 +20,6 @@ class Tournament < ApplicationRecord
   before_validation :generate_slug, on: :create, unless: :slug
   before_create :default_date, unless: :date
   after_create :create_stage
-
-  def pair_new_round!
-    number = (rounds.pluck(:number).max || 0) + 1
-    rounds.create(number: number).tap do |round|
-      round.pair!
-    end
-  end
 
   def cut_to!(stage, number)
     Tournament.create!(
@@ -85,6 +79,10 @@ class Tournament < ApplicationRecord
 
   def single_sided?
     double_elim?
+  end
+
+  def current_stage
+    stages.last
   end
 
   private

@@ -29,30 +29,6 @@ RSpec.describe Tournament do
     expect(stage.swiss?).to be(true)
   end
 
-  describe '#pair_new_round!' do
-    it 'creates new round with pairings' do
-      expect do
-        round = tournament.pair_new_round!
-
-        expect(
-          round.pairings.map(&:players).flatten
-        ).to match_array(tournament.players)
-      end.to change(tournament.rounds, :count).by(1)
-    end
-
-    describe 'round numbers' do
-      it 'creates first with number 1' do
-        expect(tournament.pair_new_round!.number).to eq(1)
-      end
-
-      it 'adds to previous highest' do
-        create(:round, tournament: tournament, number: 4)
-
-        expect(tournament.pair_new_round!.number).to eq(5)
-      end
-    end
-  end
-
   describe '#standings' do
     let(:standings) { instance_double('Standings') }
 
@@ -135,6 +111,14 @@ RSpec.describe Tournament do
     it 'establishes association' do
       expect(child.previous).to eq(tournament)
       expect(tournament.next).to eq(child)
+    end
+  end
+
+  describe '#current_stage' do
+    let!(:new_stage) { create(:stage, tournament: tournament, number: 2) }
+
+    it 'returns last stage' do
+      expect(tournament.current_stage).to eq(new_stage)
     end
   end
 end

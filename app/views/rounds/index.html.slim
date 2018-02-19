@@ -1,6 +1,5 @@
 .col-12
-  .accordion.mb-3 role="tablist"
-    = render @rounds, show_round: @current_round
+  = render @tournament.stages
 
   - if policy(@tournament).update?
     - if @tournament.rounds.all?(&:completed?)

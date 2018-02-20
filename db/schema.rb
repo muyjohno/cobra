@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180218200009) do
+ActiveRecord::Schema.define(version: 20180219221030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,14 @@ ActiveRecord::Schema.define(version: 20180218200009) do
     t.boolean "first_round_bye", default: false
     t.integer "previous_id"
     t.index ["tournament_id"], name: "index_players_on_tournament_id", using: :btree
+  end
+
+  create_table "registrations", force: :cascade do |t|
+    t.integer "player_id"
+    t.integer "stage_id"
+    t.integer "seed"
+    t.index ["player_id"], name: "index_registrations_on_player_id", using: :btree
+    t.index ["stage_id"], name: "index_registrations_on_stage_id", using: :btree
   end
 
   create_table "rounds", force: :cascade do |t|
@@ -93,6 +101,8 @@ ActiveRecord::Schema.define(version: 20180218200009) do
   add_foreign_key "pairings", "players", column: "player2_id"
   add_foreign_key "pairings", "rounds"
   add_foreign_key "players", "tournaments"
+  add_foreign_key "registrations", "players"
+  add_foreign_key "registrations", "stages"
   add_foreign_key "rounds", "stages"
   add_foreign_key "rounds", "tournaments"
   add_foreign_key "stages", "tournaments"

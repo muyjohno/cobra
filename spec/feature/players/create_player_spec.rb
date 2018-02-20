@@ -36,5 +36,11 @@ RSpec.describe 'creating a player' do
 
       expect(page.current_path).to eq(tournament_players_path(tournament))
     end
+
+    it 'creates registration' do
+      expect do
+        click_button 'Create'
+      end.to change(Registration, :count).by(1)
+    end
   end
 end

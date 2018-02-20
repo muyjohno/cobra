@@ -39,8 +39,19 @@ RSpec.describe Stage do
     end
   end
 
-  describe '#players', :skip do
+  describe '#players' do
+    let(:player1) { create(:player, tournament: tournament, skip_registration: true) }
+    let(:player2) { create(:player, tournament: tournament, skip_registration: true) }
+
+    before do
+      stage.players << player1
+    end
+
     it 'only returns players from this stage' do
+      aggregate_failures do
+        expect(stage.players).to include(player1)
+        expect(stage.players).not_to include(player2)
+      end
     end
   end
 

@@ -1,6 +1,8 @@
 class Stage < ApplicationRecord
   belongs_to :tournament
   has_many :rounds, dependent: :destroy
+  has_many :registrations, dependent: :destroy
+  has_many :players, through: :registrations
 
   enum format: {
     swiss: 0,
@@ -16,10 +18,6 @@ class Stage < ApplicationRecord
 
   def standings
     Standings.new(self)
-  end
-
-  def players
-    @players ||= tournament.players
   end
 
   def eligible_pairings

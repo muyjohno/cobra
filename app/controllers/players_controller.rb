@@ -12,7 +12,8 @@ class PlayersController < ApplicationController
   def create
     authorize @tournament, :update?
 
-    @tournament.players.create(player_params)
+    player = @tournament.players.create(player_params)
+    @tournament.current_stage.players << player
 
     redirect_to tournament_players_path(@tournament)
   end

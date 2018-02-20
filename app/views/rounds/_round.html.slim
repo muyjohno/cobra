@@ -8,7 +8,7 @@
         | #{round.pairings.reported.count} / #{round.pairings.count} pairings reported
 
   .collapse id="round#{round.number}" class=("show" if round == @tournament.stages.last.rounds.last)
-    .col-12.mt-3
+    .col-12.my-3
       - if policy(round.tournament).edit?
         = link_to tournament_round_path(round.tournament, round), class: 'btn btn-warning' do
           => fa_icon 'pencil'
@@ -23,4 +23,4 @@
       =< link_to tournament_round_pairings_path(round.tournament, round), class: 'btn btn-primary' do
         => fa_icon 'list-ul'
         | Pairings by name
-    = render 'pairings', round: round
+      = render 'pairings', round: round

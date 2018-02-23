@@ -8,7 +8,7 @@
 
   - if policy(@tournament).update?
     - if @tournament.rounds.all?(&:completed?)
-      p= button_to tournament_rounds_path(@tournament), method: :post, class: 'btn btn-success' do
+      p=> link_to tournament_rounds_path(@tournament), method: :post, class: 'btn btn-success' do
         => fa_icon 'plus'
         | Pair new round!
     - else
@@ -17,3 +17,11 @@
           => fa_icon 'plus'
           | Pair new round!
         | All rounds must be flagged complete before you can add a new round
+    - unless @tournament.stages.last.double_elim?
+      p
+        => link_to cut_tournament_path(@tournament, number: 4), method: :post, class: 'btn btn-success' do
+          => fa_icon 'scissors'
+          | Cut to Top 4
+        = link_to cut_tournament_path(@tournament, number: 8), method: :post, class: 'btn btn-success' do
+          => fa_icon 'scissors'
+          | Cut to Top 8

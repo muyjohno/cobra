@@ -65,39 +65,46 @@ RSpec.describe Tournament do
     end
   end
 
-  describe '#cut_to!', :pending do
+  describe '#cut_to!' do
+    let(:tournament) { create(:tournament) }
+    let(:swiss) { tournament.stages.first }
     let(:cut) do
       tournament.cut_to! :double_elim, 4
     end
+    let(:alpha) { create(:player, tournament: tournament, name: 'Alpha') }
+    let(:bravo) { create(:player, tournament: tournament, name: 'Bravo') }
+    let(:charlie) { create(:player, tournament: tournament, name: 'Charlie') }
+    let(:delta) { create(:player, tournament: tournament, name: 'Delta') }
+    let(:echo) { create(:player, tournament: tournament, name: 'Echo') }
+    let(:foxtrot) { create(:player, tournament: tournament, name: 'Foxtrot') }
+    let(:round) { create(:round, stage: swiss, completed: true) }
 
-    before { tournament }
+    before do
+      create(:pairing, round: round, player1: alpha, player2: bravo, score1: 5, score2: 4)
+      create(:pairing, round: round, player1: charlie, player2: delta, score1: 3, score2: 2)
+      create(:pairing, round: round, player1: echo, player2: foxtrot, score1: 1, score2: 0)
+    end
 
-    it 'creates elim tournament' do
+    it 'creates elim stage' do
       expect do
         cut
-      end.to change(Tournament, :count).by(1)
-    end
+      end.to change(Stage, :count).by(1)
 
-    it 'assigns tournament to previous tournament\'s user' do
-      expect(cut.user).to eq(tournament.user)
-    end
+      new_stage = tournament.current_stage
 
-    it 'clones players' do
       aggregate_failures do
-        expect(cut.players.map(&:name)).to eq(tournament.top(4).map(&:name))
-        expect(cut.players.map(&:corp_identity)).to eq(tournament.top(4).map(&:corp_identity))
-        expect(cut.players.map(&:runner_identity)).to eq(tournament.top(4).map(&:runner_identity))
-        expect(cut.players.map(&:seed)).to eq([1,2,3,4])
+        expect(new_stage.number).to eq(2)
+        expect(new_stage.double_elim?).to be(true)
       end
     end
-  end
 
-  describe '#previous' do
-    let!(:child) { create(:tournament, previous: tournament) }
-
-    it 'establishes association' do
-      expect(child.previous).to eq(tournament)
-      expect(tournament.next).to eq(child)
+    it 'creates registrations' do
+      aggregate_failures do
+        expect(cut.seed(1)).to eq(alpha)
+        expect(cut.seed(2)).to eq(bravo)
+        expect(cut.seed(3)).to eq(charlie)
+        expect(cut.seed(4)).to eq(delta)
+      end
     end
   end
 

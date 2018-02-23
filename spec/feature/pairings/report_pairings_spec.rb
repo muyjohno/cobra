@@ -1,6 +1,7 @@
 RSpec.describe 'reporting scores for pairings' do
   let(:tournament) { create(:tournament) }
-  let(:round) { create(:round, tournament: tournament) }
+  let(:stage) { tournament.current_stage }
+  let(:round) { create(:round, stage: stage) }
 
   before do
     tournament.players << create(:player)

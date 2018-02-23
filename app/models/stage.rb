@@ -4,6 +4,8 @@ class Stage < ApplicationRecord
   has_many :registrations, dependent: :destroy
   has_many :players, through: :registrations
 
+  delegate :top, to: :standings
+
   enum format: {
     swiss: 0,
     double_elim: 1
@@ -17,10 +19,18 @@ class Stage < ApplicationRecord
   end
 
   def standings
-    Standings.new(self)
+    @standings ||= Standings.new(self)
   end
 
   def eligible_pairings
     rounds.complete.map(&:pairings).flatten
+  end
+
+  def seed(number)
+    registrations.find_by(seed: number).try(:player)
+  end
+
+  def single_sided?
+    double_elim?
   end
 end

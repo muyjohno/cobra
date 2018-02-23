@@ -87,9 +87,9 @@ class TournamentsController < ApplicationController
     number = params[:number].to_i
     redirect_to standings_tournament_players_path(@tournament) unless [4,8].include? number
 
-    next_tournament = @tournament.cut_to!(:double_elim, number)
+    @tournament.cut_to!(:double_elim, number)
 
-    redirect_to tournament_path(next_tournament)
+    redirect_to tournament_rounds_path(@tournament)
   end
 
   def shortlink

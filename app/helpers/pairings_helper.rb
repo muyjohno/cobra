@@ -45,8 +45,8 @@ module PairingsHelper
       class: "btn btn-sm mr-1 #{active ? 'btn-dark' : 'btn-outline-dark'}"
   end
 
-  def presets(tournament)
-    return [[3, 0], [0, 3]] if tournament.single_sided?
+  def presets(stage)
+    return [[3, 0], [0, 3]] if stage.single_sided?
 
     [[6, 0], [3, 3], [0, 6]]
   end

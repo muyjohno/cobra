@@ -1,6 +1,7 @@
 RSpec.describe Bracket::Top4 do
   let(:tournament) { create(:tournament) }
-  let(:bracket) { described_class.new(tournament) }
+  let(:stage) { tournament.current_stage }
+  let(:bracket) { described_class.new(stage) }
   %w(alpha bravo charlie delta).each_with_index do |name, i|
     let!(name) { create(:player, tournament: tournament, name: name, seed: i+1) }
   end
@@ -21,7 +22,7 @@ RSpec.describe Bracket::Top4 do
       let(:pair) { bracket.pair(2) }
 
       before do
-        r1 = create(:round, tournament: tournament)
+        r1 = create(:round, stage: stage)
         report r1, 1, alpha, 3, delta, 0
         report r1, 2, bravo, 3, charlie, 0
       end
@@ -38,11 +39,11 @@ RSpec.describe Bracket::Top4 do
       let(:pair) { bracket.pair(3) }
 
       before do
-        r1 = create(:round, tournament: tournament)
+        r1 = create(:round, stage: stage)
         report r1, 1, alpha, 3, delta, 0
         report r1, 2, bravo, 3, charlie, 0
 
-        r2 = create(:round, tournament: tournament)
+        r2 = create(:round, stage: stage)
         report r2, 3, alpha, 3, bravo, 0
         report r2, 4, delta, 0, charlie, 3
       end
@@ -58,11 +59,11 @@ RSpec.describe Bracket::Top4 do
       let(:pair) { bracket.pair(4) }
 
       before do
-        r1 = create(:round, tournament: tournament)
+        r1 = create(:round, stage: stage)
         report r1, 1, alpha, 3, delta, 0
         report r1, 2, bravo, 3, charlie, 0
 
-        r2 = create(:round, tournament: tournament)
+        r2 = create(:round, stage: stage)
         report r2, 3, alpha, 3, bravo, 0
         report r2, 4, delta, 0, charlie, 3
 
@@ -80,11 +81,11 @@ RSpec.describe Bracket::Top4 do
       let(:pair) { bracket.pair(5) }
 
       before do
-        r1 = create(:round, tournament: tournament)
+        r1 = create(:round, stage: stage)
         report r1, 1, alpha, 3, delta, 0
         report r1, 2, bravo, 3, charlie, 0
 
-        r2 = create(:round, tournament: tournament)
+        r2 = create(:round, stage: stage)
         report r2, 3, alpha, 3, bravo, 0
         report r2, 4, delta, 0, charlie, 3
 
@@ -101,24 +102,65 @@ RSpec.describe Bracket::Top4 do
   end
 
   describe '#standings' do
-    before do
-      r1 = create(:round, tournament: tournament)
-      report r1, 1, alpha, 3, delta, 0
-      report r1, 2, bravo, 3, charlie, 0
+    context 'complete bracket' do
+      before do
+        r1 = create(:round, stage: stage)
+        report r1, 1, alpha, 3, delta, 0
+        report r1, 2, bravo, 3, charlie, 0
 
-      r2 = create(:round, tournament: tournament)
-      report r2, 3, alpha, 3, bravo, 0
-      report r2, 4, delta, 0, charlie, 3
+        r2 = create(:round, stage: stage)
+        report r2, 3, alpha, 3, bravo, 0
+        report r2, 4, delta, 0, charlie, 3
 
-      report r2, 5, bravo, 3, charlie, 0
-      report r2, 6, alpha, 0, bravo, 3
-      report r2, 7, bravo, 3, alpha, 0
+        report r2, 5, bravo, 3, charlie, 0
+        report r2, 6, alpha, 0, bravo, 3
+        report r2, 7, bravo, 3, alpha, 0
+      end
+
+      it 'returns correct standings' do
+        expect(bracket.standings.map(&:player)).to eq(
+          [bravo, alpha, charlie, delta]
+        )
+      end
     end
 
-    it 'returns correct standings' do
-      expect(bracket.standings.map(&:player)).to eq(
-        [bravo, alpha, charlie, delta]
-      )
+    context 'second final still to play' do
+      before do
+        r1 = create(:round, stage: stage)
+        report r1, 1, alpha, 3, delta, 0
+        report r1, 2, bravo, 3, charlie, 0
+
+        r2 = create(:round, stage: stage)
+        report r2, 3, alpha, 3, bravo, 0
+        report r2, 4, delta, 0, charlie, 3
+
+        report r2, 5, bravo, 3, charlie, 0
+        report r2, 6, alpha, 0, bravo, 3
+      end
+
+      it 'returns ambiguous top two' do
+        expect(bracket.standings.map(&:player)).to eq(
+          [nil, nil, charlie, delta]
+        )
+      end
+    end
+
+    context 'multiple rounds still to play' do
+      before do
+        r1 = create(:round, stage: stage)
+        report r1, 1, alpha, 3, delta, 0
+        report r1, 2, bravo, 3, charlie, 0
+
+        r2 = create(:round, stage: stage)
+        report r2, 3, alpha, 3, bravo, 0
+        report r2, 4, delta, 0, charlie, 3
+      end
+
+      it 'returns fixed finishes' do
+        expect(bracket.standings.map(&:player)).to eq(
+          [nil, nil, nil, delta]
+        )
+      end
     end
   end
 end

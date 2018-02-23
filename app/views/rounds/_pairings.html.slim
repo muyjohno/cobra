@@ -7,7 +7,7 @@
     .col-sm-3.centre_score
       - if policy(round.tournament).edit?
         .preset_score
-          - presets(round.tournament).each do |score1, score2|
+          - presets(round.stage).each do |score1, score2|
             => preset_score_button score1, score2, pairing
           = link_to '...', '#', class: 'btn btn-primary toggle_custom_score'
         .custom_score

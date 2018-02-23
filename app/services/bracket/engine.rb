@@ -17,20 +17,11 @@ module Bracket
         end
       end
 
-      def seed(x)
-        lambda { |context| context.seed(x) }
-      end
-
-      def winner(x)
-        lambda { |context| context.winner(x) }
-      end
-
-      def loser(x)
-        lambda { |context| context.loser(x) }
-      end
-
-      def seed_of(players, pos)
-        lambda { |context| context.seed_of(players, pos) }
+      %w(seed winner loser seed_of winner_if_higher_seed loser_if_lower_seed).each do |method|
+        define_method method do |*args|
+          args.unshift(method)
+          lambda { |context| context.send(*args) }
+        end
       end
     end
 

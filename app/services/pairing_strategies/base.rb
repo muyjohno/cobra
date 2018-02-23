@@ -1,14 +1,14 @@
 module PairingStrategies
   class Base
     attr_reader :round
-    delegate :tournament, to: :round
+    delegate :stage, to: :round
 
     def initialize(round)
       @round = round
     end
 
     def players
-      @players ||= tournament.players.active
+      @players ||= stage.players.active
     end
   end
 end

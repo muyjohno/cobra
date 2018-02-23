@@ -2,10 +2,12 @@ module Bracket
   class Base
     include Engine
 
-    attr_reader :tournament
+    attr_reader :stage
 
-    def initialize(tournament)
-      @tournament = tournament
+    delegate :seed, to: :stage
+
+    def initialize(stage)
+      @stage = stage
     end
 
     def pair(number)
@@ -18,22 +20,30 @@ module Bracket
       end
     end
 
-    def seed(number)
-      tournament.players.find { |p| p.seed == number }
-    end
-
     def winner(number)
-      tournament.rounds
-        .map(&:pairings).flatten
-        .find{ |i| i.table_number == number }
-        .try(:winner)
+        pairing(number).try(:winner)
     end
 
     def loser(number)
-      tournament.rounds
-        .map(&:pairings).flatten
-        .find{ |i| i.table_number == number }
-        .try(:loser)
+      pairing(number).try(:loser)
+    end
+
+    def winner_if_higher_seed(number)
+      w = winner(number)
+      l = loser(number)
+
+      return nil unless w && l
+
+      w if w.seed_in_stage(stage) < l.seed_in_stage(stage)
+    end
+
+    def loser_if_lower_seed(number)
+      w = winner(number)
+      l = loser(number)
+
+      return nil unless w && l
+
+      l if w.seed_in_stage(stage) < l.seed_in_stage(stage)
     end
 
     def seed_of(players, pos)
@@ -41,7 +51,9 @@ module Bracket
         lam.call(self)
       end.tap do |players|
         return nil unless players.all?
-      end.sort_by(&:seed)[pos - 1]
+      end.sort_by do |p|
+        p.seed_in_stage(stage)
+      end[pos - 1]
     end
 
     def standings
@@ -52,6 +64,14 @@ module Bracket
           lam.call(self)
         end
       end.map { |p| Standing.new(p) }
+    end
+
+    private
+
+    def pairing(number)
+      stage.rounds
+        .map(&:pairings).flatten
+        .find{ |i| i.table_number == number }
     end
   end
 end

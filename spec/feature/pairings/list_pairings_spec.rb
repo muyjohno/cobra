@@ -27,16 +27,25 @@ RSpec.describe 'list pairings for a round' do
         expect(page).to have_content('2SnapCrackle')
       end
     end
+
+    it 'displays preset score options' do
+      sign_in round.tournament.user
+      visit tournament_rounds_path(round.tournament)
+
+      expect(page).to have_content('6-0 3-3 0-6 ...')
+    end
   end
 
   context 'with double elim tournament' do
-    let(:tournament) { create(:tournament, stage: :double_elim, player_count: 4) }
+    let(:tournament) { create(:tournament, player_count: 4) }
+    let(:stage) { create(:stage, tournament: tournament, format: :double_elim) }
 
     before do
       tournament.players.each_with_index do |player, i|
-        player.update seed: i + 1
+        create(:registration, stage: stage, player: player, seed: i + 1)
       end
-      tournament.pair_new_round!
+
+      stage.pair_new_round!
 
       sign_in tournament.user
       visit tournament_rounds_path(tournament)
@@ -44,6 +53,13 @@ RSpec.describe 'list pairings for a round' do
 
     it 'displays side selection buttons' do
       expect(page).to have_content('CorpRunner')
+    end
+
+    it 'displays preset score options' do
+      sign_in tournament.user
+      visit tournament_rounds_path(tournament)
+
+      expect(page).to have_content('3-0 0-3')
     end
   end
 end

@@ -89,4 +89,22 @@ RSpec.describe Player do
       expect(player.tournament.players.dropped).to include(player)
     end
   end
+
+  describe '#seed_in_stage' do
+    let(:stage1) { create(:stage) }
+    let(:stage2) { create(:stage, tournament: stage1.tournament) }
+    let(:player) { create(:player, tournament: stage1.tournament, skip_registration: true) }
+
+    before do
+      create(:registration, player: player, stage: stage1, seed: 123)
+      create(:registration, player: player, stage: stage2, seed: 456)
+    end
+
+    it 'returns the seed for the player in the specified stage' do
+      aggregate_failures do
+        expect(player.seed_in_stage(stage1)).to eq(123)
+        expect(player.seed_in_stage(stage2)).to eq(456)
+      end
+    end
+  end
 end

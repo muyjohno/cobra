@@ -1,6 +1,8 @@
 RSpec.describe Pairer do
+  let(:tournament) { create(:tournament) }
+  let(:stage) { tournament.current_stage }
+  let(:round) { create(:round, number: 1, stage: stage) }
   let(:pairer) { described_class.new(round) }
-  let(:round) { create(:round, number: 1, tournament: tournament) }
 
   %i(jack jill hansel gretel).each do |name|
     let!(name) do
@@ -10,7 +12,6 @@ RSpec.describe Pairer do
 
   describe '#pair!' do
     context 'swiss' do
-      let(:tournament) { create(:tournament, stage: :swiss) }
       let(:strategy) { double('PairingStrategies::Swiss') }
 
       it 'delegates to swiss strategy' do
@@ -31,8 +32,15 @@ RSpec.describe Pairer do
     end
 
     context 'double elim' do
-      let(:tournament) { create(:tournament, stage: :double_elim) }
+      let(:stage) { create(:stage, format: :double_elim) }
       let(:strategy) { double('PairingStrategies::DoubleElim') }
+
+      before do
+        stage.players << jack
+        stage.players << jill
+        stage.players << hansel
+        stage.players << gretel
+      end
 
       it 'delegates to double_elim strategy' do
         allow(PairingStrategies::DoubleElim).to receive(:new).and_return(strategy)

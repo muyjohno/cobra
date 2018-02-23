@@ -3,10 +3,12 @@ class Pairing < ApplicationRecord
   belongs_to :player1, class_name: 'Player', optional: true
   belongs_to :player2, class_name: 'Player', optional: true
   has_one :tournament, through: :round
+  has_one :stage, through: :round
 
   scope :non_bye, -> { where.not(player1_id: nil, player2_id: nil) }
   scope :reported, -> { where.not(score1: nil, score2: nil) }
   scope :completed, -> { joins(:round).where('rounds.completed = ?', true) }
+  scope :for_stage, -> (stage) { joins(:round).where(rounds: { stage: stage }) }
 
   enum side: {
     player1_is_corp: 1,

@@ -7,10 +7,16 @@ FactoryGirl.define do
 
     transient do
       skip_registration false
+      seed nil
     end
 
     after(:create) do |player, evaluator|
-      player.tournament.current_stage.players << player unless evaluator.skip_registration
+      create(
+        :registration,
+        player: player,
+        stage: player.tournament.current_stage,
+        seed: evaluator.seed
+      ) unless evaluator.skip_registration
     end
   end
 end

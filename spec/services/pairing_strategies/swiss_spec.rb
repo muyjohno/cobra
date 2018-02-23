@@ -1,6 +1,7 @@
 RSpec.describe PairingStrategies::Swiss do
   let(:pairer) { described_class.new(round) }
-  let(:round) { create(:round, number: 1, tournament: tournament) }
+  let(:round) { create(:round, number: 1, stage: stage) }
+  let(:stage) { tournament.current_stage }
   let(:tournament) { create(:tournament) }
   let(:nil_player) { double('NilPlayer', id: nil) }
 
@@ -43,7 +44,7 @@ RSpec.describe PairingStrategies::Swiss do
 
       context 'in second round' do
         let(:round2_pairer) { described_class.new(round2) }
-        let(:round2) { create(:round, number: 2, tournament: tournament) }
+        let(:round2) { create(:round, number: 2, stage: stage) }
 
         before do
           pairer.pair!

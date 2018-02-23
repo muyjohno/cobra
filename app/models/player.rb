@@ -44,6 +44,10 @@ class Player < ApplicationRecord
     pairings.completed
   end
 
+  def seed_in_stage(stage)
+    registrations.find_by(stage: stage).seed
+  end
+
   private
 
   def destroy_pairings

@@ -1,5 +1,4 @@
 .col-12
   h2 Standings
-  - @tournament.stages.each do |stage|
-    p After #{pluralize(stage.rounds.complete.count, 'round')}
-    = render "players/standings/#{stage.format}", standings: stage.standings, tournament: @tournament
+  - @tournament.stages.reverse.each do |stage|
+    = render "players/standings/#{stage.format}", standings: stage.standings, stage: stage

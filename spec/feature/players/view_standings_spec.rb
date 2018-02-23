@@ -30,7 +30,7 @@ RSpec.describe 'viewing standings' do
 
   context 'with a round completed' do
     before do
-      create(:round, tournament: tournament, number: 1, completed: true)
+      create(:round, stage: tournament.current_stage, number: 1, completed: true)
       visit standings_tournament_players_path(tournament)
     end
 

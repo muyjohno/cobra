@@ -1,3 +1,4 @@
+p After #{pluralize(stage.rounds.complete.count, 'round')}
 table.table.table-striped.standings
   thead
     tr
@@ -13,7 +14,7 @@ table.table.table-striped.standings
         td= i+1
         td= standing.name
         td.ids
-          - if tournament.rounds.complete.any?
+          - if stage.rounds.complete.any?
             = render standing.corp_identity
             = render standing.runner_identity
           - else

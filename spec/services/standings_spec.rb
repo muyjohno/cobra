@@ -21,15 +21,15 @@ RSpec.describe Standings do
       expect(standings.players.map(&:player)).to eq([hansel, gretel, jack, jill])
     end
 
-    describe 'double elim bracket', :pending do
+    describe 'double elim bracket' do
       let(:cut) { tournament.cut_to! :double_elim, 4 }
       let(:standings) { described_class.new(cut) }
 
-      let(:elim1) { create(:round, tournament: cut) }
-      let(:elim2) { create(:round, tournament: cut) }
-      let(:elim3) { create(:round, tournament: cut) }
-      let(:elim4) { create(:round, tournament: cut) }
-      let(:elim5) { create(:round, tournament: cut) }
+      let(:elim1) { create(:round, stage: cut) }
+      let(:elim2) { create(:round, stage: cut) }
+      let(:elim3) { create(:round, stage: cut) }
+      let(:elim4) { create(:round, stage: cut) }
+      let(:elim5) { create(:round, stage: cut) }
 
       before do
         elim1.pairings << create(:pairing, player1: hansel, player2: jill, table_number: 1, score1: 3, score2: 0)

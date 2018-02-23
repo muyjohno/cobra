@@ -1,7 +1,5 @@
 class Tournament < ApplicationRecord
   has_many :players, -> { order(:id) }, dependent: :destroy
-  belongs_to :previous, class_name: Tournament, optional: true
-  has_one :next, class_name: Tournament, foreign_key: :previous_id
   belongs_to :user
   has_many :stages, -> { order(:number) }, dependent: :destroy
   has_many :rounds, through: :stages
@@ -11,7 +9,6 @@ class Tournament < ApplicationRecord
     double_elim: 1
   }
 
-  delegate :top, to: :standings
   delegate :pair_new_round!, to: :current_stage
 
   validates :name, :slug, presence: true
@@ -21,22 +18,16 @@ class Tournament < ApplicationRecord
   before_create :default_date, unless: :date
   after_create :create_stage
 
-  def cut_to!(stage, number)
-    Tournament.create!(
-      name: name + " - Top #{number}",
-      stage: stage,
-      previous: self,
-      user: user
-    ).tap do |t|
-      top(number).each_with_index do |player, i|
-        Player.create!(
-          name: player.name,
-          active: true,
-          corp_identity: player.corp_identity,
-          runner_identity: player.runner_identity,
-          tournament: t,
-          seed: i + 1,
-          previous: player
+  def cut_to!(format, number)
+    previous_stage = current_stage
+    stages.create!(
+      format: format,
+      number: previous_stage.number + 1
+    ).tap do |stage|
+      previous_stage.top(number).each_with_index do |player, i|
+        stage.registrations.create!(
+          player: player,
+          seed: i + 1
         )
       end
     end
@@ -71,10 +62,6 @@ class Tournament < ApplicationRecord
       size: 4,
       level: :h
     ) if slug
-  end
-
-  def single_sided?
-    double_elim?
   end
 
   def current_stage

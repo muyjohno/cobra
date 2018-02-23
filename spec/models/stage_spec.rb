@@ -65,4 +65,40 @@ RSpec.describe Stage do
       expect(stage.eligible_pairings).to eq([pairing1])
     end
   end
+
+  describe '#seed' do
+    let(:player1) { create(:player, tournament: tournament, skip_registration: true) }
+    let(:player2) { create(:player, tournament: tournament, skip_registration: true) }
+    let!(:reg1) { create(:registration, player: player1, stage: stage, seed: 1) }
+    let!(:reg2) { create(:registration, player: player2, stage: stage, seed: 2) }
+
+    it 'returns player for correct seeded registration' do
+      aggregate_failures do
+        expect(stage.seed(1)).to eq(player1)
+        expect(stage.seed(2)).to eq(player2)
+      end
+    end
+
+    it 'handles invalid seed' do
+      expect(stage.seed(99)).to eq(nil)
+    end
+  end
+
+  describe '#single_sided?' do
+    context 'swiss' do
+      let(:stage) { create(:stage, format: :swiss) }
+
+      it 'is not single sided' do
+        expect(stage.single_sided?).to be(false)
+      end
+    end
+
+    context 'double elim' do
+      let(:stage) { create(:stage, format: :double_elim) }
+
+      it 'is not single sided' do
+        expect(stage.single_sided?).to be(true)
+      end
+    end
+  end
 end

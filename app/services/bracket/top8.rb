@@ -23,8 +23,8 @@ module Bracket
     game 15, winner(14), loser(14), round: 7
 
     STANDINGS = [
-      [winner(15), winner_if_higher_seed(14)],
-      [loser(15), loser_if_lower_seed(14)],
+      [winner(15), winner_if_also_winner(14, 9)],
+      [loser(15), loser_if_also_winner(14, 13)],
       loser(13),
       loser(12),
       seed_of([loser(10), loser(11)], 1),

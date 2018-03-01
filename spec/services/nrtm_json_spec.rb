@@ -1,4 +1,4 @@
-RSpec.describe NrtmJson, :pending do
+RSpec.describe NrtmJson do
   let(:to) { create(:user, nrdb_id: 123, nrdb_username: 'username') }
   let(:tournament) { create(:tournament, name: 'Some Tournament', user: to, slug: 'SLUG', date: '2017-01-01') }
   let(:jack) { create(:player, name: 'Jack', corp_identity: 'ETF', runner_identity: 'Noise', id: 1001) }
@@ -8,7 +8,7 @@ RSpec.describe NrtmJson, :pending do
   let(:snap) { create(:player, name: 'Snap', corp_identity: 'ST', runner_identity: 'Invalid', id: 1005) }
   let(:crackle) { create(:player, name: 'Crackle', corp_identity: 'RP', runner_identity: 'Andromeda', id: 1006) }
   let(:pop) { create(:player, name: 'Pop', corp_identity: 'TWIY', runner_identity: 'Reina', id: 1007) }
-  let(:round) { create(:round, tournament: tournament) }
+  let(:round) { create(:round, stage: tournament.current_stage) }
 
   let(:json) { described_class.new(tournament) }
 
@@ -26,7 +26,7 @@ RSpec.describe NrtmJson, :pending do
   describe '#data' do
     before do
       allow(StandingStrategies::Swiss).to receive(:new)
-        .with(tournament)
+        .with(tournament.current_stage)
         .and_return(
           double(
             :standings,
@@ -51,22 +51,20 @@ RSpec.describe NrtmJson, :pending do
 
     context 'with elimination bracket' do
       let(:cut) { tournament.cut_to! :double_elim, 4 }
-      let(:json) { described_class.new(cut) }
+      let(:json) { described_class.new(tournament) }
 
       before do
-        cut.update(date: '2017-01-02', slug: 'CUTT')
+        r1 = create(:round, stage: cut, completed: true)
+        report r1, 1, jack, 3, pop, 0, :player1_is_corp
+        report r1, 2, hansel, 3, snap, 0, :player1_is_corp
 
-        r1 = create(:round, tournament: cut)
-        report r1, 1, jack.next, 3, pop.next, 0, :player1_is_corp
-        report r1, 2, hansel.next, 3, snap.next, 0, :player1_is_corp
+        r2 = create(:round, stage: cut, completed: true)
+        report r2, 3, jack, 3, hansel, 0, :player1_is_corp
+        report r2, 4, pop, 0, snap, 3, :player1_is_runner
 
-        r2 = create(:round, tournament: cut)
-        report r2, 3, jack.next, 3, hansel.next, 0, :player1_is_corp
-        report r2, 4, pop.next, 0, snap.next, 3, :player1_is_runner
-
-        report r2, 5, hansel.next, 3, snap.next, 0, :player1_is_runner
-        report r2, 6, jack.next, 0, hansel.next, 3, :player1_is_corp
-        report r2, 7, hansel.next, 3, jack.next, 0, :player1_is_runner
+        report r2, 5, hansel, 3, snap, 0, :player1_is_runner
+        report r2, 6, jack, 0, hansel, 3, :player1_is_corp
+        report r2, 7, hansel, 3, jack, 0, :player1_is_runner
       end
 
       it 'returns hash of data' do

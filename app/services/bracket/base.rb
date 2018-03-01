@@ -28,22 +28,16 @@ module Bracket
       pairing(number).try(:loser)
     end
 
-    def winner_if_higher_seed(number)
+    def winner_if_also_winner(number, other)
       w = winner(number)
-      l = loser(number)
 
-      return nil unless w && l
-
-      w if w.seed_in_stage(stage) < l.seed_in_stage(stage)
+      w if w == winner(other)
     end
 
-    def loser_if_lower_seed(number)
-      w = winner(number)
+    def loser_if_also_winner(number, other)
       l = loser(number)
 
-      return nil unless w && l
-
-      l if w.seed_in_stage(stage) < l.seed_in_stage(stage)
+      l if l == winner(other)
     end
 
     def seed_of(players, pos)
@@ -70,6 +64,7 @@ module Bracket
 
     def pairing(number)
       stage.rounds
+        .complete
         .map(&:pairings).flatten
         .find{ |i| i.table_number == number }
     end

@@ -1,27 +1,33 @@
 .col-12
   - if @tournament.stages.empty?
-    p= link_to meeting_tournament_players_path(@tournament), class: 'btn btn-primary' do
-      => fa_icon 'list-ul'
-      | Player meeting
-
-  = render @tournament.stages
-
-  - if policy(@tournament).update?
-    - if @tournament.rounds.all?(&:completed?)
-      p=> link_to tournament_rounds_path(@tournament), method: :post, class: 'btn btn-success' do
+    - if policy(@tournament).update?
+      = link_to tournament_stages_path(@tournament), method: :post, class: 'btn btn-success' do
         => fa_icon 'plus'
-        | Pair new round!
-    - else
-      p
-        .btn.btn-secondary.mr-3.disabled
+        | Add Swiss stage
+  - else
+    - if @tournament.rounds.empty?
+      p= link_to meeting_tournament_players_path(@tournament), class: 'btn btn-primary' do
+        => fa_icon 'list-ul'
+        | Player meeting
+
+    = render @tournament.stages
+
+    - if policy(@tournament).update?
+      - if @tournament.rounds.all?(&:completed?)
+        p=> link_to tournament_rounds_path(@tournament), method: :post, class: 'btn btn-success' do
           => fa_icon 'plus'
           | Pair new round!
-        | All rounds must be flagged complete before you can add a new round
-    - unless @tournament.stages.last.double_elim?
-      p
-        => link_to cut_tournament_path(@tournament, number: 4), method: :post, class: 'btn btn-success' do
-          => fa_icon 'scissors'
-          | Cut to Top 4
-        = link_to cut_tournament_path(@tournament, number: 8), method: :post, class: 'btn btn-success' do
-          => fa_icon 'scissors'
-          | Cut to Top 8
+      - else
+        p
+          .btn.btn-secondary.mr-3.disabled
+            => fa_icon 'plus'
+            | Pair new round!
+          | All rounds must be flagged complete before you can add a new round
+      - unless @tournament.stages.last.double_elim?
+        p
+          => link_to cut_tournament_path(@tournament, number: 4), method: :post, class: 'btn btn-success' do
+            => fa_icon 'scissors'
+            | Cut to Top 4
+          = link_to cut_tournament_path(@tournament, number: 8), method: :post, class: 'btn btn-success' do
+            => fa_icon 'scissors'
+            | Cut to Top 8

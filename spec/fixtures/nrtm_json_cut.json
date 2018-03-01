@@ -1,6 +1,6 @@
 {
   "name": "Some Tournament",
-  "date": "2017-01-02",
+  "date": "2017-01-01",
   "cutToTop": 4,
   "preliminaryRounds": 1,
   "tournamentOrganiser": {
@@ -138,6 +138,6 @@
   "uploadedFrom": "Cobra",
   "links": [
     { "rel": "schemaderivedfrom", "href": "http://steffens.org/nrtm/nrtm-schema.json" },
-    { "rel": "uploadedfrom", "href": "http://cobr.ai/CUTT" }
+    { "rel": "uploadedfrom", "href": "http://cobr.ai/SLUG" }
   ]
 }

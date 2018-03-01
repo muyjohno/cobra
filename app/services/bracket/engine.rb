@@ -17,7 +17,7 @@ module Bracket
         end
       end
 
-      %w(seed winner loser seed_of winner_if_higher_seed loser_if_lower_seed).each do |method|
+      %w(seed winner loser seed_of winner_if_also_winner loser_if_also_winner).each do |method|
         define_method method do |*args|
           args.unshift(method)
           lambda { |context| context.send(*args) }

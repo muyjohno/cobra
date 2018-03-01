@@ -1,6 +1,6 @@
 RSpec.describe PairingStrategies::DoubleElim do
   let(:pairer) { described_class.new(round) }
-  let(:round) { create(:round, number: 1, stage: stage) }
+  let(:round) { create(:round, number: 1, stage: stage, completed: true) }
   let(:stage) { tournament.current_stage }
   let(:tournament) { create(:tournament) }
 

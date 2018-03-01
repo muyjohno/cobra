@@ -3,7 +3,7 @@ RSpec.describe PairingStrategies::Swiss do
   let(:round) { create(:round, number: 1, stage: stage) }
   let(:stage) { tournament.current_stage }
   let(:tournament) { create(:tournament) }
-  let(:nil_player) { double('NilPlayer', id: nil) }
+  let(:nil_player) { double('NilPlayer', id: nil, points: 0) }
 
   before do
     allow(NilPlayer).to receive(:new).and_return(nil_player)

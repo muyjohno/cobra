@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       patch :repair, on: :member
       patch :complete, on: :member
     end
+    resources :stages, only: [:create, :destroy]
     post :upload_to_abr, on: :member
     get :save_json, on: :member
     post :cut, on: :member

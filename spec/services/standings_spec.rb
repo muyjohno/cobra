@@ -1,12 +1,13 @@
 RSpec.describe Standings do
   let(:tournament) { create(:tournament) }
+  let(:stage) { tournament.current_stage }
   let!(:jack) { create(:player, tournament: tournament) }
   let!(:jill) { create(:player, tournament: tournament) }
   let!(:hansel) { create(:player, tournament: tournament) }
   let!(:gretel) { create(:player, tournament: tournament) }
-  let(:round1) { create(:round, tournament: tournament, completed: true) }
-  let(:round2) { create(:round, tournament: tournament, completed: true) }
-  let(:standings) { described_class.new(tournament.reload) }
+  let(:round1) { create(:round, stage: stage, completed: true) }
+  let(:round2) { create(:round, stage: stage, completed: true) }
+  let(:standings) { described_class.new(stage) }
 
   before do
     round1.pairings << create(:pairing, player1: jack, player2: jill, score1: 6, score2: 0)
@@ -24,11 +25,11 @@ RSpec.describe Standings do
       let(:cut) { tournament.cut_to! :double_elim, 4 }
       let(:standings) { described_class.new(cut) }
 
-      let(:elim1) { create(:round, tournament: cut) }
-      let(:elim2) { create(:round, tournament: cut) }
-      let(:elim3) { create(:round, tournament: cut) }
-      let(:elim4) { create(:round, tournament: cut) }
-      let(:elim5) { create(:round, tournament: cut) }
+      let(:elim1) { create(:round, stage: cut, completed: true) }
+      let(:elim2) { create(:round, stage: cut, completed: true) }
+      let(:elim3) { create(:round, stage: cut, completed: true) }
+      let(:elim4) { create(:round, stage: cut, completed: true) }
+      let(:elim5) { create(:round, stage: cut, completed: true) }
 
       before do
         elim1.pairings << create(:pairing, player1: hansel, player2: jill, table_number: 1, score1: 3, score2: 0)

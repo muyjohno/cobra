@@ -1,13 +1,13 @@
 module StandingStrategies
   class DoubleElim < Base
     def calculate!
-      bracket.new(tournament).standings
+      bracket.new(stage).standings
     end
 
     private
 
     def bracket
-      Bracket::Factory.bracket_for tournament.players.count
+      Bracket::Factory.bracket_for stage.players.count
     end
   end
 end

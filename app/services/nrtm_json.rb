@@ -7,15 +7,15 @@ class NrtmJson
 
   def data
     {
-      name: swiss_tournament.name,
+      name: tournament.name,
       date: tournament.date.to_s(:db),
-      cutToTop: cut_standings.count,
-      preliminaryRounds: swiss_tournament.rounds.count,
+      cutToTop: cut_stage.players.count,
+      preliminaryRounds: swiss_stage.rounds.count,
       tournamentOrganiser: {
         nrdbId: tournament.user.nrdb_id,
         nrdbUsername: tournament.user.nrdb_username
       },
-      players: swiss_tournament.standings.each_with_index.map do |standing, i|
+      players: swiss_stage.standings.each_with_index.map do |standing, i|
         {
           id: standing.player.id,
           name: standing.name,
@@ -27,12 +27,12 @@ class NrtmJson
           extendedStrengthOfSchedule: standing.extended_sos
         }
       end,
-      eliminationPlayers: cut_standings.each_with_index.map do |standing, i|
+      eliminationPlayers: cut_stage.standings.each_with_index.map do |standing, i|
         {
-          id: standing.player.previous_id,
+          id: standing.player.id,
           name: standing.name,
           rank: i+1,
-          seed: standing.player.seed
+          seed: standing.player.seed_in_stage(cut_stage)
         }
       end,
       rounds: swiss_pairing_data + cut_pairing_data,
@@ -46,12 +46,12 @@ class NrtmJson
 
   private
 
-  def swiss_tournament
-    tournament.double_elim? ? tournament.previous : tournament
+  def swiss_stage
+    tournament.stages.find_by(format: :swiss)
   end
 
   def swiss_pairing_data
-    swiss_tournament.rounds.map do |round|
+    swiss_stage.rounds.map do |round|
       round.pairings.map do |pairing|
         {
           table: pairing.table_number,
@@ -74,28 +74,24 @@ class NrtmJson
     end
   end
 
-  def cut_tournament
-    tournament.double_elim? ? tournament : nil
-  end
-
-  def cut_standings
-    tournament.double_elim? ? tournament.standings : []
+  def cut_stage
+    tournament.stages.find_by(format: :double_elim) || NilStage.new
   end
 
   def cut_pairing_data
-    return [] unless cut_tournament
+    return [] unless cut_stage
 
-    cut_tournament.rounds.map do |round|
+    cut_stage.rounds.map do |round|
       round.pairings.map do |pairing|
         {
           table: pairing.table_number,
           player1: {
-            id: pairing.player1.previous.id,
+            id: pairing.player1.id,
             role: pairing.player1_side,
             winner: pairing.score1 > pairing.score2
           },
           player2: {
-            id: pairing.player2.previous.id,
+            id: pairing.player2.id,
             role: pairing.player2_side,
             winner: pairing.score2 > pairing.score1
           },

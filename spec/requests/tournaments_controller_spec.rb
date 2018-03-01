@@ -19,7 +19,8 @@ RSpec.describe TournamentsController do
   end
 
   describe '#cut' do
-    let(:cut) { create(:tournament) }
+    let(:cut) { create(:stage, tournament: tournament) }
+
     before do
       allow(Tournament).to receive(:find)
         .with(tournament.to_param)

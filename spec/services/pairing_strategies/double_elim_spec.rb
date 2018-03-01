@@ -1,6 +1,7 @@
 RSpec.describe PairingStrategies::DoubleElim do
   let(:pairer) { described_class.new(round) }
-  let(:round) { create(:round, number: 1, tournament: tournament) }
+  let(:round) { create(:round, number: 1, stage: stage, completed: true) }
+  let(:stage) { tournament.current_stage }
   let(:tournament) { create(:tournament) }
 
   context 'top 8' do
@@ -13,14 +14,17 @@ RSpec.describe PairingStrategies::DoubleElim do
 
       round.reload
 
-      expect(round.pairings.map{ |p| [p.player1, p.player2] }).to match_array(
-        [[alpha, hotel], [bravo, golf], [charlie, foxtrot], [delta, echo]]
-      )
-      expect(round.pairings.first.table_number).to eq(1)
+      aggregate_failures do
+        expect(round.pairings.map{ |p| [p.player1, p.player2] }).to match_array(
+          [[alpha, hotel], [bravo, golf], [charlie, foxtrot], [delta, echo]]
+        )
+        expect(round.pairings.first.table_number).to eq(1)
+        expect(round.pairings.first.side).to eq(nil)
+      end
     end
 
     context 'with some results' do
-      let(:round3) { create(:round, number: 3, tournament: tournament) }
+      let(:round3) { create(:round, number: 3, stage: stage) }
       let(:pairer) { described_class.new(round3) }
 
       before do
@@ -40,11 +44,13 @@ RSpec.describe PairingStrategies::DoubleElim do
 
         round3.reload
 
-        expect(round3.pairings.map{ |p| [p.player1, p.player2] }).to match_array(
-          [[alpha, bravo], [charlie, echo], [foxtrot, delta]]
-        )
-        expect(round3.pairings.first.table_number).to eq(9)
-        expect(round3.pairings.first.side.to_sym).to eq(:player1_is_runner)
+        aggregate_failures do
+          expect(round3.pairings.map{ |p| [p.player1, p.player2] }).to match_array(
+            [[alpha, bravo], [charlie, echo], [foxtrot, delta]]
+          )
+          expect(round3.pairings.first.table_number).to eq(9)
+          expect(round3.pairings.first.side.to_sym).to eq(:player1_is_runner)
+        end
       end
     end
   end

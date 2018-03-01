@@ -1,7 +1,4 @@
 .col-12
   h2 Standings
-  - if @up_to
-    p After #{pluralize(@up_to, 'round')}
-    = render "players/standings/#{@tournament.stage}", standings: @standings, tournament: @tournament
-  - else
-    p Standings will be available after the first round has completed.
+  - @tournament.stages.reverse.each do |stage|
+    = render "players/standings/#{stage.format}", standings: stage.standings, stage: stage

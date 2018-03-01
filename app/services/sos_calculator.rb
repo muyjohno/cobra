@@ -1,13 +1,13 @@
 class SosCalculator
-  def self.calculate!(tournament)
-    players = Hash[tournament.players.map{ |p| [p.id, p] }]
+  def self.calculate!(stage)
+    players = Hash[stage.players.map{ |p| [p.id, p] }]
 
     # calculate points and cache values for sos calculations
     points = {}
     games_played = {}
     opponents = {}
     points_for_sos = {}
-    tournament.players.map(&:eligible_pairings).flatten.uniq.each do |p|
+    stage.eligible_pairings.each do |p|
       points[p.player1_id] ||= 0
       points[p.player1_id] += p.score1 || 0
       points[p.player2_id] ||= 0

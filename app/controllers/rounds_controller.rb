@@ -4,9 +4,6 @@ class RoundsController < ApplicationController
 
   def index
     authorize @tournament, :show?
-
-    @rounds = @tournament.rounds
-    @current_round = params[:show_round] || @tournament.rounds.last.try(:number)
   end
 
   def show

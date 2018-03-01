@@ -1,0 +1,9 @@
+.accordion.mb-3 role="tablist"
+  .row.mb-1
+    .col-sm-11
+      h4= stage.format.titleize
+    .col-sm-1
+      - if policy(stage.tournament).update?
+        = link_to tournament_stage_path(stage.tournament, stage), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure? This cannot be reversed and all rounds will be deleted!' } do
+          => fa_icon 'trash'
+  = render stage.rounds

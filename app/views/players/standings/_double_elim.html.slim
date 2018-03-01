@@ -14,15 +14,10 @@ table.table.table-striped.standings
           td.ids
             = render standing.corp_identity
             = render standing.runner_identity
-          td= standing.seed
+          td= standing.seed_in_stage(stage)
         - else
           td ???
           td.ids
             p ???
             p ???
           td ???
-
-- if tournament.previous
-  h3 Previous stage
-  p After #{pluralize(tournament.previous.rounds.count, 'round')}
-  = render "players/standings/#{tournament.previous.stage}", standings: tournament.previous.standings, tournament: tournament.previous

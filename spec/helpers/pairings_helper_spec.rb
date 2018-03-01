@@ -1,20 +1,22 @@
 RSpec.describe PairingsHelper do
   describe '#presets' do
+    let(:tournament) { create(:tournament) }
+
     context 'for swiss' do
-      let(:tournament) { create(:tournament, stage: :swiss) }
+      let(:stage) { tournament.current_stage }
 
       it 'returns swiss defaults' do
-        expect(helper.presets(tournament)).to eq(
+        expect(helper.presets(stage)).to eq(
           [[6, 0], [3, 3], [0, 6]]
         )
       end
     end
 
     context 'for double elim' do
-      let(:tournament) { create(:tournament, stage: :double_elim) }
+      let(:stage) { create(:stage, tournament: tournament, format: :double_elim) }
 
       it 'returns double elim defaults' do
-        expect(helper.presets(tournament)).to eq(
+        expect(helper.presets(stage)).to eq(
           [[3, 0], [0, 3]]
         )
       end

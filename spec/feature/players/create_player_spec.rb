@@ -4,7 +4,7 @@ RSpec.describe 'creating a player' do
   context 'signed in' do
     before do
       sign_in tournament.user
-      visit tournament_path(tournament)
+      visit tournament_players_path(tournament)
       fill_in :player_name, with: 'Jack'
       fill_in :player_corp_identity, with: 'Haas-Bioroid: Engineering the Future'
       fill_in :player_runner_identity, with: 'Noise'
@@ -34,7 +34,13 @@ RSpec.describe 'creating a player' do
     it 'redirects to players page' do
       click_button 'Create'
 
-      expect(page.current_path).to eq(tournament_path(tournament))
+      expect(page.current_path).to eq(tournament_players_path(tournament))
+    end
+
+    it 'creates registration' do
+      expect do
+        click_button 'Create'
+      end.to change(Registration, :count).by(1)
     end
   end
 end

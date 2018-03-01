@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   end
 
   resources :tournaments do
-    resources :players, only: [:create, :update, :destroy] do
+    resources :players, only: [:index, :create, :update, :destroy] do
       get :standings, on: :collection
       get :meeting, on: :collection
       patch :drop, on: :member
@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       patch :repair, on: :member
       patch :complete, on: :member
     end
+    resources :stages, only: [:create, :destroy]
     post :upload_to_abr, on: :member
     get :save_json, on: :member
     post :cut, on: :member

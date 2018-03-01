@@ -1,16 +1,16 @@
 class Standings
   include Enumerable
 
-  attr_reader :tournament
+  attr_reader :stage
 
   delegate :each, to: :players
 
-  def initialize(tournament)
-    @tournament = tournament
+  def initialize(stage)
+    @stage = stage
   end
 
   def players
-    @players ||= strategy.new(tournament).calculate!
+    @players ||= strategy.new(stage).calculate!
   end
 
   def top(number)
@@ -20,8 +20,8 @@ class Standings
   private
 
   def strategy
-    return StandingStrategies::Swiss unless %w(swiss double_elim).include? tournament.stage
+    return StandingStrategies::Swiss unless %w(swiss double_elim).include? stage.format
 
-    "StandingStrategies::#{tournament.stage.camelize}".constantize
+    "StandingStrategies::#{stage.format.camelize}".constantize
   end
 end

@@ -18,59 +18,15 @@ RSpec.describe Tournament do
     expect(tournament.date).to eq(Date.today)
   end
 
-  describe '#pair_new_round!' do
-    it 'creates new round with pairings' do
-      expect do
-        round = tournament.pair_new_round!
+  it 'automatically creates stage' do
+    expect do
+      tournament
+    end.to change(Stage, :count).by(1)
 
-        expect(
-          round.pairings.map(&:players).flatten
-        ).to match_array(tournament.players)
-      end.to change(tournament.rounds, :count).by(1)
-    end
+    stage = tournament.stages.last
 
-    describe 'round numbers' do
-      it 'creates first with number 1' do
-        expect(tournament.pair_new_round!.number).to eq(1)
-      end
-
-      it 'adds to previous highest' do
-        create(:round, tournament: tournament, number: 4)
-
-        expect(tournament.pair_new_round!.number).to eq(5)
-      end
-    end
-  end
-
-  describe '#standings' do
-    let(:standings) { instance_double('Standings') }
-
-    before do
-      allow(Standings).to receive(:new).and_return(standings)
-    end
-
-    it 'returns standings object' do
-      expect(tournament.standings).to eq(standings)
-      expect(Standings).to have_received(:new).with(tournament)
-    end
-  end
-
-  describe '#pairing_sorter' do
-    context 'random' do
-      let(:tournament) { create(:tournament, pairing_sort: :random) }
-
-      it 'returns correct class' do
-        expect(tournament.pairing_sorter).to eq(PairingSorters::Random)
-      end
-    end
-
-    context 'ranked' do
-      let(:tournament) { create(:tournament, pairing_sort: :ranked) }
-
-      it 'returns correct class' do
-        expect(tournament.pairing_sorter).to eq(PairingSorters::Ranked)
-      end
-    end
+    expect(stage.number).to eq(1)
+    expect(stage.swiss?).to be(true)
   end
 
   describe '#corp_counts' do
@@ -110,38 +66,53 @@ RSpec.describe Tournament do
   end
 
   describe '#cut_to!' do
+    let(:tournament) { create(:tournament) }
+    let(:swiss) { tournament.stages.first }
     let(:cut) do
       tournament.cut_to! :double_elim, 4
     end
+    let(:alpha) { create(:player, tournament: tournament, name: 'Alpha') }
+    let(:bravo) { create(:player, tournament: tournament, name: 'Bravo') }
+    let(:charlie) { create(:player, tournament: tournament, name: 'Charlie') }
+    let(:delta) { create(:player, tournament: tournament, name: 'Delta') }
+    let(:echo) { create(:player, tournament: tournament, name: 'Echo') }
+    let(:foxtrot) { create(:player, tournament: tournament, name: 'Foxtrot') }
+    let(:round) { create(:round, stage: swiss, completed: true) }
 
-    before { tournament }
+    before do
+      create(:pairing, round: round, player1: alpha, player2: bravo, score1: 5, score2: 4)
+      create(:pairing, round: round, player1: charlie, player2: delta, score1: 3, score2: 2)
+      create(:pairing, round: round, player1: echo, player2: foxtrot, score1: 1, score2: 0)
+    end
 
-    it 'creates elim tournament' do
+    it 'creates elim stage' do
       expect do
         cut
-      end.to change(Tournament, :count).by(1)
-    end
+      end.to change(Stage, :count).by(1)
 
-    it 'assigns tournament to previous tournament\'s user' do
-      expect(cut.user).to eq(tournament.user)
-    end
+      new_stage = tournament.current_stage
 
-    it 'clones players' do
       aggregate_failures do
-        expect(cut.players.map(&:name)).to eq(tournament.top(4).map(&:name))
-        expect(cut.players.map(&:corp_identity)).to eq(tournament.top(4).map(&:corp_identity))
-        expect(cut.players.map(&:runner_identity)).to eq(tournament.top(4).map(&:runner_identity))
-        expect(cut.players.map(&:seed)).to eq([1,2,3,4])
+        expect(new_stage.number).to eq(2)
+        expect(new_stage.double_elim?).to be(true)
+      end
+    end
+
+    it 'creates registrations' do
+      aggregate_failures do
+        expect(cut.seed(1)).to eq(alpha)
+        expect(cut.seed(2)).to eq(bravo)
+        expect(cut.seed(3)).to eq(charlie)
+        expect(cut.seed(4)).to eq(delta)
       end
     end
   end
 
-  describe '#previous' do
-    let!(:child) { create(:tournament, previous: tournament) }
+  describe '#current_stage' do
+    let!(:new_stage) { create(:stage, tournament: tournament, number: 2) }
 
-    it 'establishes association' do
-      expect(child.previous).to eq(tournament)
-      expect(tournament.next).to eq(child)
+    it 'returns last stage' do
+      expect(tournament.current_stage).to eq(new_stage)
     end
   end
 end

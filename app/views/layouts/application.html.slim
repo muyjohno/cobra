@@ -10,7 +10,7 @@ html
   body
     nav.navbar.navbar-expand-lg.fixed-top.navbar-dark.dontprint
       .container
-        = link_to "Cobra #{(' - ' + @tournament.name) if @tournament}", root_path, class: 'navbar-brand'
+        = link_to "Cobra", root_path, class: 'navbar-brand'
         button.navbar-toggler type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
           span.navbar-toggler-icon
         #navbarNav.collapse.navbar-collapse
@@ -35,15 +35,19 @@ html
         ul.nav.nav-tabs.dontprint
           - if policy(@tournament).show?
             li.nav-item= link_to tournament_path(@tournament), class: "nav-link #{'active' if controller_name == 'tournaments' && action_name == 'show'}" do
-              => fa_icon 'users'
+              => fa_icon 'trophy'
               | Tournament
+          - if policy(@tournament).edit?
+            li.nav-item= link_to tournament_players_path(@tournament), class: "nav-link #{'active' if controller_name == 'players' && action_name == 'index'}" do
+              => fa_icon 'users'
+              | Players
           - if policy(@tournament).show?
             li.nav-item= link_to tournament_rounds_path(@tournament), class: "nav-link #{'active' if controller_name == 'rounds' || controller_name == 'pairings'}" do
               => fa_icon 'calendar-check-o'
               | Pairings
           - if policy(@tournament).show?
-            li.nav-item= link_to standings_tournament_players_path(@tournament), class: "nav-link #{'active' if controller_name == 'players'}" do
-              => fa_icon 'trophy'
+            li.nav-item= link_to standings_tournament_players_path(@tournament), class: "nav-link #{'active' if controller_name == 'players' && action_name == 'standings'}" do
+              => fa_icon 'list-ol'
               | Standings
           - if policy(@tournament).edit?
             li.nav-item= link_to edit_tournament_path(@tournament), class: "nav-link #{'active' if controller_name == 'tournaments' && action_name != 'show'}" do
@@ -60,4 +64,6 @@ html
         .row
           .col-12.nav-item
             ' Made with 🐍 by Johno -
-            = link_to 'Donate on Patreon', 'https://www.patreon.com/neoreadinggrid'
+            => link_to 'Donate on Patreon', 'https://www.patreon.com/neoreadinggrid'
+            ' -
+            = link_to 'Donate on PayPal', 'https://paypal.me/PayJohno'

@@ -2,7 +2,7 @@ RSpec.describe 'load testing' do
   ROUNDS = 10
   PLAYERS = 150
 
-  let(:tournament) { create(:tournament, pairing_sort: :ranked) }
+  let(:tournament) { create(:tournament) }
 
   def timer
     (Time.now-(@start || Time.now)).seconds.tap do

@@ -1,0 +1,42 @@
+.col-12
+  p
+    = link_to meeting_tournament_players_path(@tournament), class: 'btn btn-primary' do
+      => fa_icon 'list'
+      | Player meeting
+
+  - @players.each do |player|
+    = simple_form_for player, url: tournament_player_path(@tournament, player), html: { class: 'form-inline mb-2' } do |f|
+      => f.text_field :name, class: 'form-control mr-2'
+      => f.text_field :corp_identity, placeholder: 'Corporation', class: 'corp_identities form-control mr-2'
+      => f.text_field :runner_identity, placeholder: 'Runner', class: 'runner_identities form-control mr-2'
+      .form-check.mr-2
+        => f.input_field :first_round_bye, as: :boolean, inline_label: 'First round bye?', class: 'form-check-input'
+      = button_tag type: :submit, class: 'btn btn-primary mr-2' do
+        => fa_icon 'floppy-o'
+        | Save
+      =< link_to drop_tournament_player_path(@tournament, player), method: :patch, class: 'btn btn-warning mr-2' do
+        => fa_icon 'arrow-down'
+        | Drop
+      =< link_to tournament_player_path(@tournament, player), method: :delete, class: 'btn btn-danger mr-2' do
+        => fa_icon 'trash'
+        | Delete
+
+  h3.mt-4 Register player
+  = simple_form_for :player, url: tournament_players_path(@tournament), html: { class: 'form-inline' } do |f|
+    => f.text_field :name, placeholder: 'Name', class: 'form-control mr-2'
+    => f.text_field :corp_identity, placeholder: 'Corporation', class: 'corp_identities form-control mr-2'
+    => f.text_field :runner_identity, placeholder: 'Runner', class: 'runner_identities form-control mr-2'
+    .form-check.mr-2
+      => f.input_field :first_round_bye, as: :boolean, inline_label: 'First round bye?', class: 'form-check-input'
+    = button_tag type: :submit, class: 'btn btn-success' do
+      => fa_icon 'plus'
+      | Create
+
+  - if @dropped.any?
+    h3.mt-4 Dropped
+    - @dropped.each do |player|
+      p
+        | #{player.name} (#{player.corp_identity}, #{player.runner_identity})
+        =< link_to reinstate_tournament_player_path(@tournament, player), method: :patch, class: 'btn btn-warning' do
+          => fa_icon 'arrow-up'
+          | Reinstate

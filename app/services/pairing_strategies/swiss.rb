@@ -14,7 +14,7 @@ module PairingStrategies
         round.pairings.create(pairing_params(pairing))
       end
 
-      apply_numbers!(tournament.pairing_sorter)
+      apply_numbers!(PairingSorters::Ranked)
     end
 
     private
@@ -56,7 +56,7 @@ module PairingStrategies
     end
 
     def players_with_byes
-      return players.with_first_round_bye if (tournament.rounds - [round]).empty?
+      return players.with_first_round_bye if (stage.rounds - [round]).empty?
 
       []
     end

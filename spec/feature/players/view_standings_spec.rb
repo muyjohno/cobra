@@ -23,14 +23,14 @@ RSpec.describe 'viewing standings' do
       visit standings_tournament_players_path(tournament)
     end
 
-    it 'does not display standings' do
-      expect(page).not_to have_content('Jack')
+    it 'does not display identities' do
+      expect(page).not_to have_content('Some Corp')
     end
   end
 
   context 'with a round completed' do
     before do
-      create(:round, tournament: tournament, number: 1, completed: true)
+      create(:round, stage: tournament.current_stage, number: 1, completed: true)
       visit standings_tournament_players_path(tournament)
     end
 

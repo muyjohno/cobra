@@ -1,6 +1,6 @@
 class Pairer
   attr_reader :round
-  delegate :tournament, to: :round
+  delegate :stage, to: :round
 
   def initialize(round)
     @round = round
@@ -13,8 +13,8 @@ class Pairer
   private
 
   def strategy
-    return PairingStrategies::Swiss unless %w(swiss double_elim).include? tournament.stage
+    return PairingStrategies::Swiss unless %w(swiss double_elim).include? stage.format
 
-    "PairingStrategies::#{tournament.stage.camelize}".constantize
+    "PairingStrategies::#{stage.format.camelize}".constantize
   end
 end

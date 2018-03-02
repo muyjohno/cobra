@@ -138,8 +138,5 @@
   p You can also download the standings as JSON. Cobra uses NRTM's tournament JSON format. This JSON can be uploaded to Always Be Running, for instance.
 
   h4#help_cut What is "Cut to Top X"?
-  p You can cut to a double elimination bracket on this page. Currently only top 4 and top 8 are supported. This will create a new tournament with only the top N (non-dropped) players from the standings, and this new tournament will pair all rounds following the correct bracket structure, rather than using Swiss pairings.
-  .alert.alert-warning
-    => fa_icon 'warning'
-    | This feature is somewhat experimental
-  p In a double elimination bracket, it's important to edit the pairings in the first round to indicate which side each player played. Cobra can determine in future rounds which side each player in a pairing should play.
+  p You can cut to a double elimination bracket in your tournament. Currently only top 4 and top 8 are supported. This will create a new stage in your tournament with only the top N (non-dropped) players from the standings, and this new stage will pair all rounds following the correct bracket structure, rather than using Swiss pairings.
+  p In a double elimination bracket, it's important to mark the pairings in the first round to indicate which side each player played. In subsequent rounds, Cobra will determine which side each player should play, randomising if necessary as well.

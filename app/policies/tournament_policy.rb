@@ -26,4 +26,8 @@ class TournamentPolicy < ApplicationPolicy
   def cut?
     update?
   end
+
+  def my?
+    user
+  end
 end

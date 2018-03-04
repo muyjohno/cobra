@@ -1,17 +1,17 @@
 .col-12
+  h4 Today's tournaments
+  - if @tournaments.any?
+    = render @tournaments
+  - else
+    i None
+
+.col-12
   = simple_form_for :shortcode, url: shortlink_tournaments_path, method: :get, html: { class: 'form-inline justify-content-center' } do |f|
     label.mx-2 Got a shortcode?
     => f.text_field :slug, class: 'form-control mr-2', placeholder: 'SHRT', name: :slug
     = button_tag type: :submit, class: 'btn btn-primary mr-2' do
       => fa_icon 'arrow-right'
       | Go to tournament
-
-.col-12
-  h4 Today's tournaments
-  - if @tournaments.any?
-    = render @tournaments
-  - else
-    i None
 
 .col-12.mt-3
   .text-center

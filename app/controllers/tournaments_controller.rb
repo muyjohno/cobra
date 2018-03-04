@@ -12,6 +12,12 @@ class TournamentsController < ApplicationController
       .limit(20)
   end
 
+  def my
+    authorize Tournament
+
+    @tournaments = current_user.tournaments.order(date: :desc)
+  end
+
   def show
     authorize @tournament
 

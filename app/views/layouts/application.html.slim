@@ -19,6 +19,9 @@ html
               li.nav-item= link_to new_tournament_path, class: 'nav-link' do
                 => fa_icon 'plus'
                 | Create tournament
+              li.nav-item= link_to my_tournaments_path, class: 'nav-link' do
+                => fa_icon 'trophy'
+                | My tournaments
               li.nav-item= link_to logout_path, class: 'nav-link' do
                 => fa_icon 'sign-out'
                 | Sign out
@@ -62,8 +65,11 @@ html
     .footer.dontprint
       .container
         .row
-          .col-12.nav-item
-            ' Made with 🐍 by Johno -
+          .col-4.nav-item
             => link_to 'Donate on Patreon', 'https://www.patreon.com/neoreadinggrid'
             ' -
             = link_to 'Donate on PayPal', 'https://paypal.me/PayJohno'
+          .col-4.nav-item.text-center
+           | Made with 🐍 by Johno
+          .col-4.nav-item.text-right
+            = link_to 'v1.0.0', 'https://github.com/muyjohno/cobra/releases', class: 'text-muted'

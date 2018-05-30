@@ -22,8 +22,13 @@ class TournamentsController < ApplicationController
   def show
     authorize @tournament
 
-    @players = @tournament.players.active.sort_by(&:name)
-    @dropped = @tournament.players.dropped.sort_by(&:name)
+    respond_to do |format|
+      format.html do
+        @players = @tournament.players.active.sort_by(&:name)
+        @dropped = @tournament.players.dropped.sort_by(&:name)
+      end
+      format.json { render json: NrtmJson.new(@tournament).data }
+    end
   end
 
   def new

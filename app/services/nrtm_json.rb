@@ -29,10 +29,10 @@ class NrtmJson
       end,
       eliminationPlayers: cut_stage.standings.each_with_index.map do |standing, i|
         {
-          id: standing.player.id,
-          name: standing.name,
+          id: standing.player&.id,
+          name: standing.player&.name,
           rank: i+1,
-          seed: standing.player.seed_in_stage(cut_stage)
+          seed: standing.player&.seed_in_stage(cut_stage)
         }
       end,
       rounds: swiss_pairing_data + cut_pairing_data,
@@ -88,12 +88,12 @@ class NrtmJson
           player1: {
             id: pairing.player1.id,
             role: pairing.player1_side,
-            winner: pairing.score1 > pairing.score2
+            winner: (pairing.score1 > pairing.score2 if pairing.score1 && pairing.score2)
           },
           player2: {
             id: pairing.player2.id,
             role: pairing.player2_side,
-            winner: pairing.score2 > pairing.score1
+            winner: (pairing.score2 > pairing.score1 if pairing.score1 && pairing.score2)
           },
           intentionalDraw: false,
           eliminationGame: true

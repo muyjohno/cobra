@@ -1,7 +1,8 @@
 $(document).on 'turbolinks:load', ->
-  $.get '/identities', (data) ->
-    $('.corp_identities').each (i, input) ->
-      new Awesomplete(input, { list: data.corp })
+  if $('.identities_form').length
+    $.get '/identities', (data) ->
+      $('.corp_identities').each (i, input) ->
+        new Awesomplete(input, { list: data.corp })
 
-    $('.runner_identities').each (i, input) ->
-      new Awesomplete(input, { list: data.runner })
+      $('.runner_identities').each (i, input) ->
+        new Awesomplete(input, { list: data.runner })

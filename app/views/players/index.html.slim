@@ -5,7 +5,7 @@
       | Player meeting
 
   - @players.each do |player|
-    = simple_form_for player, url: tournament_player_path(@tournament, player), html: { class: 'form-inline mb-2' } do |f|
+    = simple_form_for player, url: tournament_player_path(@tournament, player), html: { class: 'form-inline mb-2 identities_form' } do |f|
       => f.text_field :name, class: 'form-control mr-2'
       => f.text_field :corp_identity, placeholder: 'Corporation', class: 'corp_identities form-control mr-2'
       => f.text_field :runner_identity, placeholder: 'Runner', class: 'runner_identities form-control mr-2'

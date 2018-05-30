@@ -1,0 +1,14 @@
+.col-md-12
+  p Paste in the data from TOME's export feature to recreate your event in Cobra.
+
+  .alert.alert-danger
+    => fa_icon 'flask'
+    | This feature is very experimental. All existing tournament data will be DELETED as part of this import process.
+
+  = simple_form_for :tome_import, url: apply_import_from_tome_tournament_path(@tournament) do |f|
+    .form-group
+      = f.input :tome_import, input_html: { class: 'form-control' }, label: 'TOME data', as: :text
+    .form-group
+      = button_tag type: :submit, class: 'btn btn-primary', data: { confirm: 'This action will DESTROY all existing data and CANNOT be reversed! Are you sure?' } do |f|
+        => fa_icon 'download'
+        | Import

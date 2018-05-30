@@ -20,6 +20,7 @@ gem 'rqrcode'
 gem 'bootstrap-datepicker-rails'
 gem 'unicorn'
 gem 'execjs'
+gem 'rails-html-sanitizer', '~> 1.0.4'
 
 group :development, :test do
   gem 'pry'

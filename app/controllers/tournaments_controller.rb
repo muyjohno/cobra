@@ -1,7 +1,8 @@
 class TournamentsController < ApplicationController
   before_action :set_tournament, only: [
       :show, :edit, :update, :destroy,
-      :upload_to_abr, :save_json, :cut, :qr
+      :upload_to_abr, :save_json, :cut, :qr,
+      :import_from_tome, :apply_import_from_tome
     ]
 
   def index
@@ -120,6 +121,18 @@ class TournamentsController < ApplicationController
     authorize @tournament, :edit?
   end
 
+  def import_from_tome
+    authorize @tournament, :edit?
+  end
+
+  def apply_import_from_tome
+    authorize @tournament, :edit?
+
+    Import::Tome.new(tome_import_params[:tome_import]).apply(@tournament)
+
+    redirect_to tournament_players_path(@tournament)
+  end
+
   private
 
   def set_tournament
@@ -128,5 +141,9 @@ class TournamentsController < ApplicationController
 
   def tournament_params
     params.require(:tournament).permit(:name, :date, :private)
+  end
+
+  def tome_import_params
+    params.require(:tome_import).permit(:tome_import)
   end
 end

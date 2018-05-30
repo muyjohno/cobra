@@ -45,7 +45,7 @@ RSpec.describe NrtmJson do
 
     it 'returns hash of data' do
       expect(json.data.with_indifferent_access).to eq(
-        JSON.parse(File.read('spec/fixtures/nrtm_json_swiss.json'))
+        JSON.parse(file_fixture('nrtm_json_swiss.json').read)
       )
     end
 
@@ -69,7 +69,7 @@ RSpec.describe NrtmJson do
 
       it 'returns hash of data' do
         expect(JSON.parse(json.data.to_json)).to eq(
-          JSON.parse(File.read('spec/fixtures/nrtm_json_cut.json'))
+          JSON.parse(file_fixture('nrtm_json_cut.json').read)
         )
       end
     end

@@ -35,4 +35,38 @@ RSpec.describe TournamentsController do
       expect(tournament).to have_received(:cut_to!).with(:double_elim, 8)
     end
   end
+
+  describe '#apply_import_from_tome' do
+    let(:importer) { double( apply: true) }
+
+    before do
+      allow(Import::Tome).to receive(:new).and_return(importer)
+    end
+
+    it 'prevents unauthorised access' do
+      post apply_import_from_tome_tournament_path(tournament),
+        params: { tome_import: { tome_import: 'SOMEJSON' }}
+
+      expect(response).to redirect_to(root_path)
+    end
+
+    it 'applies import to the tournament' do
+      sign_in tournament.user
+
+      post apply_import_from_tome_tournament_path(tournament),
+        params: { tome_import: { tome_import: 'SOMEJSON' }}
+
+      expect(Import::Tome).to have_received(:new).with('SOMEJSON')
+      expect(importer).to have_received(:apply).with(tournament)
+    end
+
+    it 'redirects to tournament page' do
+      sign_in tournament.user
+
+      post apply_import_from_tome_tournament_path(tournament),
+        params: { tome_import: { tome_import: 'SOMEJSON' }}
+
+      expect(response).to redirect_to(tournament_players_path(tournament))
+    end
+  end
 end

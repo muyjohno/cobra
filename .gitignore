@@ -6,6 +6,7 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
+npm-debug.log
 
 .env
 

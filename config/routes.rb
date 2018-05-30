@@ -28,6 +28,8 @@ Rails.application.routes.draw do
     get :save_json, on: :member
     post :cut, on: :member
     get :qr, on: :member
+    get :import_from_tome, on: :member
+    post :apply_import_from_tome, on: :member
     get :shortlink, on: :collection
     get :not_found, on: :collection
     get :my, on: :collection

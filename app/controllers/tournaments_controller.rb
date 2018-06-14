@@ -27,7 +27,10 @@ class TournamentsController < ApplicationController
         @players = @tournament.players.active.sort_by(&:name)
         @dropped = @tournament.players.dropped.sort_by(&:name)
       end
-      format.json { render json: NrtmJson.new(@tournament).data }
+      format.json do
+        headers['Access-Control-Allow-Origin'] = '*'
+        render json: NrtmJson.new(@tournament).data
+      end
     end
   end
 

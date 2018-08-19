@@ -22,7 +22,7 @@
         | Delete
 
   h3.mt-4 Register player
-  = simple_form_for :player, url: tournament_players_path(@tournament), html: { class: 'form-inline' } do |f|
+  = simple_form_for :player, url: tournament_players_path(@tournament), html: { class: 'form-inline identities_form' } do |f|
     => f.text_field :name, placeholder: 'Name', class: 'form-control mr-2'
     => f.text_field :corp_identity, placeholder: 'Corporation', class: 'corp_identities form-control mr-2'
     => f.text_field :runner_identity, placeholder: 'Runner', class: 'runner_identities form-control mr-2'

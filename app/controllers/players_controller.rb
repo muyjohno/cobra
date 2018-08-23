@@ -5,8 +5,8 @@ class PlayersController < ApplicationController
   def index
     authorize @tournament, :update?
 
-    @players = @tournament.players.active.sort_by(&:name)
-    @dropped = @tournament.players.dropped.sort_by(&:name)
+    @players = @tournament.players.active.sort_by { |p| p.name || '' }
+    @dropped = @tournament.players.dropped.sort_by { |p| p.name || '' }
   end
 
   def create

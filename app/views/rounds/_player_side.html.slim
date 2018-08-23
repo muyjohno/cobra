@@ -1,4 +1,4 @@
-- if pairing.stage.single_sided?
+- if single_sided
   - if policy(pairing.tournament).update?
     = set_side_button(player, :corp, pairing)
     = set_side_button(player, :runner, pairing)

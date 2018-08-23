@@ -12,7 +12,7 @@ RSpec.describe 'Listing players' do
     end
 
     it 'lists players' do
-      expect(first('input[name="player[name]"]').value).to eq('Jack Player')
+      expect(all('input[name="player[name]"]').last.value).to eq('Jack Player')
     end
   end
 

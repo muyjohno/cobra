@@ -6,7 +6,7 @@ RSpec.describe 'updating players' do
 
     sign_in tournament.user
     visit tournament_players_path(tournament)
-    within(first('form')) do
+    within(all('form').last) do
       fill_in :player_name, with: 'Jill Player'
       fill_in :player_corp_identity, with: 'Jinteki: Personal Evolution'
       fill_in :player_runner_identity, with: 'Gabriel Santiago'

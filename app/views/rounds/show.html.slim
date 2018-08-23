@@ -4,23 +4,24 @@
     => link_to tournament_rounds_path(@round.tournament), class: 'btn btn-primary' do
       => fa_icon 'arrow-left'
       | Back to pairings
-    => link_to repair_tournament_round_path(@round.tournament, @round), method: :patch, class: 'btn btn-warning', data: { confirm: 'Are you sure? This cannot be reversed.' } do
-      => fa_icon 'refresh'
-      | Re-pair
-    - if @round.completed?
-      => link_to complete_tournament_round_path(@round.tournament, @round, completed: false), method: :patch, class: 'btn btn-warning' do
-        => fa_icon 'backward'
-        | Uncomplete
-    - else
-      => link_to complete_tournament_round_path(@round.tournament, @round, completed: true), method: :patch, class: 'btn btn-warning' do
-        => fa_icon 'check'
-        | Complete
-    => link_to edit_tournament_round_path(@round.tournament, @round), class: 'btn btn-warning' do
-      => fa_icon 'wrench'
-      | Advanced
-    = link_to tournament_round_path(@round.tournament, @round), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure? This cannot be reversed.' } do
-      => fa_icon 'trash'
-      | Delete round
+    - if policy(@round.tournament).update?
+      => link_to repair_tournament_round_path(@round.tournament, @round), method: :patch, class: 'btn btn-warning', data: { confirm: 'Are you sure? This cannot be reversed.' } do
+        => fa_icon 'refresh'
+        | Re-pair
+      - if @round.completed?
+        => link_to complete_tournament_round_path(@round.tournament, @round, completed: false), method: :patch, class: 'btn btn-warning' do
+          => fa_icon 'backward'
+          | Uncomplete
+      - else
+        => link_to complete_tournament_round_path(@round.tournament, @round, completed: true), method: :patch, class: 'btn btn-warning' do
+          => fa_icon 'check'
+          | Complete
+      => link_to edit_tournament_round_path(@round.tournament, @round), class: 'btn btn-warning' do
+        => fa_icon 'wrench'
+        | Advanced
+      = link_to tournament_round_path(@round.tournament, @round), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure? This cannot be reversed.' } do
+        => fa_icon 'trash'
+        | Delete round
   = render 'pairings', round: @round
 
 h3.mt-2.col-12 Unpaired players

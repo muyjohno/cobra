@@ -6,11 +6,7 @@ module PairingStrategies
     def pair!
       assign_byes!
 
-      Swissper.pair(
-        (players - players_with_byes).to_a,
-        delta_key: :points,
-        exclude_key: :unpairable_opponents
-      ).each do |pairing|
+      paired_players.each do |pairing|
         round.pairings.create(pairing_params(pairing))
       end
 
@@ -26,6 +22,33 @@ module PairingStrategies
           player2: nil,
           score1: BYE_WINNER_SCORE,
           score2: BYE_LOSER_SCORE
+        )
+      end
+    end
+
+    def paired_players
+      if first_round?
+        return players_to_pair.to_a.shuffle.in_groups_of(2, Swissper::Bye)
+      elsif players.count < 100
+        Swissper.pair(
+          players_to_pair.to_a,
+          delta_key: :points,
+          exclude_key: :unpairable_opponents
+        )
+      else
+        active_players = stage.standings.map(&:player).select(&:active?)
+        size = 2 * (active_players.count/4)
+        bottom_half = active_players
+        top_half = bottom_half.shift(size)
+
+        Swissper.pair(
+          top_half,
+          delta_key: :points,
+          exclude_key: :unpairable_opponents
+        ) + Swissper.pair(
+          bottom_half,
+          delta_key: :points,
+          exclude_key: :unpairable_opponents
         )
       end
     end
@@ -56,9 +79,17 @@ module PairingStrategies
     end
 
     def players_with_byes
-      return players.with_first_round_bye if (stage.rounds - [round]).empty?
+      return players.with_first_round_bye if first_round?
 
       []
+    end
+
+    def players_to_pair
+      @players_to_pair ||= players - players_with_byes
+    end
+
+    def first_round?
+      (stage.rounds - [round]).empty?
     end
   end
 end

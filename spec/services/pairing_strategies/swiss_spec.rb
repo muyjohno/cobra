@@ -64,9 +64,12 @@ RSpec.describe PairingStrategies::Swiss do
     end
 
     context 'after some rounds' do
+      let(:round1) { create(:round, number: 1, stage: stage) }
+      let(:round) { create(:round, number: 2, stage: stage) }
+
       before do
-        create(:pairing, player1: jack, player2: jill, score1: 6, score2: 0)
-        create(:pairing, player1: hansel, player2: gretel, score1: 4, score2: 1)
+        create(:pairing, player1: jack, player2: jill, score1: 6, score2: 0, round: round1)
+        create(:pairing, player1: hansel, player2: gretel, score1: 4, score2: 1, round: round1)
       end
 
       it 'pairs based on points' do
@@ -125,10 +128,13 @@ RSpec.describe PairingStrategies::Swiss do
     end
 
     context 'after multiple rounds' do
+      let(:round1) { create(:round, number: 1, stage: stage) }
+      let(:round) { create(:round, number: 2, stage: stage) }
+
       before do
-        create(:pairing, player1: snap, score1: 6)
-        create(:pairing, player1: crackle, score1: 3)
-        create(:pairing, player1: pop, player2: nil, score1: 1, score2: 0)
+        create(:pairing, player1: snap, score1: 6, round: round1)
+        create(:pairing, player1: crackle, score1: 3, round: round1)
+        create(:pairing, player1: pop, player2: nil, score1: 1, score2: 0, round: round1)
       end
 
       it 'avoids previous byes' do

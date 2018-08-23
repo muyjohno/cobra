@@ -1,9 +1,10 @@
+- single_sided = round.stage.single_sided?
 - round.pairings.each do |pairing|
   .row.m-1.round_pairing class="table_#{pairing.table_number} #{'reported' if pairing.reported?}"
     .col-sm-2 Table #{pairing.table_number}
     .col-sm.left_player_name
-      = pairing.player1.name
-      =< render 'player_side', pairing: pairing, player: pairing.player1
+      = @players[pairing.player1_id].name
+      =< render 'player_side', pairing: pairing, player: @players[pairing.player1_id], single_sided: single_sided
     .col-sm-3.centre_score
       - if policy(round.tournament).edit?
         .preset_score
@@ -22,8 +23,8 @@
       - else
         | #{pairing.score1} - #{pairing.score2}
     .col-sm.right_player_name
-      = pairing.player2.name
-      =< render 'player_side', pairing: pairing, player: pairing.player2
+      = @players[pairing.player2_id].name
+      =< render 'player_side', pairing: pairing, player: @players[pairing.player2_id], single_sided: single_sided
     - if policy(round.tournament).update?
       .col-sm-1
         = link_to tournament_round_pairing_path(round.tournament, round, pairing), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure? This cannot be reversed.' } do

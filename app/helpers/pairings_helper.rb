@@ -21,7 +21,7 @@ module PairingsHelper
   end
 
   def side_value(player, side, pairing)
-    return unless pairing.players.include? player
+    return unless player_is_in_pairing(player, pairing)
 
     [:player1_is_corp, :player1_is_runner].tap do |options|
       options.reverse! if (side == :runner) ^ (pairing.player2 == player)
@@ -29,7 +29,7 @@ module PairingsHelper
   end
 
   def set_side_button(player, side, pairing)
-    return unless pairing.players.include? player
+    return unless player_is_in_pairing(player, pairing)
 
     value = side_value(player, side, pairing)
     active = (pairing.side.try(:to_sym) == value)
@@ -37,7 +37,7 @@ module PairingsHelper
     link_to side.capitalize,
       report_tournament_round_pairing_path(
         pairing.tournament,
-        pairing.round,
+        pairing.round_id,
         pairing,
         pairing: { side: value }
       ),
@@ -56,8 +56,12 @@ module PairingsHelper
   end
 
   def side_label_for(pairing, player)
-    return nil unless pairing.side && pairing.players.include?(player)
+    return nil unless pairing.side && player_is_in_pairing(player, pairing)
 
     "(#{pairing.side_for(player).to_s.titleize})"
+  end
+
+  def player_is_in_pairing(player, pairing)
+    pairing.player1_id == player.id || pairing.player2_id == player.id
   end
 end

@@ -5,6 +5,12 @@
         => fa_icon 'plus'
         | Add Swiss stage
   - else
+    - if policy(@tournament).update?
+      p
+        #toggle_reported.btn.btn-primary
+          => fa_icon 'eye-slash'
+          | Show/hide reported pairings
+      .reported_hidden_message.alert.alert-info Reported scores are currently hidden on this page. This will not affect other users viewing this page.
     - if @tournament.rounds.empty?
       p= link_to meeting_tournament_players_path(@tournament), class: 'btn btn-primary' do
         => fa_icon 'list-ul'

@@ -22,6 +22,9 @@
     p= button_to cut_tournament_path(@tournament, number: 8), method: :post, class: 'btn btn-success' do
       => fa_icon 'scissors'
       | Cut to Top 8
+    p= button_to cut_tournament_path(@tournament, number: 16), method: :post, class: 'btn btn-success' do
+      => fa_icon 'scissors'
+      | Cut to Top 16
     p= link_to import_from_tome_tournament_path(@tournament), class: 'btn btn-warning' do |f|
       => fa_icon 'book'
       | Import from TOME

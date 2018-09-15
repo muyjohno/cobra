@@ -1,6 +1,6 @@
 - single_sided = round.stage.single_sided?
 - round.pairings.each do |pairing|
-  .row.m-1.round_pairing class="table_#{pairing.table_number} #{'reported' if pairing.reported?}"
+  .row.m-1.round_pairing class="table_#{pairing.table_number} #{'reported' if pairing.reported? && current_user == @tournament.user}"
     .col-sm-2 Table #{pairing.table_number}
     .col-sm.left_player_name
       = @players[pairing.player1_id].name

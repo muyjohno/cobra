@@ -80,7 +80,7 @@ RSpec.describe Round do
       let!(:pairing13) { create(:pairing, round: round) }
 
       it 'returns sorted pairings' do
-        expect(round.collated_pairings).to eq([
+        expect(round.collated_pairings).to match_array([
           pairing1, pairing5, pairing9, pairing13,
           pairing2, pairing6, pairing10, nil,
           pairing3, pairing7, pairing11, nil,
@@ -94,7 +94,7 @@ RSpec.describe Round do
       let!(:pairing2) { create(:pairing, round: round) }
 
       it 'returns sorted pairings' do
-        expect(round.collated_pairings).to eq([
+        expect(round.collated_pairings).to match_array([
           pairing1, pairing2
         ])
       end
@@ -129,7 +129,7 @@ RSpec.describe Round do
       let!(:pairing26) { create(:pairing, round: round) }
 
       it 'returns sorted pairings' do
-        expect(round.collated_pairings).to eq([
+        expect(round.collated_pairings).to match_array([
           pairing1, pairing8, pairing15, pairing22,
           pairing2, pairing9, pairing16, pairing23,
           pairing3, pairing10, pairing17, pairing24,

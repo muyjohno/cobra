@@ -29,7 +29,7 @@ class Player < ApplicationRecord
   end
 
   def points
-    @points ||= pairings.reported.sum{ |pairing| pairing.score_for(self) }
+    @points ||= pairings.reported.sum { |pairing| pairing.score_for(self) }
   end
 
   def sos_earned
@@ -46,6 +46,10 @@ class Player < ApplicationRecord
 
   def seed_in_stage(stage)
     registrations.find_by(stage: stage).seed
+  end
+
+  def had_bye?
+    pairings.bye.any?
   end
 
   private

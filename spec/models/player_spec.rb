@@ -107,4 +107,26 @@ RSpec.describe Player do
       end
     end
   end
+
+  describe '#had_bye?' do
+    before do
+      create_list(:pairing, 3, player1: player)
+    end
+
+    context 'player has not had a bye' do
+      it 'returns false' do
+        expect(player.had_bye?).to eq(false)
+      end
+    end
+
+    context 'player has had a bye' do
+      before do
+        create(:pairing, player1: player, player2: nil)
+      end
+
+      it 'returns true' do
+        expect(player.had_bye?).to eq(true)
+      end
+    end
+  end
 end

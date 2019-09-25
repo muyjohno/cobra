@@ -164,4 +164,38 @@ RSpec.describe PairingStrategies::Swiss do
       end
     end
   end
+
+  context 'with over 60 players' do
+    let(:strategy) { double('PairingStrategies::BigSwiss') }
+
+    before do
+      create_list(:player, 61, tournament: tournament)
+      allow(PairingStrategies::BigSwiss).to receive(:new).and_return(strategy)
+      allow(strategy).to receive(:pair!).and_return([])
+    end
+
+    context 'first round' do
+      it 'does not hand off to BigSwiss pairing strategy' do
+        pairer.pair!
+
+        expect(PairingStrategies::BigSwiss).not_to have_received(:new).with(stage)
+        expect(strategy).not_to have_received(:pair!)
+      end
+    end
+
+    context 'after a round' do
+      let(:round) { create(:round, number: 2, stage: stage) }
+
+      before do
+        create(:round, number: 1, stage: stage)
+      end
+
+      it 'hands off to BigSwiss pairing strategy' do
+        pairer.pair!
+
+        expect(PairingStrategies::BigSwiss).to have_received(:new).with(stage)
+        expect(strategy).to have_received(:pair!)
+      end
+    end
+  end
 end

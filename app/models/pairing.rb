@@ -11,6 +11,9 @@ class Pairing < ApplicationRecord
   scope :completed, -> { joins(:round).where('rounds.completed = ?', true) }
   scope :for_stage, ->(stage) { joins(:round).where(rounds: { stage: stage }) }
 
+  after_update :cache_standings!, if: Proc.new { round.completed? }
+  delegate :cache_standings!, to: :stage
+
   enum side: {
     player1_is_corp: 1,
     player1_is_runner: 2

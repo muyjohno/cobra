@@ -3,6 +3,7 @@ class Stage < ApplicationRecord
   has_many :rounds, dependent: :destroy
   has_many :registrations, dependent: :destroy
   has_many :players, through: :registrations
+  has_many :standing_rows
 
   delegate :top, to: :standings
 
@@ -19,7 +20,7 @@ class Stage < ApplicationRecord
   end
 
   def standings
-    @standings ||= Standings.new(self)
+    Standings.new(self)
   end
 
   def eligible_pairings
@@ -32,5 +33,18 @@ class Stage < ApplicationRecord
 
   def single_sided?
     double_elim?
+  end
+
+  def cache_standings!
+    standing_rows.destroy_all
+    standings.each_with_index do |standing, i|
+      standing_rows.create(
+        position: i+1,
+        player: standing.player,
+        points: standing.points,
+        sos: standing.sos,
+        extended_sos: standing.extended_sos
+      )
+    end
   end
 end

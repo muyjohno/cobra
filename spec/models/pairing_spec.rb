@@ -153,4 +153,32 @@ RSpec.describe Pairing do
       expect(pairing.player2_side).to eq(nil)
     end
   end
+
+  describe '#cache_standings!' do
+    let(:pairing) { create(:pairing, round: round) }
+
+    before do
+      allow(pairing.stage).to receive(:cache_standings!)
+    end
+
+    context 'when round is incomplete' do
+      let(:round) { create(:round, completed: false) }
+
+      it 'is not called' do
+        pairing.update(score1: 3)
+
+        expect(pairing.stage).not_to have_received(:cache_standings!)
+      end
+    end
+
+    context 'when round is complete' do
+      let(:round) { create(:round, completed: true) }
+
+      it 'is called' do
+        pairing.update(score1: 3)
+
+        expect(pairing.stage).to have_received(:cache_standings!)
+      end
+    end
+  end
 end

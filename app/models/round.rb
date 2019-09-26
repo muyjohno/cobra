@@ -6,6 +6,9 @@ class Round < ApplicationRecord
   default_scope { order(number: :asc) }
   scope :complete, -> { where(completed: true) }
 
+  after_update :cache_standings!, if: Proc.new { completed_changed? && completed? }
+  delegate :cache_standings!, to: :stage
+
   def pair!
     Pairer.new(self).pair!
   end

@@ -101,4 +101,28 @@ RSpec.describe Stage do
       end
     end
   end
+
+  describe '#cache_standings!' do
+    let(:jack) { create(:player, name: 'Jack') }
+    let(:jill) { create(:player, name: 'Jill') }
+    let(:round1) { create(:round, stage: stage, completed: true) }
+    let(:round2) { create(:round, stage: stage, completed: false) }
+
+    it 'generates standing row entries' do
+      stage.players << jack
+      stage.players << jill
+      report round1, 1, jack, 6, jill, 0
+      report round2, 1, jack, 3, jill, 3
+
+      expect do
+        stage.cache_standings!
+      end.to change { StandingRow.count }.by(2)
+
+      expect(stage.standing_rows.map(&:position)).to eq([1, 2])
+      expect(stage.standing_rows.map(&:name)).to eq(%w[Jack Jill])
+      expect(stage.standing_rows.map(&:points)).to eq([6, 0])
+      expect(stage.standing_rows.map(&:sos)).to eq([0, 6])
+      expect(stage.standing_rows.map(&:extended_sos)).to eq([6, 0])
+    end
+  end
 end

@@ -26,11 +26,21 @@ RSpec.describe 'viewing standings' do
     it 'does not display identities' do
       expect(page).not_to have_content('Some Corp')
     end
+
+    it 'does display names' do
+      aggregate_failures do
+        expect(page).to have_content('Jack')
+        expect(page).to have_content('Jill')
+      end
+    end
   end
 
   context 'with a round completed' do
+    let(:round) { create(:round, stage: tournament.current_stage, number: 1) }
+
     before do
-      create(:round, stage: tournament.current_stage, number: 1, completed: true)
+      round.update(completed: true)
+
       visit standings_tournament_players_path(tournament)
     end
 
@@ -38,6 +48,13 @@ RSpec.describe 'viewing standings' do
       aggregate_failures do
         expect(page).to have_content('Some Corp Some Runner')
         expect(page).to have_content('Another Corp Another Runner')
+      end
+    end
+
+    it 'does display names' do
+      aggregate_failures do
+        expect(page).to have_content('Jack')
+        expect(page).to have_content('Jill')
       end
     end
   end

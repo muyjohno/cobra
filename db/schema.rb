@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180219221030) do
+ActiveRecord::Schema.define(version: 20190925181937) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,6 +74,17 @@ ActiveRecord::Schema.define(version: 20180219221030) do
     t.index ["tournament_id"], name: "index_stages_on_tournament_id", using: :btree
   end
 
+  create_table "standing_rows", force: :cascade do |t|
+    t.integer "position"
+    t.integer "player_id"
+    t.integer "stage_id"
+    t.integer "points"
+    t.decimal "sos"
+    t.decimal "extended_sos"
+    t.index ["player_id"], name: "index_standing_rows_on_player_id", using: :btree
+    t.index ["stage_id"], name: "index_standing_rows_on_stage_id", using: :btree
+  end
+
   create_table "tournaments", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -106,5 +117,7 @@ ActiveRecord::Schema.define(version: 20180219221030) do
   add_foreign_key "rounds", "stages"
   add_foreign_key "rounds", "tournaments"
   add_foreign_key "stages", "tournaments"
+  add_foreign_key "standing_rows", "players"
+  add_foreign_key "standing_rows", "stages"
   add_foreign_key "tournaments", "users"
 end

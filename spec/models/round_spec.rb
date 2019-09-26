@@ -141,4 +141,36 @@ RSpec.describe Round do
       end
     end
   end
+
+  describe '#cache_standings!' do
+    before do
+      allow(round.stage).to receive(:cache_standings!)
+    end
+
+    context 'when completed' do
+      let(:round) { create(:round, completed: true) }
+
+      it 'is not called' do
+        round.update(completed: true)
+
+        expect(round.stage).not_to have_received(:cache_standings!)
+      end
+    end
+
+    context 'when not completed' do
+      let(:round) { create(:round, completed: false) }
+
+      it 'is called when round is completed' do
+        round.update(completed: true)
+
+        expect(round.stage).to have_received(:cache_standings!)
+      end
+
+      it 'is not called when round remains incomplete' do
+        round.update(number: 1)
+
+        expect(round.stage).not_to have_received(:cache_standings!)
+      end
+    end
+  end
 end

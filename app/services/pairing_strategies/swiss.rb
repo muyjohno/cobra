@@ -27,30 +27,14 @@ module PairingStrategies
     end
 
     def paired_players
-      if first_round?
-        return players_to_pair.to_a.shuffle.in_groups_of(2, Swissper::Bye)
-      elsif players.count < 100
-        Swissper.pair(
-          players_to_pair.to_a,
-          delta_key: :points,
-          exclude_key: :unpairable_opponents
-        )
-      else
-        active_players = stage.standings.map(&:player).select(&:active?)
-        size = 2 * (active_players.count/4)
-        bottom_half = active_players
-        top_half = bottom_half.shift(size)
+      return players_to_pair.to_a.shuffle.in_groups_of(2, Swissper::Bye) if first_round?
+      return PairingStrategies::BigSwiss.new(stage).pair! if players.count > 60
 
-        Swissper.pair(
-          top_half,
-          delta_key: :points,
-          exclude_key: :unpairable_opponents
-        ) + Swissper.pair(
-          bottom_half,
-          delta_key: :points,
-          exclude_key: :unpairable_opponents
-        )
-      end
+      Swissper.pair(
+        players_to_pair.to_a,
+        delta_key: :points,
+        exclude_key: :unpairable_opponents
+      )
     end
 
     def pairing_params(pairing)

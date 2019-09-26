@@ -9,17 +9,23 @@ table.table.table-striped.standings
       th SOS
       th Extended SOS
   tbody
-    - tournament_started = stage.rounds.complete.any?
-    - standings.each_with_index do |standing, i|
-      tr
-        td= i+1
-        td= standing.name
-        td.ids
-          - if tournament_started
-            = render standing.corp_identity
-            = render standing.runner_identity
-          - else
-            | -
-        td= standing.points
-        td= number_with_precision standing.sos, precision: 4
-        td= number_with_precision standing.extended_sos, precision: 4
+    - if stage.rounds.complete.any?
+      - stage.standing_rows.each do |row|
+        tr
+          td= row.position
+          td= row.name
+          td.ids
+            = render row.corp_identity
+            = render row.runner_identity
+          td= row.points
+          td= number_with_precision row.sos, precision: 4
+          td= number_with_precision row.extended_sos, precision: 4
+    - else
+      - stage.players.map(&:name).sort.each_with_index do |name, i|
+        tr
+          td= i+1
+          td= name
+          td.ids -
+          td= 0
+          td= number_with_precision 0, precision: 4
+          td= number_with_precision 0, precision: 4

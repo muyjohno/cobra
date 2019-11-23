@@ -27,10 +27,10 @@ module PairingStrategies
     end
 
     def paired_players
-      return players_to_pair.to_a.shuffle.in_groups_of(2, Swissper::Bye) if first_round?
-      return PairingStrategies::BigSwiss.new(stage).pair! if players.count > 60
+      return @paired_players ||= players_to_pair.to_a.shuffle.in_groups_of(2, Swissper::Bye) if first_round?
+      return @paired_players ||= PairingStrategies::BigSwiss.new(stage).pair! if players.count > 60
 
-      Swissper.pair(
+      @paired_players ||= Swissper.pair(
         players_to_pair.to_a,
         delta_key: :points,
         exclude_key: :unpairable_opponents
@@ -57,8 +57,13 @@ module PairingStrategies
     end
 
     def apply_numbers!(sorter)
-      sorter.sort(round.pairings).each_with_index do |pairing, i|
+      sorter.sort(round.pairings.non_bye).each_with_index do |pairing, i|
         pairing.update(table_number: i + 1)
+      end
+
+      non_bye_tables = round.pairings.non_bye.count
+      round.pairings.bye.each_with_index do |pairing, i|
+        pairing.update(table_number: i + non_bye_tables + 1)
       end
     end
 

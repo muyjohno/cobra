@@ -42,6 +42,14 @@ RSpec.describe PairingStrategies::Swiss do
         end
       end
 
+      it 'gives byes highest table numbers' do
+        pairer.pair!
+
+        round.reload
+
+        expect(round.pairings.bye.pluck(:table_number)).to match_array([2, 3])
+      end
+
       context 'in second round' do
         let(:round2_pairer) { described_class.new(round2) }
         let(:round2) { create(:round, number: 2, stage: stage) }
@@ -115,6 +123,14 @@ RSpec.describe PairingStrategies::Swiss do
       ).to contain_exactly(snap, crackle, pop, nil_player)
     end
 
+    it 'gives bye highest table number' do
+      pairer.pair!
+
+      round.reload
+
+      expect(round.pairings.bye.first.table_number).to eq(round.pairings.count)
+    end
+
     it 'gives win against bye' do
       pairer.pair!
 
@@ -132,8 +148,7 @@ RSpec.describe PairingStrategies::Swiss do
       let(:round) { create(:round, number: 2, stage: stage) }
 
       before do
-        create(:pairing, player1: snap, score1: 6, round: round1)
-        create(:pairing, player1: crackle, score1: 3, round: round1)
+        create(:pairing, player1: snap, score1: 6, player2: crackle, score2: 3, round: round1)
         create(:pairing, player1: pop, player2: nil, score1: 1, score2: 0, round: round1)
       end
 
@@ -145,6 +160,14 @@ RSpec.describe PairingStrategies::Swiss do
         round.pairings.each do |pairing|
           expect(pairing.players).not_to match_array([pop, nil_player]) if pairing.players.include? pop
         end
+      end
+
+      it 'gives bye highest table number' do
+        pairer.pair!
+
+        round.reload
+
+        expect(round.pairings.bye.first.table_number).to eq(round.pairings.count)
       end
     end
 

@@ -1,13 +1,18 @@
 RSpec.describe PairingsHelper do
   describe '#presets' do
     let(:tournament) { create(:tournament) }
+    let(:stage) { tournament.current_stage }
+    let(:pairing) { create(:pairing, stage: stage) }
 
     context 'for swiss' do
-      let(:stage) { tournament.current_stage }
-
       it 'returns swiss defaults' do
-        expect(helper.presets(stage)).to eq(
-          [[6, 0], [3, 3], [0, 6]]
+        expect(helper.presets(pairing)).to eq(
+          [
+            { score1_corp: 3, score2_runner: 0, score1_runner: 3, score2_corp: 0, label: '6-0' },
+            { score1_corp: 3, score2_runner: 0, score1_runner: 0, score2_corp: 3, label: '3-3 (C)' },
+            { score1_corp: 0, score2_runner: 3, score1_runner: 3, score2_corp: 0, label: '3-3 (R)' },
+            { score1_corp: 0, score2_runner: 3, score1_runner: 0, score2_corp: 3, label: '0-6' }
+          ]
         )
       end
     end
@@ -15,10 +20,41 @@ RSpec.describe PairingsHelper do
     context 'for double elim' do
       let(:stage) { create(:stage, tournament: tournament, format: :double_elim) }
 
-      it 'returns double elim defaults' do
-        expect(helper.presets(stage)).to eq(
-          [[3, 0], [0, 3]]
-        )
+      context 'when side is unknown' do
+        it 'returns double elim defaults' do
+          expect(helper.presets(pairing)).to eq(
+            [
+              { score1: 3, score2: 0, score1_corp: 0, score2_runner: 0, score1_runner: 0, score2_corp: 0, label: '3-0' },
+              { score1: 0, score2: 3, score1_corp: 0, score2_runner: 0, score1_runner: 0, score2_corp: 0, label: '0-3' }
+            ]
+          )
+        end
+      end
+
+      context 'when player 1 is corp' do
+        let(:pairing) { create(:pairing, stage: stage, side: :player1_is_corp) }
+
+        it 'returns double elim defaults' do
+          expect(helper.presets(pairing)).to eq(
+            [
+              { score1_corp: 3, score2_runner: 0, score1_runner: 0, score2_corp: 0, label: '3-0' },
+              { score1_corp: 0, score2_runner: 3, score1_runner: 0, score2_corp: 0, label: '0-3' }
+            ]
+          )
+        end
+      end
+
+      context 'when player 1 is runner' do
+        let(:pairing) { create(:pairing, stage: stage, side: :player1_is_runner) }
+
+        it 'returns double elim defaults' do
+          expect(helper.presets(pairing)).to eq(
+            [
+              { score1_corp: 0, score2_runner: 0, score1_runner: 3, score2_corp: 0, label: '3-0' },
+              { score1_corp: 0, score2_runner: 0, score1_runner: 0, score2_corp: 3, label: '0-3' }
+            ]
+          )
+        end
       end
     end
   end

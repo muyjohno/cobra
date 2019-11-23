@@ -11,6 +11,7 @@ class Pairing < ApplicationRecord
   scope :completed, -> { joins(:round).where('rounds.completed = ?', true) }
   scope :for_stage, ->(stage) { joins(:round).where(rounds: { stage: stage }) }
 
+  before_save :aggregate_scores
   after_update :cache_standings!, if: Proc.new { round.completed? }
   delegate :cache_standings!, to: :stage
 
@@ -79,5 +80,15 @@ class Pairing < ApplicationRecord
     return unless players.include? player
 
     player1 == player ? player1_side : player2_side
+  end
+
+  private
+
+  def aggregate_scores
+    return unless (score1_corp.present? && score1_corp > 0) || (score1_runner.present? && score1_runner > 0) ||
+      (score2_corp.present? && score2_corp > 0) || (score2_runner.present? && score2_runner > 0)
+
+    self.score1 = (score1_corp || 0) + (score1_runner || 0)
+    self.score2 = (score2_corp || 0) + (score2_runner || 0)
   end
 end

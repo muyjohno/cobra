@@ -8,13 +8,13 @@ module PairingsHelper
       input_html: { class: 'form-control mx-2' }
   end
 
-  def preset_score_button(score1, score2, pairing)
-    link_to "#{score1}-#{score2}",
+  def preset_score_button(pairing, data)
+    link_to data[:label],
       report_tournament_round_pairing_path(
         pairing.tournament,
         pairing.round,
         pairing,
-        pairing: { score1: score1, score2: score2}
+        pairing: data
       ),
       method: :post,
       class: 'btn btn-primary'
@@ -45,10 +45,28 @@ module PairingsHelper
       class: "btn btn-sm mr-1 #{active ? 'btn-dark' : 'btn-outline-dark'}"
   end
 
-  def presets(stage)
-    return [[3, 0], [0, 3]] if stage.single_sided?
+  def presets(pairing)
+    return [
+      { score1_corp: 3, score2_runner: 0, score1_runner: 3, score2_corp: 0, label: '6-0' },
+      { score1_corp: 3, score2_runner: 0, score1_runner: 0, score2_corp: 3, label: '3-3 (C)' },
+      { score1_corp: 0, score2_runner: 3, score1_runner: 3, score2_corp: 0, label: '3-3 (R)' },
+      { score1_corp: 0, score2_runner: 3, score1_runner: 0, score2_corp: 3, label: '0-6' }
+    ] unless pairing.stage.single_sided?
 
-    [[6, 0], [3, 3], [0, 6]]
+    return [
+      { score1_corp: 3, score2_runner: 0, score1_runner: 0, score2_corp: 0, label: '3-0' },
+      { score1_corp: 0, score2_runner: 3, score1_runner: 0, score2_corp: 0, label: '0-3' }
+    ] if pairing.side.try(:to_sym) == :player1_is_corp
+
+    return [
+      { score1_corp: 0, score2_runner: 0, score1_runner: 3, score2_corp: 0, label: '3-0' },
+      { score1_corp: 0, score2_runner: 0, score1_runner: 0, score2_corp: 3, label: '0-3' }
+    ] if pairing.side.try(:to_sym) == :player1_is_runner
+
+    [
+      { score1: 3, score2: 0, score1_corp: 0, score2_runner: 0, score1_runner: 0, score2_corp: 0, label: '3-0' },
+      { score1: 0, score2: 3, score1_corp: 0, score2_runner: 0, score1_runner: 0, score2_corp: 0, label: '0-3' }
+    ]
   end
 
   def side_options

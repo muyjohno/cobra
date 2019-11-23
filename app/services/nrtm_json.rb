@@ -57,14 +57,14 @@ class NrtmJson
           table: pairing.table_number,
           player1: {
             id: pairing.player1_id,
-            runnerScore: 0,
-            corpScore: 0,
+            runnerScore: pairing.score1_runner,
+            corpScore: pairing.score1_corp,
             combinedScore: pairing.score1
           },
           player2: {
             id: pairing.player2_id,
-            runnerScore: 0,
-            corpScore: 0,
+            runnerScore: pairing.score2_runner,
+            corpScore: pairing.score2_corp,
             combinedScore: pairing.score2
           },
           intentionalDraw: false,

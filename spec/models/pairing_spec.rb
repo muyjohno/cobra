@@ -181,4 +181,20 @@ RSpec.describe Pairing do
       end
     end
   end
+
+  describe 'side scores' do
+    it 'updates combined score fields' do
+      pairing.update(score1_runner: 1, score2_corp: 1, score1_corp: 3, score2_runner: 0)
+
+      expect(pairing.score1).to eq(4)
+      expect(pairing.score2).to eq(1)
+    end
+
+    it 'handles non-numeric values' do
+      pairing.update(score1_runner: 3, score2_corp: nil)
+
+      expect(pairing.score1).to eq(3)
+      expect(pairing.score2).to eq(0)
+    end
+  end
 end

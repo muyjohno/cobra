@@ -5,22 +5,27 @@
     .col-sm.left_player_name
       = @players[pairing.player1_id].name
       =< render 'player_side', pairing: pairing, player: @players[pairing.player1_id], single_sided: single_sided
-    .col-sm-3.centre_score
-      - if policy(round.tournament).edit?
+    - if policy(round.tournament).edit?
+      .col-sm-5.centre_score
         .preset_score
-          - presets(round.stage).each do |score1, score2|
-            => preset_score_button score1, score2, pairing
+          - presets(pairing).each do |data|
+            => preset_score_button pairing, data
           = link_to '...', '#', class: 'btn btn-primary toggle_custom_score'
         .custom_score
           = simple_form_for pairing, url: report_tournament_round_pairing_path(round.tournament, round, pairing), method: :post, html: { class: 'form-inline' } do |f|
             .mx-auto
+              = f.hidden_field :score1_runner, value: 0
+              = f.hidden_field :score1_corp, value: 0
+              = f.hidden_field :score2_runner, value: 0
+              = f.hidden_field :score2_corp, value: 0
               = f.text_field :score1, style: 'width: 2.5em;', class: 'form-control'
               = button_tag type: :submit, class: 'btn btn-primary mx-2' do
                 => fa_icon 'flag-checkered'
                 | Save
               = f.text_field :score2, style: 'width: 2.5em;', class: 'form-control'
               =< link_to '...', '#', class: 'btn btn-primary toggle_custom_score'
-      - else
+    - else
+      .col-sm-2.centre_score
         | #{pairing.score1} - #{pairing.score2}
     .col-sm.right_player_name
       = @players[pairing.player2_id].name

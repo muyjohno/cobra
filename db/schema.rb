@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190925181937) do
+ActiveRecord::Schema.define(version: 20191111183214) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,15 @@ ActiveRecord::Schema.define(version: 20190925181937) do
     t.index ["side"], name: "index_identities_on_side", using: :btree
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.string   "message"
+    t.integer  "notification_type"
+    t.integer  "tournament_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.index ["tournament_id"], name: "index_notifications_on_tournament_id", using: :btree
+  end
+
   create_table "pairings", force: :cascade do |t|
     t.integer "round_id"
     t.integer "player1_id"
@@ -32,6 +41,10 @@ ActiveRecord::Schema.define(version: 20190925181937) do
     t.integer "score1"
     t.integer "score2"
     t.integer "side"
+    t.integer "score1_runner"
+    t.integer "score1_corp"
+    t.integer "score2_corp"
+    t.integer "score2_runner"
     t.index ["player1_id"], name: "index_pairings_on_player1_id", using: :btree
     t.index ["player2_id"], name: "index_pairings_on_player2_id", using: :btree
     t.index ["round_id"], name: "index_pairings_on_round_id", using: :btree

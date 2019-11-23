@@ -32,7 +32,7 @@ RSpec.describe 'list pairings for a round' do
       sign_in round.tournament.user
       visit tournament_rounds_path(round.tournament)
 
-      expect(page).to have_content('6-0 3-3 0-6 ...')
+      expect(page).to have_content('6-0 3-3 (C) 3-3 (R) 0-6 ...')
     end
   end
 

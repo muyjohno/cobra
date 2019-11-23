@@ -49,28 +49,28 @@
     [
       {
         "table": 1,
-        "player1": { "id": 1001, "runnerScore": 0, "corpScore": 0, "combinedScore": 6 },
+        "player1": { "id": 1001, "runnerScore": 3, "corpScore": 3, "combinedScore": 6 },
         "player2": { "id": 1002, "runnerScore": 0, "corpScore": 0, "combinedScore": 0 },
         "intentionalDraw": false,
         "eliminationGame": false
       },
       {
         "table": 2,
-        "player1": { "id": 1003, "runnerScore": 0, "corpScore": 0, "combinedScore": 5 },
-        "player2": { "id": 1004, "runnerScore": 0, "corpScore": 0, "combinedScore": 1 },
+        "player1": { "id": 1003, "runnerScore": 2, "corpScore": 3, "combinedScore": 5 },
+        "player2": { "id": 1004, "runnerScore": 0, "corpScore": 1, "combinedScore": 1 },
         "intentionalDraw": false,
         "eliminationGame": false
       },
       {
         "table": 3,
-        "player1": { "id": 1005, "runnerScore": 0, "corpScore": 0, "combinedScore": 4 },
-        "player2": { "id": 1006, "runnerScore": 0, "corpScore": 0, "combinedScore": 2 },
+        "player1": { "id": 1005, "runnerScore": 3, "corpScore": 1, "combinedScore": 4 },
+        "player2": { "id": 1006, "runnerScore": 2, "corpScore": 0, "combinedScore": 2 },
         "intentionalDraw": false,
         "eliminationGame": false
       },
       {
         "table": 4,
-        "player1": { "id": 1007, "runnerScore": 0, "corpScore": 0, "combinedScore": 3 },
+        "player1": { "id": 1007, "runnerScore": 0, "corpScore": 3, "combinedScore": 3 },
         "player2": { "id": null, "runnerScore": 0, "corpScore": 0, "combinedScore": 0 },
         "intentionalDraw": false,
         "eliminationGame": false

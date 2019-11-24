@@ -18,3 +18,7 @@
     p= link_to tournaments_path, class: 'btn btn-primary' do
       => fa_icon 'users'
       | More tournaments
+
+- if File.exists?(Rails.root.join('public', 'scoop.png'))
+  .col-12.text-center
+    = image_tag '/scoop.png'

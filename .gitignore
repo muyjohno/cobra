@@ -16,3 +16,5 @@ config/secrets.yml
 # Ignore db for sqlite
 cobra
 cobra_test
+
+public/scoop.png

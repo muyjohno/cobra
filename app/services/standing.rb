@@ -20,16 +20,10 @@ class Standing
   end
 
   def corp_identity
-    identity(player.corp_identity)
+    player.corp_identity_object
   end
 
   def runner_identity
-    identity(player.runner_identity)
-  end
-
-  private
-
-  def identity(id)
-    Identity.find_or_initialize_by(name: id)
+    player.runner_identity_object
   end
 end

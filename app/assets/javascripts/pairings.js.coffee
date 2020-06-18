@@ -8,7 +8,18 @@ $(document).on 'turbolinks:load', ->
   else
     localStorage['hide_reported'] = false
     $('.reported_hidden_message').hide()
+
   $('#toggle_reported').on 'click', (e) ->
     $('.reported').toggle()
     $('.reported_hidden_message').toggle()
     localStorage['hide_reported'] = !JSON.parse(localStorage['hide_reported'])
+
+  if localStorage['show_identities'] && JSON.parse(localStorage['show_identities'])
+    $('.round_pairing .ids').show()
+  else
+    localStorage['show_identities'] = false
+    $('.round_pairing .ids').hide()
+
+  $('#toggle_identities').on 'click', (e) ->
+    $('.round_pairing .ids').toggle()
+    localStorage['show_identities'] = !JSON.parse(localStorage['show_identities'])

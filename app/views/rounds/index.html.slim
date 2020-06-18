@@ -15,6 +15,11 @@
       p= link_to meeting_tournament_players_path(@tournament), class: 'btn btn-primary' do
         => fa_icon 'list-ul'
         | Player meeting
+    - else
+      p
+        #toggle_identities.btn.btn-primary
+          => fa_icon 'eye-slash'
+          | Show/hide identities
 
     = render @tournament.stages
 

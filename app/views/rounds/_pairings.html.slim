@@ -5,6 +5,10 @@
     .col-sm.left_player_name
       = @players[pairing.player1_id].name
       =< render 'player_side', pairing: pairing, player: @players[pairing.player1_id], single_sided: single_sided
+      - if @players[pairing.player1_id].id
+        .ids
+          = render @players[pairing.player1_id].corp_identity_object
+          = render @players[pairing.player1_id].runner_identity_object
     - if policy(round.tournament).edit?
       .col-sm-5.centre_score
         .preset_score
@@ -30,6 +34,10 @@
     .col-sm.right_player_name
       = @players[pairing.player2_id].name
       =< render 'player_side', pairing: pairing, player: @players[pairing.player2_id], single_sided: single_sided
+      - if @players[pairing.player2_id].id
+        .ids
+          = render @players[pairing.player2_id].corp_identity_object
+          = render @players[pairing.player2_id].runner_identity_object
     - if policy(round.tournament).update?
       .col-sm-1
         = link_to tournament_round_pairing_path(round.tournament, round, pairing), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure? This cannot be reversed.' } do

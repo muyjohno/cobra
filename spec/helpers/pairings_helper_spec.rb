@@ -104,4 +104,26 @@ RSpec.describe PairingsHelper do
       end
     end
   end
+
+  describe '#readable_score' do
+    let(:sweep) { create(:pairing, score1_corp: 3, score1_runner: 3)}
+    let(:runner_split) { create(:pairing, score1_runner: 3, score2_runner: 3) }
+    let(:corp_split) { create(:pairing, score1_corp: 3, score2_corp: 3) }
+    let(:swept) { create(:pairing, score2_corp: 3, score2_runner: 3) }
+    let(:unreported) { create(:pairing) }
+    let(:unusual) { create(:pairing, score1_corp: 3, score1_runner: 1, score2_corp: 1) }
+    let(:undeclared_sides) { create(:pairing, score1: 3, score2: 3) }
+
+    it 'outputs correct score description' do
+      aggregate_failures do
+        expect(helper.readable_score(sweep)).to eq('6 - 0')
+        expect(helper.readable_score(runner_split)).to eq('3 - 3 (R)')
+        expect(helper.readable_score(corp_split)).to eq('3 - 3 (C)')
+        expect(helper.readable_score(swept)).to eq('0 - 6')
+        expect(helper.readable_score(unreported)).to eq('-')
+        expect(helper.readable_score(unusual)).to eq('4 - 1 (C)')
+        expect(helper.readable_score(undeclared_sides)).to eq('3 - 3')
+      end
+    end
+  end
 end

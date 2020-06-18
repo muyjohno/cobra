@@ -15,8 +15,8 @@ table.table.table-striped.standings
           td= row.position
           td= row.name
           td.ids
-            = render row.corp_identity
-            = render row.runner_identity
+            = render row.corp_identity, points: row.corp_points, side: 'Corp'
+            = render row.runner_identity, points: row.runner_points, side: 'Runner'
           td= row.points
           td= number_with_precision row.sos, precision: 4
           td= number_with_precision row.extended_sos, precision: 4

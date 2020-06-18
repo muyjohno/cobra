@@ -146,4 +146,18 @@ RSpec.describe SosCalculator do
       end
     end
   end
+
+  describe 'corp and runner points' do
+    before do
+      create(:pairing, player1: snap, player2: crackle, score1_corp: 3, score1_runner: 3, round: round)
+      create(:pairing, player1: snap, player2: pop, score1_corp: 1, score2_corp: 3, round: round)
+    end
+
+    it 'calculates side points' do
+      aggregate_failures do
+        expect(standing.corp_points).to eq(4)
+        expect(standing.runner_points).to eq(3)
+      end
+    end
+  end
 end

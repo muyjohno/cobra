@@ -43,7 +43,9 @@ class Stage < ApplicationRecord
         player: standing.player,
         points: standing.points,
         sos: standing.sos,
-        extended_sos: standing.extended_sos
+        extended_sos: standing.extended_sos,
+        corp_points: standing.corp_points,
+        runner_points: standing.runner_points
       )
     end
   end

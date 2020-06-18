@@ -7,6 +7,8 @@ class SosCalculator
     games_played = {}
     opponents = {}
     points_for_sos = {}
+    corp_points = {}
+    runner_points = {}
     stage.eligible_pairings.each do |p|
       points[p.player1_id] ||= 0
       points[p.player1_id] += p.score1 || 0
@@ -24,6 +26,14 @@ class SosCalculator
       points_for_sos[p.player1_id] += p.score1 || 0
       points_for_sos[p.player2_id] ||= 0
       points_for_sos[p.player2_id] += p.score2 || 0
+      corp_points[p.player1_id] ||= 0
+      corp_points[p.player1_id] += p.score1_corp || 0
+      corp_points[p.player2_id] ||= 0
+      corp_points[p.player2_id] += p.score2_corp || 0
+      runner_points[p.player1_id] ||= 0
+      runner_points[p.player1_id] += p.score1_runner || 0
+      runner_points[p.player2_id] ||= 0
+      runner_points[p.player2_id] += p.score2_runner || 0
     end
 
     # filter out byes from sos calculations
@@ -57,7 +67,9 @@ class SosCalculator
       Standing.new(p,
         points: points[p.id],
         sos: sos[p.id],
-        extended_sos: extended_sos[p.id]
+        extended_sos: extended_sos[p.id],
+        corp_points: corp_points[p.id],
+        runner_points: runner_points[p.id]
       )
     end.sort
   end

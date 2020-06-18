@@ -1,5 +1,5 @@
 class Standing
-  attr_reader :player, :points, :sos, :extended_sos
+  attr_reader :player, :points, :sos, :extended_sos, :corp_points, :runner_points
 
   delegate :name, :corp_identity, :runner_identity, to: :player
   delegate :seed_in_stage, to: :player
@@ -9,6 +9,8 @@ class Standing
     @points = values.fetch(:points, 0) || 0
     @sos = values.fetch(:sos, 0) || 0
     @extended_sos = values.fetch(:extended_sos, 0) || 0
+    @corp_points = values.fetch(:corp_points, 0) || 0
+    @runner_points = values.fetch(:runner_points, 0) || 0
   end
 
   def <=>(other)

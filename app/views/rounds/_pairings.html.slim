@@ -30,7 +30,7 @@
               =< link_to '...', '#', class: 'btn btn-primary toggle_custom_score'
     - else
       .col-sm-2.centre_score
-        | #{pairing.score1} - #{pairing.score2}
+        = readable_score(pairing)
     .col-sm.right_player_name
       = @players[pairing.player2_id].name
       =< render 'player_side', pairing: pairing, player: @players[pairing.player2_id], single_sided: single_sided

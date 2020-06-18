@@ -111,8 +111,8 @@ RSpec.describe Stage do
     it 'generates standing row entries' do
       stage.players << jack
       stage.players << jill
-      report round1, 1, jack, 6, jill, 0
-      report round2, 1, jack, 3, jill, 3
+      create(:pairing, round: round1, player1: jack, player2: jill, score1_corp: 3, score1_runner: 3)
+      create(:pairing, round: round2, player1: jack, player2: jill, score1_corp: 3, score2_corp: 3)
 
       expect do
         stage.cache_standings!
@@ -123,6 +123,8 @@ RSpec.describe Stage do
       expect(stage.standing_rows.map(&:points)).to eq([6, 0])
       expect(stage.standing_rows.map(&:sos)).to eq([0, 6])
       expect(stage.standing_rows.map(&:extended_sos)).to eq([6, 0])
+      expect(stage.standing_rows.map(&:corp_points)).to eq([3, 0])
+      expect(stage.standing_rows.map(&:runner_points)).to eq([3, 0])
     end
   end
 end

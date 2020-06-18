@@ -82,4 +82,27 @@ module PairingsHelper
   def player_is_in_pairing(player, pairing)
     pairing.player1_id == player.id || pairing.player2_id == player.id
   end
+
+  def readable_score(pairing)
+    return "-" if pairing.score1 == 0 && pairing.score2 == 0
+    ws = winning_side(pairing)
+
+    return "#{pairing.score1} - #{pairing.score2}" unless ws
+
+    "#{pairing.score1} - #{pairing.score2} (#{ws})"
+  end
+
+  def winning_side(pairing)
+    corp_score = (pairing.score1_corp || 0) + (pairing.score2_corp || 0)
+    runner_score = (pairing.score1_runner || 0) + (pairing.score2_runner || 0)
+
+    case
+    when corp_score - runner_score == 0
+      nil
+    when corp_score - runner_score < 0
+      'R'
+    else
+      'C'
+    end
+  end
 end

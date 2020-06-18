@@ -52,6 +52,14 @@ class Player < ApplicationRecord
     pairings.bye.any?
   end
 
+  def corp_identity_object
+    Identity.find_or_initialize_by(name: corp_identity)
+  end
+
+  def runner_identity_object
+    Identity.find_or_initialize_by(name: runner_identity)
+  end
+
   private
 
   def destroy_pairings

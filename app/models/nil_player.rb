@@ -22,4 +22,12 @@ class NilPlayer
   def points
     0
   end
+
+  def corp_identity_object
+    nil
+  end
+
+  def runner_identity_object
+    nil
+  end
 end

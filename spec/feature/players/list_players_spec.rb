@@ -14,9 +14,24 @@ RSpec.describe 'Listing players' do
     it 'lists players' do
       expect(all('input[name="player[name]"]').last.value).to eq('Jack Player')
     end
+
+    context 'with multiple players' do
+      before do
+        tournament.players << create(:player, name: 'adam')
+        tournament.players << create(:player, name: 'Ben')
+
+        visit tournament_players_path(tournament)
+      end
+
+      it 'sorts players' do
+        expect(all('input[name="player[name]"]').map(&:value)).to eq(
+          [nil, 'adam', 'Ben', 'Jack Player']
+        )
+      end
+    end
   end
 
-  context 'as owner' do
+  context 'as non-owner' do
     before do
       sign_in create(:user)
       visit tournament_players_path(tournament)

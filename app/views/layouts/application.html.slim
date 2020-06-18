@@ -38,7 +38,7 @@ html
           .col-10
             h1= @tournament.name
           .col-2.text-right
-            - if @tournament.stream_url
+            - if @tournament.stream_url.present?
               = link_to @tournament.stream_url, class: 'stream-link', target: '_blank' do
                 => fa_icon 'video-camera'
         ul.nav.nav-tabs.dontprint

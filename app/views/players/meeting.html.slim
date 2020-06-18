@@ -12,7 +12,7 @@
         th Player 1
         th Player 2
     tbody
-      - @tournament.players.sort_by(&:name).map(&:name).in_groups_of(2).each_with_index do |pairing, i|
+      - @tournament.players.map(&:name).sort_by{ |n| n.downcase }.in_groups_of(2).each_with_index do |pairing, i|
         tr
           td= i+1
           td= pairing[0]

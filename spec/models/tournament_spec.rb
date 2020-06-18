@@ -29,6 +29,18 @@ RSpec.describe Tournament do
     expect(stage.swiss?).to be(true)
   end
 
+  describe 'stream_url' do
+    it 'has no stream_url by default' do
+      expect(tournament.stream_url).to eq(nil)
+    end
+
+    it 'can have a stream_url set' do
+      tournament.update(stream_url: 'https://twitch.tv')
+
+      expect(tournament.stream_url).to eq('https://twitch.tv')
+    end
+  end
+
   describe '#corp_counts' do
     let!(:identity) { create(:identity, name: 'Something') }
     let!(:other_identity) { create(:identity, name: 'Something else') }

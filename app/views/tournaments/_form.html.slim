@@ -3,4 +3,6 @@
 .form-group
   = f.input :date, html5: true, input_html: { class: 'form-control' }
 .form-group
+  = f.input :stream_url, input_html: { class: 'form-control' }, label: 'Stream URL'
+.form-group
   = f.input :private, as: :boolean, inline_label: 'Private: Only I will be able to view this tournament'

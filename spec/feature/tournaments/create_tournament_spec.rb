@@ -13,12 +13,15 @@ RSpec.describe 'creating a tournament' do
   end
 
   it 'populates the tournament correctly' do
+    fill_in :tournament_stream_url, with: 'https://twitch.tv'
+
     click_button 'Create'
 
     subject = Tournament.last
 
     aggregate_failures do
       expect(subject.name).to eq('Test Tournament')
+      expect(subject.stream_url).to eq('https://twitch.tv')
       expect(subject.created_at).not_to eq(nil)
     end
   end

@@ -14,6 +14,21 @@ RSpec.describe 'viewing a tournament' do
     it 'displays count' do
       expect(page.body).to include('2 active players (1 dropped)')
     end
+
+    describe 'stream link' do
+      it 'does not display link if no stream url is set' do
+        expect(page.body).not_to include('video-camera')
+      end
+
+      it 'does display link if stream url is set' do
+        tournament.update(stream_url: 'https://twitch.tv')
+
+        visit tournament_path(tournament)
+
+        expect(page.body).to include('video-camera')
+        expect(page.body).to include('https://twitch.tv')
+      end
+    end
   end
 
   context 'with private tournament' do

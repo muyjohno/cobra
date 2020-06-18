@@ -7,7 +7,10 @@
         ' -
         => pluralize(tournament.players.active.count, 'player')
         ' -
-        = tournament.user.try(:nrdb_username)
+        => tournament.user.try(:nrdb_username)
+        - if tournament.stream_url
+          ' -
+          => fa_icon 'video-camera'
       - if policy(tournament).destroy?
         .delete_action= link_to tournament_path(tournament), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure? This cannot be reversed.' } do
           => fa_icon 'trash-o'

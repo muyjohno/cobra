@@ -148,7 +148,7 @@ class TournamentsController < ApplicationController
   end
 
   def tournament_params
-    params.require(:tournament).permit(:name, :date, :private)
+    params.require(:tournament).permit(:name, :date, :private, :stream_url)
   end
 
   def tome_import_params

@@ -34,7 +34,13 @@ html
               | How to
     .container
       - if @tournament
-        h1.dontprint= @tournament.name
+        .row.dontprint
+          .col-10
+            h1= @tournament.name
+          .col-2.text-right
+            - if @tournament.stream_url
+              = link_to @tournament.stream_url, class: 'stream-link', target: '_blank' do
+                => fa_icon 'video-camera'
         ul.nav.nav-tabs.dontprint
           - if policy(@tournament).show?
             li.nav-item= link_to tournament_path(@tournament), class: "nav-link #{'active' if controller_name == 'tournaments' && action_name == 'show'}" do

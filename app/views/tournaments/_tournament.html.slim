@@ -8,7 +8,7 @@
         => pluralize(tournament.players.active.count, 'player')
         ' -
         => tournament.user.try(:nrdb_username)
-        - if tournament.stream_url
+        - if tournament.stream_url.present?
           ' -
           => fa_icon 'video-camera'
       - if policy(tournament).destroy?

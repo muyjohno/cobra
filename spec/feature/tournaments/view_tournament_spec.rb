@@ -17,6 +17,10 @@ RSpec.describe 'viewing a tournament' do
 
     describe 'stream link' do
       it 'does not display link if no stream url is set' do
+        tournament.update(stream_url: '')
+
+        visit tournament_path(tournament)
+
         expect(page.body).not_to include('video-camera')
       end
 

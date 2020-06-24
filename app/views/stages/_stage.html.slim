@@ -6,8 +6,9 @@
       - if policy(stage.tournament).update?
         = link_to tournament_stage_path(stage.tournament, stage), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure? This cannot be reversed and all rounds will be deleted!' } do
           => fa_icon 'trash'
-  - if stage.players.count > 60
-    .alert.alert-info Due to the number of players, only the most recent round will be displayed on this page to help page load.
-    = render stage.rounds.last
-  - else
-    = render stage.rounds
+  - if stage.rounds.any?
+    - if stage.players.count > 60
+      .alert.alert-info Due to the number of players, only the most recent round will be displayed on this page to help page load.
+      = render stage.rounds.last
+    - else
+      = render stage.rounds

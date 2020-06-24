@@ -2,6 +2,8 @@ class StandingRow < ApplicationRecord
   belongs_to :stage
   belongs_to :player
 
+  default_scope { order(position: :asc) }
+
   delegate :name, :corp_identity, :runner_identity, :manual_seed, to: :player
 
   def corp_identity

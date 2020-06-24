@@ -2,7 +2,7 @@ class Standing
   attr_reader :player, :points, :sos, :extended_sos, :corp_points, :runner_points
 
   delegate :name, :corp_identity, :runner_identity, to: :player
-  delegate :seed_in_stage, to: :player
+  delegate :tournament, :seed_in_stage, to: :player
 
   def initialize(player, values = {})
     @player = player
@@ -18,7 +18,7 @@ class Standing
   end
 
   def tiebreakers
-    [points, sos, extended_sos]
+    [points, -manual_seed, sos, extended_sos]
   end
 
   def corp_identity
@@ -27,5 +27,11 @@ class Standing
 
   def runner_identity
     player.runner_identity_object
+  end
+
+  def manual_seed
+    return 0 unless tournament.manual_seed?
+
+    player.manual_seed || Float::INFINITY
   end
 end

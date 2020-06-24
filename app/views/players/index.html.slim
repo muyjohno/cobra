@@ -1,4 +1,4 @@
-.col-12
+.col-12.players
   p
     = link_to meeting_tournament_players_path(@tournament), class: 'btn btn-primary' do
       => fa_icon 'list'
@@ -11,6 +11,8 @@
     => f.text_field :runner_identity, placeholder: 'Runner', class: 'runner_identities form-control mr-2'
     .form-check.mr-2
       => f.input_field :first_round_bye, as: :boolean, inline_label: 'First round bye?', class: 'form-check-input'
+    - if @tournament.manual_seed
+      => f.text_field :manual_seed, placeholder: 'Seed', class: 'manual_seed form-control mr-2'
     = button_tag type: :submit, class: 'btn btn-success' do
       => fa_icon 'plus'
       | Create
@@ -23,6 +25,8 @@
       => f.text_field :runner_identity, placeholder: 'Runner', class: 'runner_identities form-control mr-2'
       .form-check.mr-2
         => f.input_field :first_round_bye, as: :boolean, inline_label: 'First round bye?', class: 'form-check-input'
+      - if @tournament.manual_seed
+        => f.text_field :manual_seed, placeholder: 'Seed', class: 'manual_seed form-control mr-2'
       = button_tag type: :submit, class: 'btn btn-primary mr-2' do
         => fa_icon 'floppy-o'
         | Save

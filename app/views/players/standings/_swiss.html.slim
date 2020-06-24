@@ -6,6 +6,8 @@ table.table.table-striped.standings
       th Name
       th IDs
       th Points
+      - if @tournament.manual_seed?
+        th Seed
       th SOS
       th Extended SOS
   tbody
@@ -18,14 +20,18 @@ table.table.table-striped.standings
             = render row.corp_identity, points: row.corp_points, side: 'Corp'
             = render row.runner_identity, points: row.runner_points, side: 'Runner'
           td= row.points
+          - if @tournament.manual_seed?
+            td= row.manual_seed || '-'
           td= number_with_precision row.sos, precision: 4
           td= number_with_precision row.extended_sos, precision: 4
     - else
-      - stage.players.map(&:name).sort.each_with_index do |name, i|
+      - stage.players.sort.each_with_index do |player, i|
         tr
           td= i+1
-          td= name
+          td= player.name
           td.ids -
           td= 0
+          - if @tournament.manual_seed?
+            td= player.manual_seed || '-'
           td= number_with_precision 0, precision: 4
           td= number_with_precision 0, precision: 4

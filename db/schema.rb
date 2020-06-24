@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_18_191437) do
+ActiveRecord::Schema.define(version: 2020_06_24_135125) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +59,8 @@ ActiveRecord::Schema.define(version: 2020_06_18_191437) do
     t.integer "seed"
     t.boolean "first_round_bye", default: false
     t.integer "previous_id"
+    t.boolean "deck_checked"
+    t.integer "manual_seed"
     t.index ["tournament_id"], name: "index_players_on_tournament_id"
   end
 
@@ -111,6 +113,7 @@ ActiveRecord::Schema.define(version: 2020_06_18_191437) do
     t.date "date"
     t.boolean "private", default: false
     t.string "stream_url"
+    t.boolean "manual_seed"
     t.index ["user_id"], name: "index_tournaments_on_user_id"
   end
 

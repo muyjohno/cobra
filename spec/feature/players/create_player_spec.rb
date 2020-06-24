@@ -11,6 +11,22 @@ RSpec.describe 'creating a player' do
       check :player_first_round_bye
     end
 
+    context 'with manual_seed tournament' do
+      let(:tournament) { create(:tournament, manual_seed: true) }
+
+      before do
+        fill_in :player_manual_seed, with: 1
+      end
+
+      it 'provides seed field' do
+        click_button 'Create'
+
+        subject = Player.last
+
+        expect(subject.manual_seed).to eq(1)
+      end
+    end
+
     it 'creates player' do
       expect do
         click_button 'Create'

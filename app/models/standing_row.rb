@@ -2,7 +2,7 @@ class StandingRow < ApplicationRecord
   belongs_to :stage
   belongs_to :player
 
-  delegate :name, :corp_identity, :runner_identity, to: :player
+  delegate :name, :corp_identity, :runner_identity, :manual_seed, to: :player
 
   def corp_identity
     identity(player.corp_identity)

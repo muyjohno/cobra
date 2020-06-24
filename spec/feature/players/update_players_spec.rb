@@ -1,5 +1,5 @@
 RSpec.describe 'updating players' do
-  let(:tournament) { create(:tournament) }
+  let(:tournament) { create(:tournament, manual_seed: true) }
 
   before do
     tournament.players << create(:player, name: 'Jack Player')
@@ -11,6 +11,7 @@ RSpec.describe 'updating players' do
       fill_in :player_corp_identity, with: 'Jinteki: Personal Evolution'
       fill_in :player_runner_identity, with: 'Gabriel Santiago'
       check :player_first_round_bye
+      fill_in :player_manual_seed, with: 3
       click_button 'Save'
     end
   end
@@ -29,6 +30,10 @@ RSpec.describe 'updating players' do
 
   it 'can update first round bye' do
     expect(tournament.players.first.first_round_bye).to eq(true)
+  end
+
+  it 'can update manual seed' do
+    expect(tournament.players.first.manual_seed).to eq(3)
   end
 
   it 'redirects to tournament player page' do

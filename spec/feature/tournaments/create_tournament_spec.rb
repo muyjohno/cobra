@@ -14,6 +14,7 @@ RSpec.describe 'creating a tournament' do
 
   it 'populates the tournament correctly' do
     fill_in :tournament_stream_url, with: 'https://twitch.tv'
+    check :tournament_manual_seed
 
     click_button 'Create'
 
@@ -23,6 +24,7 @@ RSpec.describe 'creating a tournament' do
       expect(subject.name).to eq('Test Tournament')
       expect(subject.stream_url).to eq('https://twitch.tv')
       expect(subject.created_at).not_to eq(nil)
+      expect(subject.manual_seed?).to eq(true)
     end
   end
 

@@ -30,6 +30,8 @@ Rails.application.routes.draw do
     get :qr, on: :member
     get :import_from_tome, on: :member
     post :apply_import_from_tome, on: :member
+    get :import_from_csv, on: :member
+    post :apply_import_from_csv, on: :member
     get :shortlink, on: :collection
     get :not_found, on: :collection
     get :my, on: :collection

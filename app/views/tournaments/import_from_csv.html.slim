@@ -1,0 +1,14 @@
+.col-md-12
+  p This function takes a csv file with three columns: Player name, Corp ID, Runner ID
+
+  .alert.alert-danger
+    => fa_icon 'flask'
+    | This feature is very experimental. All existing tournament data will be DELETED as part of this import process.
+
+  = simple_form_for :csv_import, url: apply_import_from_csv_tournament_path(@tournament) do |f|
+    .form-group
+      = f.input :csv_import, label: 'CSV file', as: :file
+    .form-group
+      = button_tag type: :submit, class: 'btn btn-primary', data: { confirm: 'This action will DESTROY all existing data and CANNOT be reversed! Are you sure?' } do |f|
+        => fa_icon 'download'
+        | Import

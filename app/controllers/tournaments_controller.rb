@@ -2,7 +2,8 @@ class TournamentsController < ApplicationController
   before_action :set_tournament, only: [
       :show, :edit, :update, :destroy,
       :upload_to_abr, :save_json, :cut, :qr,
-      :import_from_tome, :apply_import_from_tome
+      :import_from_tome, :apply_import_from_tome,
+      :import_from_csv, :apply_import_from_csv
     ]
 
   def index
@@ -141,6 +142,18 @@ class TournamentsController < ApplicationController
     redirect_to tournament_players_path(@tournament)
   end
 
+  def import_from_csv
+    authorize @tournament, :edit?
+  end
+
+  def apply_import_from_csv
+    authorize @tournament, :edit?
+
+    Import::CSV_Import.new(csv_import_params[:csv_import]).apply(@tournament)
+
+    redirect_to tournament_players_path(@tournament)
+  end
+
   private
 
   def set_tournament
@@ -153,5 +166,9 @@ class TournamentsController < ApplicationController
 
   def tome_import_params
     params.require(:tome_import).permit(:tome_import)
+  end
+
+  def csv_import_params
+    params.require(:csv_import).permit(:csv_import)
   end
 end

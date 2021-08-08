@@ -1,10 +1,10 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :tournament do
-    name 'Tournament Name'
+    name { 'Tournament Name' }
     user
 
     transient do
-      player_count 0
+      player_count { 0 }
     end
 
     after(:create) do |tournament, evaluator|

@@ -1,13 +1,13 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :player do
     name { Faker::Name.name }
     tournament { Tournament.first || create(:tournament) }
-    active true
-    first_round_bye false
+    active { true }
+    first_round_bye { false }
 
     transient do
-      skip_registration false
-      seed nil
+      skip_registration { false }
+      seed { nil }
     end
 
     after(:create) do |player, evaluator|

@@ -1,8 +1,8 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :round do
-    number 1
+    number { 1 }
     stage
-    completed false
-    weight 1.0
+    completed { false }
+    weight { 1.0 }
   end
 end

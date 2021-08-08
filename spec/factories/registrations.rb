@@ -1,7 +1,7 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :registration do
     player
     stage
-    seed nil
+    seed { nil }
   end
 end

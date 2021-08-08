@@ -1,6 +1,6 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :stage do
     tournament
-    format :swiss
+    format { :swiss }
   end
 end
